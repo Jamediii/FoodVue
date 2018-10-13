@@ -4,8 +4,13 @@ import HomePage from '../components/HomePage.vue'
 import Recipes from '../components/Recipes.vue'
 import User from '../components/User.vue'
 import Community from '../components/Community.vue'
+import HomePageMiddle from '../components/homePage/HomePageMiddle.vue'
+import  Login from '../components/common/Login.vue'
+import Register from '../components/common/Register.vue'
+import Activity from '../components/Activity.vue'
 
-Vue.use(Router)
+
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -13,11 +18,13 @@ export default new Router({
       path: '/',
       name: 'HomePage',
       component: HomePage,
-    },
-    {
-      path: '/recipes',
-      name: 'Recipes',
-      component: Recipes,
+      children:[
+        {path:'',component:HomePageMiddle},
+        {path:'recipes',component:Recipes},
+        {path:'community',component:Community},
+        {path:'user',component:User},
+        {path:'activity',component:Activity}
+      ]
     },
     {
       path: '/user',
@@ -25,9 +32,15 @@ export default new Router({
       component: User,
     },
     {
-      path: '/community',
-      name: 'Community',
-      component: Community,
-    }
+      path:'/login',
+      name: 'Login',
+      component: Login,
+    },
+    {
+      path:'/register',
+      name: 'Register',
+      component: Register,
+    },
+
   ]
 })
