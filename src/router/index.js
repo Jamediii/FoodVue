@@ -17,10 +17,22 @@ import Makemn from '../components/Public/Menu/Makemn.vue'
 //添加活动组件
 import Activity from '../components/Activity.vue'
 
+// 显示文章的全部内容
+import ArticleDetail from '../components/Community/ArticleDetail.vue'
+//文章的作者
+import CommunityAuthor from '../components/Community/CommunityAuthor.vue'
+//显示某个菜谱的全部内容（菜谱详情）
+import RecipeDetail from'../components/Recipes/RecipeDetail.vue'
+//菜谱的作者
+import RecipeAuthor from '../components/Recipes/RecipeAuthor.vue'
+
+
 Vue.use(Router);
 
 // 用户界面的浏览路由
 import {browseUser} from './UserRouter/BrowseUser.js'
+
+
 
 export default new Router({
   routes: [
@@ -38,17 +50,39 @@ export default new Router({
           path: 'recipes',
           name: 'Recipes',
           component: Recipes,
+          // children:recipeContent
         },
         {
           path: 'community',
           name: 'Community',
           component: Community,
+          // children:community
         },
         {
           path: 'activity',
           name: 'Activity',
           component: Activity,
         },
+        // 显示文章的全部内容
+        {
+          path:'article_detail',
+          component:ArticleDetail
+        },
+        //文章的作者
+        {
+          path:'community_author',
+          component:CommunityAuthor
+        },
+        //显示某个菜谱的全部内容
+        {
+          path:'recipe_detail',
+          component:RecipeDetail
+        },
+        //菜谱的作者
+        {
+          path:'recipe_author',
+          component:RecipeAuthor
+        }
       ]
     },
     // 根组件一定要带'/',子组件则不需要
