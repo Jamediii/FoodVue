@@ -1,18 +1,23 @@
 <template>
   <div>
-    <img src="../assets/logo.png">
     <h1>首页</h1>
-    <router-link to="/user">去我的界面</router-link>
-    <router-view></router-view>
+    <app-commonfixed></app-commonfixed>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
+  import Commonfixed from './Commonfixed.vue'
+  import Footer from './common/Footer.vue'
 export default {
   name: 'Homepage',
   data () {
     return {
     }
+  },
+  components:{
+    'app-footer':Footer,
+    'app-commonfixed':Commonfixed
   }
 }
 </script>
