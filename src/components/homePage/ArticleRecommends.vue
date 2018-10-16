@@ -2,7 +2,7 @@
     <div>
       <img src="../../assets/logo.png" alt="">
       <ul>
-        <router-link to="community">文章推荐1</router-link>
+        <router-link to="/article_detail">文章推荐1</router-link>
       </ul>
     </div>
 </template>

@@ -3,7 +3,7 @@
       <img src="" alt="">
       <h2>最受欢迎的食谱</h2>
       <ul>
-        <router-link to="recipes">食谱1</router-link>
+        <router-link to="/recipe_detail">食谱1</router-link>
       </ul>
     </div>
 </template>

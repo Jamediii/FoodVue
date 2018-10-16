@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>首页</h1>
     <app-commonfixed></app-commonfixed>
     <app-footer></app-footer>
   </div>

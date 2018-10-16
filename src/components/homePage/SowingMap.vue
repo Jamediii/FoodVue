@@ -1,7 +1,7 @@
 <template>
     <div>
       <ul>
-        <router-link to="/recipes">轮播图</router-link>
+        <router-link to="/recipe_detail">轮播图</router-link>
       </ul>
       <p>简介</p>
       <ul>
