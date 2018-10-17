@@ -1,11 +1,10 @@
 <template>
     <div>
-      <p>编辑部发表的文章：</p>
+      <!--应该导入的是该作者写的文章-->
       <article-brief></article-brief>
-      <router-view></router-view>
+      <article-brief></article-brief>
     </div>
 </template>
-
 
 <script>
   import ArticleBrief from '../Community/ArticleBrief.vue'
