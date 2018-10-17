@@ -1,27 +1,29 @@
 <template>
   <div>
     <!--导航栏部分-->
-    <el-row class="w" id="nav">
-      <el-col :span="18">
+    <el-row id="nav">
+      <el-col id="toTop" :xs="14" :sm="16" :md="16" :lg="18" :xl="18">
         <el-menu :default-active="this.$router.path" router
-                 class="el-menu-demo"
-                 background-color="#fff"
+                 class="el-menu-demo "
+                 background-color="#FAE8C8"
                  text-color="#333333"
                  active-text-color="#ffd04b" mode="horizontal">
-          <el-menu-item index="/"  @click="isShow=true">乐享食间首页</el-menu-item>
+          <el-menu-item index="/" @click="isShow=true">乐享食间首页</el-menu-item>
           <el-menu-item index="11" width="10px" disabled><span>|</span></el-menu-item>
-          <el-menu-item index="/recipes" @click="isShow=false">逛食谱<i class="el-icon-arrow-down"></i></el-menu-item>
+          <el-menu-item index="/recipes" @click="isShow=false">逛食谱
+            <i class="el-icon-arrow-down"></i>
+          </el-menu-item>
           <el-menu-item index="11" width="10px" disabled><span>|</span></el-menu-item>
-          <el-menu-item index="/community">享食社区<i class="el-icon-arrow-down"></i></el-menu-item>
+          <el-menu-item index="/community" @click="isShow=false">享食社区<i class="el-icon-arrow-down"></i></el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="10" :sm="8" :md="8" :lg="6" :xl="6" style="float: right">
         <el-menu :default-active="this.$router.path" router
                  class="el-menu-demo"
-                 background-color="#fff"
+                 background-color="#FAE8C8"
                  text-color="#333333"
                  active-text-color="#ffd04b" mode="horizontal">
-          <el-menu-item index="/user" >去我的界面</el-menu-item>
+          <el-menu-item @userName="showname" index="/user">{{uName}}去我的界面</el-menu-item>
           <el-menu-item index="/login">登录</el-menu-item>
           <el-menu-item index="/register">注册</el-menu-item>
         </el-menu>
@@ -30,11 +32,11 @@
 
     <!--首页应该出现的部分-->
     <el-row id="projTitle" v-if="isShow">
-      <el-col :offset="3" :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <img src="../assets/Hlogo.png" width="100px" alt="">
+      <el-col :offset="7" :xs="2" :sm="4" :md="3" :lg="5" :xl="5">
+        <img src="../assets/Hlogo.png" width="100px" alt="">
       </el-col>
-      <el-col :offset="3" :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-        <h2></h2>
+      <el-col :xs="15" :sm="13" :md="14" :lg="12" :xl="12">
+        <span>享受厨房小事</span>
       </el-col>
     </el-row>
 
@@ -56,9 +58,11 @@
         <el-button>搜寻</el-button>
       </el-col>
       <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-        <router-link to="/makemn">写食谱</router-link>
+        <router-link to="/makemn"><span><i class="el-icon-edit"></i>写食谱</span></router-link>
       </el-col>
     </el-row>
+
+
     <router-view></router-view>
   </div>
 </template>
@@ -69,24 +73,84 @@
     data() {
       return {
         input: '',
-        isShow:true
+        isShow: true,
+        uName: ""
       }
     },
-
+    mounted() {
+      if (this.$router.path == '/') {
+        this.isShow = true
+      } else {
+        this.isShow = false
+      }
+    },
+    methods: {
+      //http://so.meishi.cc/?q=as
+      // https://www.meishij.net/ajax/ajaxtitle.php?words=ww
+      // getMatchingData() {
+      //   this.$axios.get("/proxy/ajaxtitle.php?",{
+      //     params:{
+      //       words:this.input
+      //     }
+      //   }).then((res) => {
+      //     console.log(res);
+      //   })
+      // }
+      showname(data) {
+        this.uName = data;
+        console.log(data);
+      }
+    }
   }
 </script>
 
 <style scoped>
+  /*导航栏部分开始*/
+
   #nav ul.el-menu {
     border-bottom-color: #f9d422;
-    box-sizing: border-box;
   }
-  #search{
+
+  /*导航栏部分结束*/
+  /*搜索部分开始*/
+  #search {
     min-width: 768px;
   }
-  #search .el-col{
+
+  #search .el-col {
     line-height: 124px;
   }
 
+  #search .el-col:last-child span {
+    display: inline-block;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #ccc;
+    height: 80px;
+    line-height: 80px;
+    width: 130px;
+    text-align: center;
+    margin-top: 20px;
+  }
 
+  /*搜索部分结束*/
+
+  /*与搜索栏替换的标题部分开始*/
+  #search, #projTitle {
+    padding: 10px 0;
+    height: 144px;
+    box-sizing: border-box;
+    background-color: #FAE8C8;
+  }
+
+  #search, #projTitle .el-col span {
+    line-height: 144px;
+  }
+
+  #projTitle .el-col span {
+    font-size: 50px;
+    font-family: "楷体";
+  }
+
+  /*与搜索栏替换的标题部分结束*/
 </style>
