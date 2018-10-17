@@ -2,7 +2,8 @@
   <div>
     <!--导航栏部分-->
     <el-row id="nav">
-      <el-col id="toTop" :xs="14" :sm="16" :md="16" :lg="18" :xl="18">
+      <el-col :xs="12" :sm="14" :md="14" :lg="18" :xl="18">
+
         <el-menu :default-active="this.$router.path" router
                  class="el-menu-demo "
                  background-color="#FAE8C8"
@@ -16,18 +17,31 @@
           <el-menu-item index="11" width="10px" disabled><span>|</span></el-menu-item>
           <el-menu-item index="/community" @click="isShow=false">享食社区<i class="el-icon-arrow-down"></i></el-menu-item>
         </el-menu>
+
       </el-col>
-      <el-col :xs="10" :sm="8" :md="8" :lg="6" :xl="6" style="float: right">
+      <el-col class="topright"  :xs="12" :sm="10" :md="10" :lg="6" :xl="6">
         <el-menu :default-active="this.$router.path" router
                  class="el-menu-demo"
                  background-color="#FAE8C8"
                  text-color="#333333"
                  active-text-color="#ffd04b" mode="horizontal">
-          <el-menu-item @userName="showname" index="/user">{{uName}}去我的界面</el-menu-item>
-          <el-menu-item index="/login">登录</el-menu-item>
+          <el-menu-item index="/user">{{name}}</el-menu-item>
+          <el-menu-item index="/login">{{loginState}}</el-menu-item>
           <el-menu-item index="/register">注册</el-menu-item>
+
+          <!--设置部分-->
+          <el-dropdown class="w setting">
+              <span class="el-dropdown-link">
+                <i class="el-icon-setting"></i>
+              </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="toEdit">修改资料</el-dropdown-item>
+              <el-dropdown-item @click.native="exitEdit">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </el-menu>
       </el-col>
+
     </el-row>
 
     <!--首页应该出现的部分-->
@@ -74,7 +88,7 @@
       return {
         input: '',
         isShow: true,
-        uName: ""
+        // loginState:"登录"
       }
     },
     mounted() {
@@ -85,20 +99,25 @@
       }
     },
     methods: {
-      //http://so.meishi.cc/?q=as
-      // https://www.meishij.net/ajax/ajaxtitle.php?words=ww
-      // getMatchingData() {
-      //   this.$axios.get("/proxy/ajaxtitle.php?",{
-      //     params:{
-      //       words:this.input
-      //     }
-      //   }).then((res) => {
-      //     console.log(res);
-      //   })
-      // }
-      showname(data) {
-        this.uName = data;
-        console.log(data);
+      toEdit() {
+        this.$router.push("/user/edit");
+      }
+    },
+    computed: {
+      name() {
+        if (this.$store.state.user.state) {
+          return "去我的页面"
+        }
+      },
+      loginState() {
+        if (this.$store.state.user.state) {
+          return "欢迎" + this.$store.state.user.name;
+        } else {
+          return "登录";
+        }
+      },
+      exitEdit() {
+        return this.$store.state.user.state = false;
       }
     }
   }
@@ -106,9 +125,17 @@
 
 <style scoped>
   /*导航栏部分开始*/
+  #nav {
+    background-color: #FAE8C8;
+  }
 
   #nav ul.el-menu {
     border-bottom-color: #f9d422;
+  }
+
+  #nav .topright .setting {
+    width: 40px;
+    line-height: 60px;
   }
 
   /*导航栏部分结束*/

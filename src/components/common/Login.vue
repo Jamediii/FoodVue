@@ -7,9 +7,9 @@
                  class="demo-ruleForm">
           <el-form-item><p>乐享食间</p></el-form-item>
           <el-form-item label="手机号" prop="pass">
-            <el-input type="password" v-model="ruleForm2.pass" placeHolder="请输入手机号" autocomplete="off"></el-input>
+            <el-input type="text" v-model="ruleForm2.pass" placeHolder="请输入手机号" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="确认密码" prop="checkPass">
+          <el-form-item label="密码" prop="checkPass">
             <el-input type="password" v-model="ruleForm2.checkPass" placeHolder="请输入密码" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
@@ -40,9 +40,7 @@
       };
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
+          callback(new Error('请输入密码'));
         } else {
           callback();
         }
@@ -61,30 +59,30 @@
             {validator: validatePass2, trigger: 'blur'}
           ]
         },
-        result:{}
       };
     },
     methods: {
       submitForm(formName) {
-        // this.$refs[formName].validate((valid) => {
-        //   if (valid) {
-        //
-        //   } else {
-        //     console.log('error submit!!');
-        //     return false;
-        //   }
-        // });
         this.$axios.post('http://localhost:3000/login', {
           userPNo: this.ruleForm2.pass,
           userPwd: this.ruleForm2.checkPass
         })
           .then((res)=> {
-            this.result=res.data.data;
-            if(this.result.state){
-              this.$emit('userName',this.result.name);
+            if(res.data.data.state){
+              this.$store.state.user=res.data.data;
+              console.log(this.$store.state.user);
               this.$router.push('/');
             }else{
-              alert("登录失败！用户名或者验证码错误");
+              // alert("登录失败！用户名或者验证码错误");
+              this.$alert('用户名或者验证码错误！！', '登录失败', {
+                confirmButtonText: '确定', // callback: action => {
+                //   this.$message({
+                //     type: 'info',
+                //     message: `action: ${ action }`
+                //   });
+                // }
+
+              });
             }
           })
           .catch(function (error) {

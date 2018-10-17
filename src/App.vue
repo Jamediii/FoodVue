@@ -29,4 +29,10 @@
   ul {
     list-style: none;
   }
+  .right {
+    float: right;
+  }
+  .left{
+    float: left;
+  }
 </style>

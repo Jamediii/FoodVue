@@ -36,7 +36,7 @@
         </ul>
       </el-col>
       <el-col :span="1">
-        <a href="#toTop"><i class="el-icon-caret-top"></i></a>
+        <i class="el-icon-caret-top"></i>
       </el-col>
 
     </el-row>

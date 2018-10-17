@@ -117,5 +117,6 @@ export default new Router({
       name: 'Register',
       component: Register
     },
-  ]
+  ],
+  mode:'history'
 })
