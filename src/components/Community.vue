@@ -1,14 +1,24 @@
 <template>
   <div>
-    <p>这里是享食社区</p>
-    <!--导航栏-->
-    <article-nav></article-nav>
-    <br/><br/>
-    <!--文章搜索（实现搜索功能）-->
-    <article-search></article-search>
-    <!--文章列表（显示的是所有文章的简介）-->
-    <article-brief></article-brief>
-
+    <br/>
+    <!--<article-nav></article-nav>-->
+    <el-row :gutter="30">
+      <el-col :span="10" :offset="5">
+        <!--<span style="font-size: 18px;color: #333;">所有文章</span>-->
+        <el-container>
+          <el-header>所有文章&nbsp;&nbsp;>></el-header>
+        </el-container>
+        <article-brief></article-brief>
+        <article-brief></article-brief>
+        <article-brief></article-brief>
+        <article-brief></article-brief>
+      </el-col>
+      <el-col :span="4">
+        <article-search></article-search><br/>
+        <author-list></author-list>
+      </el-col>
+    </el-row>
+    <br/>
   </div>
 </template>
 
@@ -16,6 +26,7 @@
   import ArticleNav from './Community/ArticleNav.vue'
   import ArticleBrief from './Community/ArticleBrief.vue'
   import ArticleSearch from './Community/ArticleSearch.vue'
+  import AuthorList from './Community/AuthorList.vue'
 
   export default {
     name: "Community",
@@ -23,10 +34,25 @@
       'article-nav':ArticleNav,
       'article-brief':ArticleBrief,
       'article-search':ArticleSearch,
+      'author-list':AuthorList
     }
   }
 </script>
 
 <style scoped>
+  div{
+    background-color: #fdf6dc;
+  }
+  p{
+    height: 20px;
+  }
+
+  .el-header{
+    background-color: #fae8c8;
+    color: #333;
+    text-align: left;
+    line-height: 60px;
+    font-size: 16px;
+  }
 
 </style>
