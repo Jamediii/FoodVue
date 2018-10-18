@@ -25,6 +25,8 @@ import CommunityAuthor from '../components/Community/CommunityAuthor.vue'
 import RecipeDetail from'../components/Recipes/RecipeDetail.vue'
 //菜谱的作者
 import RecipeAuthor from '../components/Recipes/RecipeAuthor.vue'
+//导入服务条款
+import ServerItem from "../components/Public/ServerItem.vue"
 
 
 Vue.use(Router);
@@ -82,29 +84,30 @@ export default new Router({
         {
           path:'recipe_author',
           component:RecipeAuthor
-        }
+        },
+        // 用户是否真的要制作菜谱路由
+        {
+          path: '/menu',
+          name: 'Menu',
+          component: Menu
+        },
+        // 根组件一定要带'/',子组件则不需要
+        {
+          // 用户--我的显示路由
+          path: '/user',
+          name: 'User',
+          component: User,
+          children: browseUser
+        },
+        // 用户填写菜谱路由
+        {
+          path: '/makemn',
+          name: 'Makemn',
+          component: Makemn
+        },
       ]
     },
-    // 根组件一定要带'/',子组件则不需要
-    {
-      // 用户--我的显示路由
-      path: '/user',
-      name: 'User',
-      component: User,
-      children: browseUser
-    },
-    // 用户是否真的要制作菜谱路由
-    {
-      path: '/menu',
-      name: 'Menu',
-      component: Menu
-    },
-    // 用户填写菜谱路由
-    {
-      path: '/makemn',
-      name: 'Makemn',
-      component: Makemn
-    },
+
     //登录
     {
       path: '/login',
@@ -117,6 +120,12 @@ export default new Router({
       name: 'Register',
       component: Register
     },
+    //服务条款
+    {
+      path: '/sitem',
+      name: 'ServerItem',
+      component: ServerItem
+    }
   ],
   mode:'history'
 })

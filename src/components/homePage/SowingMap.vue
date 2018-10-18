@@ -3,15 +3,20 @@
   <div id="Sowingmap" class="w">
     <el-row :gutter="20">
       <!--轮播图部分-->
-      <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
-        <router-link to="/recipe_detail">
+      <el-col :xs="12" :sm="14" :md="16" :lg="18" :xl="18">
+
           <div class="block">
-            <el-carousel height="400px">
+
+            <el-carousel >
+
               <el-carousel-item v-for="item in 2" :key="item">
+                <router-link to="/recipe_detail"> <img src="../../assets/meal1.jpg" alt=""></router-link>
               </el-carousel-item>
+
             </el-carousel>
+
           </div>
-        </router-link>
+
         <p>開始感受到炎炎夏日的威力,最適合來道麻辣開胃的川味料理,溫順椒香拌著麵條及軟嫩的雞腿肉,爽脆的黃瓜,交織出豐富層次~另人純垂涎三尺的美味</p>
         <ul>
           <li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>
@@ -46,12 +51,13 @@
   }
 
   #Sowingmap .block {
+
     width: 800px;
   }
 
   #Sowingmap .block .el-carousel__item {
     background-size: cover;
-    background-image: url("../../assets/meal1.jpg");
+    /*background-image: url("../../assets/meal1.jpg");*/
   }
 
   #Sowingmap .el-col p {

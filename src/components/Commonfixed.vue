@@ -2,46 +2,58 @@
   <div>
     <!--导航栏部分-->
     <el-row id="nav">
-      <el-col :xs="12" :sm="14" :md="14" :lg="18" :xl="18">
-
+      <el-col :span="24">
         <el-menu :default-active="this.$router.path" router
                  class="el-menu-demo "
                  background-color="#FAE8C8"
                  text-color="#333333"
                  active-text-color="#ffd04b" mode="horizontal">
-          <el-menu-item index="/" @click="isShow=true">乐享食间首页</el-menu-item>
-          <el-menu-item index="11" width="10px" disabled><span>|</span></el-menu-item>
-          <el-menu-item index="/recipes" @click="isShow=false">逛食谱
-            <i class="el-icon-arrow-down"></i>
+          <el-menu-item index="/" @click="isShow=true">
+            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">乐享食间首页</el-col>
           </el-menu-item>
-          <el-menu-item index="11" width="10px" disabled><span>|</span></el-menu-item>
-          <el-menu-item index="/community" @click="isShow=false">享食社区<i class="el-icon-arrow-down"></i></el-menu-item>
-        </el-menu>
-
-      </el-col>
-      <el-col class="topright"  :xs="12" :sm="10" :md="10" :lg="6" :xl="6">
-        <el-menu :default-active="this.$router.path" router
-                 class="el-menu-demo"
-                 background-color="#FAE8C8"
-                 text-color="#333333"
-                 active-text-color="#ffd04b" mode="horizontal">
-          <el-menu-item index="/user">{{name}}</el-menu-item>
-          <el-menu-item index="/login">{{loginState}}</el-menu-item>
-          <el-menu-item index="/register">注册</el-menu-item>
-
-          <!--设置部分-->
-          <el-dropdown class="w setting">
+          <el-menu-item index.prevent="11" width="10px">
+            <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"><span>|</span></el-col>
+          </el-menu-item>
+          <el-menu-item index="/recipes" @click="isShow=false">
+            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+              逛食谱<i class="el-icon-arrow-down"></i>
+            </el-col>
+          </el-menu-item>
+          <el-menu-item index.prevent="11" width="10px">
+            <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"><span>|</span></el-col>
+          </el-menu-item>
+          <el-menu-item index="/community" @click="isShow=false">
+            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">享食社区<i class="el-icon-arrow-down"></i></el-col>
+          </el-menu-item>
+          <div class="right">
+            <el-menu-item class="right" index.prevent="11">
+              <!--设置部分-->
+              <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+                <el-dropdown class="setting">
               <span class="el-dropdown-link">
                 <i class="el-icon-setting"></i>
               </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="toEdit">修改资料</el-dropdown-item>
-              <el-dropdown-item @click.native="exitEdit">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item @click.native="toEdit">修改资料</el-dropdown-item>
+                    <el-dropdown-item @click.native="exitEdit">退出登录</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-col>
+            </el-menu-item>
+            <el-menu-item index="/register" class="right">
+              <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">注册</el-col>
+            </el-menu-item>
+            <el-menu-item index="/login" class="right">
+              <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="3">{{loginState}}</el-col>
+            </el-menu-item>
+            <el-menu-item index="/user" class="right">
+              <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                <div>{{name}}</div>
+              </el-col>
+            </el-menu-item>
+          </div>
         </el-menu>
       </el-col>
-
     </el-row>
 
     <!--首页应该出现的部分-->
@@ -72,7 +84,7 @@
         <el-button>搜寻</el-button>
       </el-col>
       <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-        <router-link to="/makemn"><span><i class="el-icon-edit"></i>写食谱</span></router-link>
+        <router-link to="/menu"><span><i class="el-icon-edit"></i>写食谱</span></router-link>
       </el-col>
     </el-row>
 
@@ -129,13 +141,8 @@
     background-color: #FAE8C8;
   }
 
-  #nav ul.el-menu {
+  #nav .el-menu {
     border-bottom-color: #f9d422;
-  }
-
-  #nav .topright .setting {
-    width: 40px;
-    line-height: 60px;
   }
 
   /*导航栏部分结束*/
@@ -151,7 +158,6 @@
   #search .el-col:last-child span {
     display: inline-block;
     box-sizing: border-box;
-    display: inline-block;
     border: 1px solid #ccc;
     height: 80px;
     line-height: 80px;

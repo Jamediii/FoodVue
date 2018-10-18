@@ -5,20 +5,20 @@
       <p></p>
       <h2>最受欢迎食谱</h2>
       <el-col>
-        <el-row class="popRecList">
-          <el-col :span="3"></el-col>
-          <el-col :span="4" v-for="(o, index) in 4" :key="o">
-            <el-card :body-style="{ padding: '0px' }">
-              <img src="../../assets/popRecipeIcon.png" class="image">
-              <div style="padding: 14px;">
-                <span>菜谱名</span>
-                <div class="bottom clearfix">
-                  <p>菜谱作者名称</p>
+          <el-col >
+            <el-col :span="4">&nbsp;</el-col>
+            <el-col :span="4" style="margin: 20px 10px;" v-for="(o, index) in 4" :key="o">
+              <el-card :body-style="{ padding: '0px' }">
+                <img src="../../assets/popRecipeIcon.png" class="image">
+                <div style="padding: 14px;">
+                  <span>菜谱名</span>
+                  <div class="bottom clearfix">
+                    <p>菜谱作者名称</p>
+                  </div>
                 </div>
-              </div>
-            </el-card>
+              </el-card>
+            </el-col>
           </el-col>
-        </el-row>
       </el-col>
     </el-row>
   </div>
@@ -55,12 +55,5 @@
     margin-top: 20px;
   }
 
-  #popRecipes .popRecList:first-child {
-    background-color: transparent;
-  }
-
-  #popRecipes .popRecList .el-col {
-    margin: 30px 10px;
-  }
 
 </style>
