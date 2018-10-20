@@ -11,7 +11,7 @@
           <el-menu-item index="/" @click="isShow=true">
             <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">乐享食间首页</el-col>
           </el-menu-item>
-          <el-menu-item index.prevent="11" width="10px">
+          <el-menu-item index="11" disabled width="10px">
             <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"><span>|</span></el-col>
           </el-menu-item>
           <el-menu-item index="/recipes" @click="isShow=false">
@@ -19,14 +19,14 @@
               逛食谱<i class="el-icon-arrow-down"></i>
             </el-col>
           </el-menu-item>
-          <el-menu-item index.prevent="11" width="10px">
+          <el-menu-item index="11" disabled width="10px">
             <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"><span>|</span></el-col>
           </el-menu-item>
           <el-menu-item index="/community" @click="isShow=false">
             <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">享食社区<i class="el-icon-arrow-down"></i></el-col>
           </el-menu-item>
           <div class="right">
-            <el-menu-item class="right" index.prevent="11">
+            <el-menu-item class="right" index="11" disabled>
               <!--设置部分-->
               <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
                 <el-dropdown class="setting">

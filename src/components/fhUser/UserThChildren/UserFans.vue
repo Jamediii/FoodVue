@@ -2,20 +2,18 @@
   <div>
     <!-- 没有粉丝情况下 -->
     <div v-if="recipesY.length <= 0" class="no-content">
-      <span>到现在都还没有一个粉丝?</span>
-      <router-link to="" class="toRouter">马上互粉别人吧！</router-link>
+      <span>他到现在都还没有一个粉丝?</span>
     </div>
     <!--有粉丝情况下-->
     <el-row :gutter="20" v-else>
-      <div v-for="data in recipesY" class="fans-cont">
+      <div v-for="(data,key) in recipesY" class="fans-cont">
         <el-col :span="4">
           <img :src="data.headPhoto" :alt="data.userId" :title="data.accountName">
           <span class="userName">{{data.accountName}}</span>
           <el-button
             class="to-user"
             type="primary"
-            icon="el-icon-search"
-            @click.native="toUserInfo(data.userId)">
+            icon="el-icon-search">
             去看看
           </el-button>
         </el-col>
@@ -30,41 +28,25 @@
     name: "UserFans",
     data() {
       return {
-        // 粉丝信息
+        // 我的Id
+        userId: '',
+        // 菜谱信息
         recipesY: '',
-        // 粉丝的菜谱信息
-        recipes: []
       }
     },
     props: ['userid'],
     // 页面挂载后 -- 执行
     mounted() {
-      // 获取 我的Id
+      // 获取 达人/粉丝 的Id
       let userId = this.userid;
       this.$axios.get(`http://localhost:3000/users/fans/${userId}`)
         .then((result) => {
           this.recipesY = result.data.data;
-          // 获取到每个粉丝的id
-          let length = this.recipesY.length;
-          for (let i = 0; i < length; i++) {
-            let fansId = result.data.data[i].userId;
-            // 获取到每个粉丝的菜谱信息
-            this.$axios.get(`http://localhost:3000/recipes/brief/${fansId}`)
-              .then(fansResult => {
-                this.recipes.push(fansResult.data.data);
-                console.log(this.recipes);
-              }).catch(err => {
-              console.log(err);
-            })
-          }
         }).catch((err) => {
         console.log(err.message);
       })
     },
     methods: {
-      toUserInfo(userId) {
-        this.$router.push(`/fhuser/${userId}`);
-      }
     }
   }
 </script>
@@ -79,11 +61,6 @@
   p {
     margin: 0;
     padding: 0;
-  }
-
-  .toRouter {
-    font-size: 20px;
-    font-weight: bold;
   }
 
   /* 有东西 */

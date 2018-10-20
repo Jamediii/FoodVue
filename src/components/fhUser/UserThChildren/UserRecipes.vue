@@ -1,11 +1,11 @@
 <template>
   <div>
-    <!-- 没有收藏情况下 -->
+    <!-- 没有食谱情况下 -->
     <div v-if="!isArray" class="no-content">
-      <span>{{recipesY}},赶快去收藏吧！</span>
+      <span>该用户还未拥有任何属于自己的食谱</span>
     </div>
 
-    <!-- 有收藏情况下 -->
+    <!-- 有食谱情况下 -->
     <div v-else v-for="(data,key) in recipesY">
 
     </div>
@@ -13,20 +13,23 @@
 </template>
 
 <script>
-  // 显示收藏
+  // 显示菜谱
   export default {
     name: "UserRecipes",
     data() {
       return {
-        // 收藏信息
+        // 菜谱信息
         recipesY: '',
-        // 判断类型
+        // 判断类型 -- 默认有菜谱
         isArray: true
       }
     },
+    props:['userid'], // 达人/粉丝 Id
     // 页面挂载 -- 执行
     mounted() {
-      this.$axios.get('http://localhost:3000/operat/setCollection').then((result) => {
+      let userId = this.userid;
+      // 获取菜谱基本信息
+      this.$axios.get(`http://localhost:3000/operat/${userId}`).then((result) => {
         if (typeof result.data.data === "string") {
           this.isArray = false;
         }
@@ -35,11 +38,19 @@
         console.log(err.message);
       })
     },
+    watch: {
+      // recipesY(newDate,oldDate) {
+      //   console.log(newDate);
+      //   console.log(oldDate);
+      //   return this.recipesY
+      // }
+    }
 
   }
 </script>
 
 <style scoped>
+  /* 没有菜谱 */
   .no-content {
     text-align: center;
     line-height: 300px;

@@ -6,41 +6,16 @@
         <form action="" id="Headportrait"></form>
 
         <!--背景图片-->
-        <div
-          @mouseenter="showBgBtn = !showBgBtn"
-          @mouseleave="showBgBtn = !showBgBtn">
-          <div class="background-pic">
-            <label for="user-bg">
-              <transition name="el-fade-in-linear">
-                <div v-show="showBgBtn" class="chang-bg">更换背景</div>
-              </transition>
-            </label>
-          </div>
-          <input type="file" id="user-bg" style="display: none" form="Headportrait">
+        <div>
+          <div class="background-pic"></div>
         </div>
 
         <!--头像-->
-        <div class="user-pic"
-             @mouseenter="showHdBtn = !showHdBtn"
-             @mouseleave="showHdBtn = !showHdBtn"
-        :style="{backgroundImage: 'url('+userInfo.headPhoto+')'}">
-          <!--按钮显示-->
-          <label for="user-hd">
-            <transition name="el-zoom-in-bottom">
-              <div class="chang-ushead" v-show="showHdBtn">更换</div>
-            </transition>
-          </label>
-        </div>
-        <input type="file" id="user-hd" style="display: none" form="Headportrait">
+        <div class="user-pic" :style="{backgroundImage: 'url('+userInfo.headPhoto+')'}"></div>
         <!--名字-->
-        <span>{{userInfo.accountName}}</span>
+        <span>{{ userInfo.accountName }}</span>
         <!--等级-->
-        <!--经验-->
 
-        <!--去用户修改页面-->
-        <router-link to="/modifyinfo">
-          <el-button class="chang-userInfo"> 编辑</el-button>
-        </router-link>
       </div>
 
       <div style="margin-top: 80px">
@@ -51,28 +26,26 @@
 </template>
 
 <script>
-  import UserTh from './User/UserTh';
+  import UserTh from './fhUser/UserTh';
 
   export default {
-    name: "User",
+    name: "fhUser",
     data() {
       return {
-        showBgBtn: '', // 大背景更改按钮显示/隐藏
-        showHdBtn: '', // 头像更改按钮显示/隐藏
-        userId: '', // 我的id
         userInfo: {} // 用户的基本信息 --名字/头像/背景/经验/等级
       }
     },
     // methods: {
     // },
-    // 页面加载后就去获取 -- 查看自己的信息
+    // 页面加载后就去获取 -- 查看用户的信息
     created() {
-      this.$router.push('/user/recipe');
-      this.userId = this.$store.state.user.userId;
-      let userId = this.userId;
-      this.$axios.get(`http://127.0.0.1:3000/users/${userId}`)
+      this.userId = this.$route.params.userId;
+      this.$router.push(`/fhuser/${this.userId}/recipe`);
+      // 获取用户基本信息
+      this.$axios.get(`http://127.0.0.1:3000/users/${this.userId}`)
         .then((result) => {
           this.userInfo = result.data.data[0];
+          console.log(this.userInfo);
         }).catch(err => {
         console.log(err);
       });

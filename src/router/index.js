@@ -2,7 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '../components/HomePage.vue'
 import Recipes from '../components/Recipes.vue'
+// 我的界面显示内容
 import User from '../components/User.vue'
+// 达人/粉丝界面显示
+import fhUser from '../components/fhUser.vue'
 import Community from '../components/Community.vue'
 //登录
 import Login from '../components/common/Login.vue'
@@ -33,7 +36,10 @@ Vue.use(Router);
 
 // 用户界面的浏览路由
 import {browseUser} from './UserRouter/BrowseUser.js'
-
+// 达人/粉丝界面的浏览路由
+import {fhBrowseUser} from './FhUserRouter/BrowseUser.js'
+//显示修改用户资料组件
+import ModifyUserInfo from '../components/User/UserInfoModify/ModifyUserInfo.vue'
 
 
 export default new Router({
@@ -98,6 +104,19 @@ export default new Router({
           name: 'User',
           component: User,
           children: browseUser
+        },
+        {
+          // 用户资料修改路由
+          path: '/modifyinfo',
+          name: 'ModifyUserInfo',
+          component: ModifyUserInfo
+        },
+        {
+          // 用户粉丝--显示路由
+          path: '/fhuser/:userId',
+          name: 'fhUser',
+          component: fhUser,
+          children: fhBrowseUser
         },
         // 用户填写菜谱路由
         {

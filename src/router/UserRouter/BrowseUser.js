@@ -8,8 +8,6 @@ import userFans from '../../components/User/UserThChildren/UserFans'
 import userDraft from '../../components/User/UserThChildren/UserDraft'
 // 显示用户的参赛项目
 import userJoin from '../../components/User/UserThChildren/UserJoin'
-//显示修改用户资料组件
-import editUserInfo from '../../components/User/EditUserInfo.vue'
 
 export const browseUser = [
   {
@@ -32,8 +30,4 @@ export const browseUser = [
     path: 'join',
     component: userJoin
   },
-  {
-    path: 'edit',
-    component: editUserInfo
-  }
 ];
