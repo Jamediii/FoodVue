@@ -21,24 +21,24 @@
     <el-col :span="4" :offset="6">
       <recipe-brief></recipe-brief>
     </el-col>
-    <el-col :span="4" >
-      <recipe-brief></recipe-brief>
-    </el-col>
-    <el-col :span="4" >
-      <recipe-brief></recipe-brief>
-    </el-col>
+    <!--<el-col :span="4" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
+    <!--<el-col :span="4" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
   </el-row>
   <!--第二行-->
   <el-row :gutter="40">
     <el-col :span="4" :offset="6">
       <recipe-brief></recipe-brief>
     </el-col>
-    <el-col :span="4" >
-      <recipe-brief></recipe-brief>
-    </el-col>
-    <el-col :span="4" >
-      <recipe-brief></recipe-brief>
-    </el-col>
+    <!--<el-col :span="4" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
+    <!--<el-col :span="4" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
   </el-row>
 
   <el-row :gutter="20" >
@@ -54,30 +54,30 @@
     <el-col :span="3" :offset="6">
       <recipe-brief></recipe-brief>
     </el-col>
-    <el-col :span="3" >
-      <recipe-brief></recipe-brief>
-    </el-col>
-    <el-col :span="3" >
-      <recipe-brief></recipe-brief>
-    </el-col>
-    <el-col :span="3" >
-      <recipe-brief></recipe-brief>
-    </el-col>
+    <!--<el-col :span="3" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
+    <!--<el-col :span="3" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
+    <!--<el-col :span="3" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
   </el-row>
   <!--第二行-->
   <el-row :gutter="40">
     <el-col :span="3" :offset="6">
       <recipe-brief></recipe-brief>
     </el-col>
-    <el-col :span="3" >
-      <recipe-brief></recipe-brief>
-    </el-col>
-    <el-col :span="3" >
-      <recipe-brief></recipe-brief>
-    </el-col>
-    <el-col :span="3" >
-      <recipe-brief></recipe-brief>
-    </el-col>
+    <!--<el-col :span="3" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
+    <!--<el-col :span="3" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
+    <!--<el-col :span="3" >-->
+      <!--<recipe-brief></recipe-brief>-->
+    <!--</el-col>-->
   </el-row>
 
   <br/>

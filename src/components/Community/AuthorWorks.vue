@@ -2,7 +2,6 @@
     <div>
       <!--应该导入的是该作者写的文章-->
       <article-brief></article-brief>
-      <article-brief></article-brief>
     </div>
 </template>
 

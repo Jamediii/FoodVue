@@ -67,7 +67,7 @@ export default new Router({
         },
         // 显示文章的全部内容
         {
-          path:'article_detail',
+          path:'article_detail/:articleId',
           component:ArticleDetail
         },
         //文章的作者
@@ -77,7 +77,7 @@ export default new Router({
         },
         //显示某个菜谱的全部内容
         {
-          path:'recipe_detail',
+          path:'recipe_detail/:detailsId',
           component:RecipeDetail
         },
         //菜谱的作者

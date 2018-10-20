@@ -1,32 +1,38 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="name" label="食材表 " width="180"></el-table-column>
-      <el-table-column prop="weight" label=" " width=""></el-table-column>
+    <el-table :data="recipeFoodList" style="width: 100%">
+      <el-table-column prop="foodName" label="食材表 " width="180"></el-table-column>
+      <el-table-column prop="foodNum" label=" " width=""></el-table-column>
+    </el-table>
+    <el-table :data="accessoriesList" style="width: 100%">
+      <el-table-column prop="accessoriesName" label="调料表 " width="180"></el-table-column>
+      <el-table-column prop="accessoriesNum" label=" " width=""></el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
     export default {
-        name: "RecipeFood",
+      name: "RecipeFood",
       data() {
         return {
-          tableData: [
-            {
-              name: '土豆',
-              weight: '生重500-600克'
-            },
-            {
-              name: '原味无糖酸奶',
-              weight: '120g'
-            },
-            {
-              name: '白洋葱',
-              weight: '中等大小的1/8个'
-            }
-          ]
+          recipeFoodList:[],
+          accessoriesList:[],
+          //路由传参获取的id
+          p_recipeId:this.$route.params.detailsId
         }
+      },
+      created(){
+        //根据id获取的菜谱
+        this.$axios.get('http://localhost:3000/recipes/details/' + this.p_recipeId)
+          .then((res) =>{
+            var allData = res.data.data;
+            this.recipeFoodList = allData[1];
+            this.accessoriesList = allData[2];
+          })
+          .catch(function (err) {
+            console.log(err)
+          });
       }
     }
 </script>

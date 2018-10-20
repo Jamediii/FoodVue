@@ -25,7 +25,8 @@
             imgList:[
               {
                 id:0,
-                idView:'http://i2.chuimg.com/1fa348e00432410d868f3332230bf5bb_1920w_1280h.jpg?imageView2/2/w/660/interlace/1/q/90'
+                recipeId:'271',
+                idView:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/172428/large_a0c06dfc2edb7388.jpg'
               },
               {
                 id:1,
