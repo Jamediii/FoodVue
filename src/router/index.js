@@ -61,7 +61,7 @@ export default new Router({
           // children:community
         },
         {
-          path: 'activity',
+          path: 'activity/:activityId',
           name: 'Activity',
           component: Activity,
         },

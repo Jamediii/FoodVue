@@ -9,14 +9,14 @@
       </el-col>
 
       <!--切换显示两个菜谱-->
-      <el-col v-show="isShowRC" class="show-rc-two" :span="24">
-        <el-col  :span="6" :push=5 v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+      <el-col v-show="isShowRC" class="show-rc-two showrc" :span="24">
+        <el-col :span="6" :push=5 v-for="(o, index) in 2" :key="index" :offset="index > 0 ? 2 : 0">
           <el-card :body-style="{ padding: '0px' }">
-            <img src="../../assets/popRecipeIcon.png" class="image">
+            <img :src="recipesRImg[index]" class="image">
             <div style="padding: 14px;">
-              <span>菜谱名字</span>
+              <span>{{recipesRName[index]}}</span>
               <div class="bottom clearfix">
-                <p>作者名字</p>
+                <p>{{recipesRAuthor[index]}}</p>
               </div>
             </div>
           </el-card>
@@ -24,36 +24,55 @@
       </el-col>
 
       <!--切换显示三个菜谱-->
-      <el-col v-show="!isShowRC" class="show-rc-three" :span="24">
-        <el-col  :span="6" :push=1 v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
+      <el-col v-show="!isShowRC" class="show-rc-three showrc" :span="24">
+        <el-col :span="6" :push=1 v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
           <el-card :body-style="{ padding: '0px' }">
-            <img src="../../assets/popRecipeIcon.png" class="image">
+            <img :src="recipesRImg[index]" class="image">
             <div style="padding: 14px;">
-              <span>菜谱名字</span>
+              <span>{{recipesRName[index]}}</span>
               <div class="bottom clearfix">
-                <p>作者名字</p>
+                <p>{{recipesRAuthor[index]}}</p>
               </div>
             </div>
           </el-card>
         </el-col>
       </el-col>
     </el-row>
-
-
   </div>
 </template>
 
 <script>
   export default {
     name: "RecipesRecommends",
-    data(){
+    data() {
       return {
-        isShowRC:true
+        isShowRC: true,
+        recipesRImg: [
+          "http://site.meishij.net/r/241/19/8567491/s8567491_148292490436361.jpg",
+          "https://s1.st.meishij.net/r/245/13/2378495/s2378495_152583854223746.jpg"
+        ],
+        recipesRName: ["培根卷虾仁披萨","小玛琳蛋糕"],
+        recipesRAuthor: ["秋分0923","搬个凳子看戏08"],
+
       }
     },
-    methods:{
-      chg(){
-        this.isShowRC=!this.isShowRC;
+    methods: {
+      chg() {
+        this.isShowRC = !this.isShowRC;
+        var rcData = this.$store.state.RecipeRecom.data.data;
+        console.log(rcData);
+        var len = rcData.length - 1;
+        var rom = parseInt(Math.random() * len + 1);
+        var start = rom - 10;
+        this.recipesRImg = [];
+        this.recipesRName = [];
+        this.recipesRAuthor = [];
+        console.log(start);
+        for (var i = start; i < rom; i++) {
+          this.recipesRImg.push(rcData[i].recipeCoverImg);
+          this.recipesRName.push(rcData[i].recipeName);
+          this.recipesRAuthor.push(rcData[i].accountName);
+        }
       }
     }
   }
@@ -61,7 +80,7 @@
 
 <style scoped>
   #recipesComm {
-    height: 500px;
+    height: 600px;
     padding-top: 30px;
     color: #fff;
   }
@@ -74,7 +93,7 @@
     font-size: 40px;
   }
 
-  #recipesComm .inner-RC .irc-first>p {
+  #recipesComm .inner-RC .irc-first > p {
     margin-top: 20px;
     font-size: 20px;
   }
@@ -82,4 +101,13 @@
   #recipesComm .inner-RC .irc-first {
     font-size: 60px;
   }
+
+  #recipesComm .inner-RC .showrc img{
+    height: 300px;
+    width: 100%;
+  }
+
+  /*#recipesComm .showrc .el-card img:hover {*/
+    /*background-color: rgba(255,255,255,0.4);*/
+  /*}*/
 </style>
