@@ -21,9 +21,15 @@
                   逛食谱<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>家常菜</el-dropdown-item>
-                  <el-dropdown-item>西餐</el-dropdown-item>
-                  <el-dropdown-item>烘焙</el-dropdown-item>
+                  <router-link to="/recipecl/1">
+                    <el-dropdown-item>家常菜</el-dropdown-item>
+                  </router-link>
+                  <router-link to="/recipecl/2">
+                    <el-dropdown-item>西餐</el-dropdown-item>
+                  </router-link>
+                  <router-link to="/recipecl/3">
+                    <el-dropdown-item>烘焙</el-dropdown-item>
+                  </router-link>
                 </el-dropdown-menu>
               </el-dropdown>
               <!--逛食谱<i class="el-icon-arrow-down"></i>-->
@@ -64,7 +70,7 @@
               <el-col v-show="!this.$store.state.user.state" :xs="3" :sm="3" :md="3" :lg="3" :xl="3">注册</el-col>
             </el-menu-item>
             <el-menu-item index="/login" class="right">
-              <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="3" >{{loginState}}</el-col>
+              <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="3">{{loginState}}</el-col>
             </el-menu-item>
             <el-menu-item index="/user" class="right">
               <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
@@ -91,25 +97,27 @@
       <el-col :offset="3" :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
         <img src="../assets/Hlogo.png" width="100px" alt="">
       </el-col>
-      <el-col class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3">
-        <select name="" id="">
+      <el-col  class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3">
+        <select style="height:40px;width: 80%;" name="" id="">
           <option value="按食谱名称">按食谱名称</option>
           <option value="按食谱作者">按食谱作者</option>
         </select>
       </el-col>
       <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
         <input style="height: 40px;width: 100%;" v-model="inputsel" @keyup="searchMathing" placeholder="请输入内容"/>
-        <div v-if="showlist" :style="'height: '+24*index+'px;'" class="searchList">
+        <div v-if="showlist" class="searchList">
           <ul>
-            <li @click="upText(i)" v-for="(i,index) in showMathing" v-if="index <= showMathing.length">{{i}}</li>
+            <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index <= showMathing.length">
+              {{o.name}}
+            </li>
           </ul>
         </div>
       </el-col>
       <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-        <el-button>搜寻</el-button>
+        <el-button @click="findRec">搜寻</el-button>
       </el-col>
       <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-        <router-link to="/menu"><span><i class="el-icon-edit"></i>写食谱</span></router-link>
+        <router-link to="/menu"><span style="background-color: #fff;"><i class="el-icon-edit"></i>写食谱</span></router-link>
       </el-col>
     </el-row>
     <router-view></router-view>
@@ -125,28 +133,35 @@
         inputsel: '',
         isShow: true,
         // loginState:"登录"
-        raNameBefore: [],
+        checkData: [],
+        // raNameBefore: [],
         showMathing: [],
-        rsNameBefore: [],
+        // rsNameBefore: [],
         showlist: false,
+        recipeSearchId: 0
       }
     },
     mounted() {
-      if(this.$route.path == '/'){
-        this.isShow=true;
-      }else{
-        this.isShow=false;
+      if (this.$route.path == '/') {
+        this.isShow = true;
+      } else {
+        this.isShow = false;
       }
       this.$axios.post('http://localhost:3000/recipes/find').then((res) => {
-        var sdata = res.data.data;
-        var len = sdata.length;
-        for (var i = 0; i < len; i++) {
-          this.rsNameBefore.push(sdata[i].recipeName);
-          this.raNameBefore.push(sdata[i].accountName);
-        }
+        // var sdata = res.data.data;
+        // console.log(sdata);
+        // var len = sdata.length;
+        // for (var i = 0; i < len; i++) {
+        //   this.rsNameBefore.push(sdata[i].recipeName);
+        //   this.raNameBefore.push(sdata[i].accountName);
+        // }
+        this.checkData = res.data.data;
+
       }).catch((err) => {
         console.log(err);
       })
+
+
     },
     methods: {
       toEdit() {
@@ -154,23 +169,39 @@
       },
       //搜索匹配方法
       searchMathing() {
-        var len1 = this.rsNameBefore.length;
-        var len2 = this.raNameBefore.length;
+        // var len1 = this.rsNameBefore.length;
+        // var len2 = this.raNameBefore.length;
         this.showMathing = [];
+        // var reg = new RegExp(".*?" + this.inputsel + ".*?", "g");
+        // if ($("#search .myselect select").val() == "按食谱名称") {
+        //   for (let i = 0; i < len1; i++) {
+        //     if (reg.test(this.rsNameBefore[i])) {
+        //       this.showMathing.push(this.rsNameBefore[i]);
+        //     }
+        //   }
+        // } else {
+        //   for (let i = 0; i < len2; i++) {
+        //     if (reg.test(this.raNameBefore[i])) {
+        //       this.showMathing.push(this.raNameBefore[i]);
+        //     }
+        //   }
+        // }
+
         var reg = new RegExp(".*?" + this.inputsel + ".*?", "g");
         if ($("#search .myselect select").val() == "按食谱名称") {
-          for (let i = 0; i < len1; i++) {
-            if (reg.test(this.rsNameBefore[i])) {
-              this.showMathing.push(this.rsNameBefore[i]);
+          for (let i = 0; i < this.checkData.length; i++) {
+            if (reg.test(this.checkData[i].recipeName)) {
+              this.showMathing.push({id: this.checkData[i].detailsId, name: this.checkData[i].recipeName});
             }
           }
         } else {
-          for (let i = 0; i < len2; i++) {
-            if (reg.test(this.raNameBefore[i])) {
-              this.showMathing.push(this.raNameBefore[i]);
+          for (let i = 0; i < this.checkData.length; i++) {
+            if (reg.test(this.checkData[i].accountName)) {
+              this.showMathing.push({id: this.checkData[i].userId, name: this.checkData[i].accountName});
             }
           }
         }
+
         if (!this.inputsel.length) {
           this.showMathing = [];
           this.showlist = false;
@@ -180,9 +211,21 @@
 
       },
       //将选择的下拉框内容，放到搜索框中
-      upText(text){
-        this.inputsel=text;
-        this.showlist=false;
+      upText(text, id) {
+        this.inputsel = text;
+        this.showlist = false;
+        if ($("#search .myselect select").val() == "按食谱名称") {
+          this.recipeSearchId = id;
+        } else if ($("#search .myselect select").val() == "按食谱作者") {
+          //根据用户ID获取到用户相应的菜谱
+          this.$axios.post('http://localhost:3000/recipes/findbyuid', {
+            userId: id
+          }).then((res) => {
+            console.log(res+"......");
+          }).catch((err) => {
+            console.log(err);
+          })
+        }
       },
       //退出登录
       exitEdit() {
@@ -191,6 +234,16 @@
         }
         // return this.$store.state.user.state = false;
       },
+      //单击搜寻按钮，找到相应的结果
+      findRec() {
+        if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱名称") {
+          //根据食谱ID跳转到相应的路由
+          this.$router.push('/recipe_detail/' + this.recipeSearchId);
+        } else if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱作者") {
+          //根据用户id跳转到用户相应的用户做的菜谱。。。。。
+        }
+
+      }
     },
     computed: {
       name() {
@@ -267,7 +320,7 @@
     color: #333;
   }
 
-  #search .inputSearch .searchList li:hover{
+  #search .inputSearch .searchList li:hover {
     background-color: #eee;
   }
 

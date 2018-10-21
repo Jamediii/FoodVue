@@ -1,7 +1,7 @@
 <template>
   <div id="register">
     <el-row>
-      <el-col :span="8">
+      <el-col :span="8" :push="8">
         <el-form :model="registerInfo" status-icon :rules="rules2" ref="registerInfo" label-width="100px"
                  class="demo-ruleForm">
           <el-form-item><p>乐享食间</p></el-form-item>
@@ -130,15 +130,16 @@
   }
 
   #register .el-row {
-    height: 300px;
+    /*height: 300px;*/
+    height: 600px;
   }
 
   #register .el-row .el-col {
     position: absolute;
     top: 50%;
-    left: 50%;
+    /*left: 50%;*/
     transform: translate(0, -50%);
-    transform: translateX(-50%);
+    /*transform: translateX(-50%);*/
   }
 
   #register .el-col p {

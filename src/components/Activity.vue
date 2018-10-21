@@ -16,21 +16,23 @@
         <!--左边下面部分-->
         <el-card class="actMiddle" shadow="always">
           <div v-for="i in activityContent">
-            <p>{{i}}</p>
+            <p>{{i}}！！！</p>
           </div>
 
           <!--显示获奖作品部分-->
+
           <div class="showResult" v-show="showActivityResult">
+            <h3>获奖作品如下</h3>
             <el-col >
               <el-row>
                 <el-col style="margin-top:20px;" v-for="(o,index) in mydata" :span="7" :key="index" :offset="1">
                   <el-card :body-style="{ padding: '0px' }">
                     <img :src="o.recipeCoverImg" class="image">
                     <div style="padding: 14px;">
-                      <span>{{AResultRecipeName[index]}}
-                        <i style="color:#FF7979" class="glyphicon glyphicon glyphicon-heart"></i>{{recipePraiseNum[index]}}</span>
+                      <span>{{o.recipeName}}
+                        <i style="color:#FF7979" class="glyphicon glyphicon glyphicon-heart"></i>{{o.recipePraiseNum}}</span>
                       <div class="bottom clearfix">
-                        <p>{{AResultAuthorName[index]}}</p>
+                        <p>{{o.accountName}}</p>
                       </div>
                     </div>
                   </el-card>
@@ -45,8 +47,8 @@
               <p>{{activityDetail.activityState}}</p>
             </el-col>
             <el-col  class="actbuttom" :span="12">
-              <router-link to="/menu" style="text-decoration: none;color: #333;"><p style="background-color: #FF7979;">
-                立即投稿</p></router-link>
+              <!--<p  style="text-decoration: none;color: #333;">-->
+                <p @click="toUprecipe" style="background-color: #FF7979;">立即投稿</p>
             </el-col>
           </div>
 
@@ -70,10 +72,6 @@
         activityDetail: {},
         activityContent: [],
         showActivityResult: false,
-        AResultAuthorName:[],
-        AResultImg:[],
-        AResultRecipeName:[],
-        recipePraiseNum:[],
         AResult:0,
         mydata:[]
       }
@@ -92,7 +90,6 @@
           } else {
             this.showActivityResult = false;
           }
-          // console.log(this.activityDetail);
         }).catch((err) => {
         console.log(err);
       });
@@ -103,17 +100,19 @@
       })
         .then((res) => {
           this.mydata = res.data.data;
-          this.AResult = this.mydata.length;
-          for (var i = 0; i < this.AResult; i++) {
-            this.AResultImg.push(this.mydata[i].recipeCoverImg);
-            this.AResultAuthorName.push(this.mydata[i].accountName);
-            this.AResultRecipeName.push(this.mydata[i].recipeName);
-            this.recipePraiseNum.push(this.mydata[i].recipePraiseNum);
-          }
-          console.log(this.mydata);
         }).catch((err) => {
         console.log(err);
       });
+    },
+    methods:{
+      //判断是否登录，如果已登录，就跳到编辑页面，未登录就跳到登录页面
+      toUprecipe(){
+        if(this.$store.state.user.state){
+          this.$router.push('/menu');
+        }else{
+          this.$router.push('/login');
+        }
+      }
     }
   }
 </script>

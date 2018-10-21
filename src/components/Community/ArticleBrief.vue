@@ -77,6 +77,7 @@
           console.log(err)
         })
     },
+
     methods: {
       handleInfo() {
         // 页数，如果有小数，只取整数部分

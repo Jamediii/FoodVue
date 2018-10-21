@@ -7,16 +7,18 @@
       <el-col>
         <el-col>
           <el-col :span="4">&nbsp;</el-col>
-          <el-col :span="4" style="margin: 20px 10px;" v-for="(o, index) in 4" :key="o">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="recipeImg[o]" class="image">
-              <div style="padding: 14px;">
-                <span>{{recipeName[o]}}</span>
-                <div class="bottom clearfix">
-                  <p>{{recipeAuthor[o]}}</p>
+          <el-col :span="4" style="margin: 20px 10px;" v-for="(o, index) in recipepop" :key="index" v-if="index < 4">
+            <router-link :to="`recipe_detail/${o.detailsId}`">
+              <el-card :body-style="{ padding: '0px' }">
+                <img :src="o.recipeCoverImg" class="image">
+                <div style="padding: 14px;">
+                  <span>{{o.recipeName}}  <span style="color:#FF7979;" class="glyphicon glyphicon glyphicon-heart"></span>  {{o.recipePraiseNum}}</span>
+                  <div class="bottom clearfix">
+                    <p><span style="color:#FF7979;" class="glyphicon glyphicon glyphicon-user"></span>   {{o.accountName}}</p>
+                  </div>
                 </div>
-              </div>
-            </el-card>
+              </el-card>
+            </router-link>
           </el-col>
         </el-col>
       </el-col>
@@ -29,9 +31,7 @@
     name: "PopularRecipes",
     data() {
       return {
-        recipeImg: [],
-        recipeName: [],
-        recipeAuthor: []
+        recipepop:[],
       }
     },
     mounted() {
@@ -39,13 +39,8 @@
       this.$axios.get('http://localhost:3000/recipes/order')
         .then((res) => {
           this.$store.state.RecipeRecom = res;
-          var popRecipe = res.data.data;
-          for (var i = 0; i < 5; i++) {
-            this.recipeImg.push(popRecipe[i].recipeCoverImg);
-            this.recipeName.push(popRecipe[i].recipeName);
-            this.recipeAuthor.push(popRecipe[i].accountName);
-          }
-          // console.log(res.data.data);
+          this.recipepop = res.data.data;
+          console.log(this.recipepop);
         })
         .catch(function (error) {
           console.log(error);

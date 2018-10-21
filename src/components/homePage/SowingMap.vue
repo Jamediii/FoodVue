@@ -14,28 +14,29 @@
         </div>
 
         <p>開始感受到炎炎夏日的威力,最適合來道麻辣開胃的川味料理,溫順椒香拌著麵條及軟嫩的雞腿肉,爽脆的黃瓜,交織出豐富層次~另人純垂涎三尺的美味</p>
-        <ul>
-          <li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>
-          <li><span class="glyphicon glyphicon glyphicon-heart"></span>点赞数</li>
-          <li><span class="glyphicon glyphicon glyphicon-comment"></span>评论数</li>
-        </ul>
+        <!--<ul>-->
+          <!--<li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>-->
+          <!--<li><span class="glyphicon glyphicon glyphicon-heart"></span>点赞数</li>-->
+          <!--<li><span class="glyphicon glyphicon glyphicon-comment"></span>评论数</li>-->
+        <!--</ul>-->
       </el-col>
       <!--右边文章推荐部分-->
       <el-col class="ArticleRemRight" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
-        <router-link to="/article_detail">
-          <el-card @click.native="todetail" shadow="hover" v-for="item1 in 3" :key="item1">
+        <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 3">
+          <router-link :to="`/article_detail/${o.articleId}`">
             <el-col :span="10">
-              <img width="100px" :src="articleImg[item1]" alt="">
+              <img width="100px" :src="o.articleCoverImg" alt="">
             </el-col>
             <el-col :span="14">
-              <span>{{articleBrief[item1]}}</span>
+              <span>{{o.articleName}}</span>
               <ul>
-                <li><span class="glyphicon glyphicon glyphicon-user"></span>{{articleAuthorName[item1]}}</li>
-                <li><span class="glyphicon glyphicon glyphicon-heart"></span>{{articlePno[item1]}}</li>
+                <li><span class="glyphicon glyphicon glyphicon-user"></span>{{o.authorName}}</li>
+                <li><span class="glyphicon glyphicon glyphicon-heart"></span>{{o.articlePraiseNum}}</li>
               </ul>
             </el-col>
-          </el-card>
-        </router-link>
+          </router-link>
+        </el-card>
+
       </el-col>
     </el-row>
   </div>
@@ -46,16 +47,13 @@
     name: "SowingMap",
     data() {
       return {
-        imgs:[
-          {pic:require('../../assets/meal1.jpg')},
-          {pic:require('../../assets/meal2.jpg')},
-          {pic:require('../../assets/meal3.jpg')}
+        imgs: [
+          {pic: require('../../assets/meal1.jpg')},
+          {pic: require('../../assets/meal2.jpg')},
+          {pic: require('../../assets/meal3.jpg')}
         ],
         reArr: [],
-        articleImg: [],
-        articleBrief: [],
-        articlePno: [],
-        articleAuthorName: [],
+        homepageArt: {},
       }
     },
     mounted() {
@@ -71,14 +69,7 @@
       //获取获取文章推荐
       this.$axios.get("http://localhost:3000/community/article/all")
         .then((res) => {
-          var artile = res.data.data;
-          // console.log(artile);
-          for (var i = 0; i < 5; i++) {
-            this.articleImg.push(artile[i].articleCoverImg);
-            this.articleBrief.push(artile[i].articleName);
-            this.articlePno.push(artile[i].articlePraiseNum);
-            this.articleAuthorName.push(artile[i].authorName);
-          }
+          this.homepageArt = res.data.data;
         }).catch((err) => {
         console.log(err);
       });
@@ -94,15 +85,15 @@
   }
 
   #Sowingmap .block {
-    width: 800px;
+    width: 100%;
   }
 
-  #Sowingmap .block img{
+  #Sowingmap .block img {
     height: 460px;
   }
 
   #Sowingmap .el-col p {
-    width: 800px;
+    width: 90%;
   }
 
   #Sowingmap .el-col ul {
@@ -126,7 +117,7 @@
 
   /*右边文章推荐部分开始*/
   #Sowingmap .ArticleRemRight .el-card {
-    padding:10px;
+    padding: 10px;
     margin-bottom: 10px;
   }
 

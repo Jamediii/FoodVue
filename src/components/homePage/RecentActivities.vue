@@ -9,14 +9,14 @@
         </el-col>
       </el-row>
       <el-row class="activity" :gutter="20">
-        <el-col :span="6" :push="6" v-for="(o, index) in 2" :key="o">
+        <el-col :span="6" :push="6" v-for="(o, index) in recentAct" :key="index" v-if="index < 2">
           <el-card :body-style="{ padding: '0px' }">
-            <router-link :to="`/activity/${activityId[index]}`">
-              <img :src="activityImg[index]" class="image">
+            <router-link :to="`/activity/${o.activityId}`">
+              <img :src="o.activityImg" class="image">
               <div style="padding: 14px;">
-                <span>{{activityName[index]}}</span>
+                <span>{{o.activityName}}</span>
                 <div class="bottom clearfix">
-                  <p>{{activityState[index]}}</p>
+                  <p>{{o.activityState}}</p>
                 </div>
               </div>
             </router-link>
@@ -33,24 +33,12 @@
     name: "RecentActivities",
     data() {
       return {
-        stopTime: [],
-        activityImg:[],
-        activityState: [],
-        activityName: [],
-        activityId: []
+        recentAct:[],
       }
     },
     mounted() {
       this.$axios.get("http://localhost:3000/competition").then((res) => {
-        var data = res.data.data;
-        for (var i = 0; i < data.length; i++) {
-          this.stopTime.push(data[i].activitySTime);
-          this.activityState.push(data[i].activityState);
-          this.activityName.push(data[i].activityName);
-          this.activityImg.push(data[i].activityImg);
-          this.activityId.push(data[i].activityId);
-        }
-        console.log(this.activityId);
+        this.recentAct = res.data.data;
       }).catch((err) => {
         console.log(err);
       })

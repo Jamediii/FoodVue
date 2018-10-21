@@ -2,22 +2,23 @@
   <!--登录-->
   <div id="login">
     <el-row>
-      <el-col :span="8">
+      <el-col :span="8" :offset="8">
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
                  class="demo-ruleForm">
-          <el-form-item><p>乐享食间</p></el-form-item>
-          <el-form-item label="手机号" prop="pass">
-            <el-input type="text" v-model="ruleForm2.pass" placeHolder="请输入手机号" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="checkPass">
-            <el-input type="password" v-model="ruleForm2.checkPass" placeHolder="请输入密码" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-            <el-button  @click="resetForm('ruleForm2')">重置</el-button>
-            <br/>
-            <router-link to="/register">还没有账号?免费注册</router-link>
-          </el-form-item>
+            <el-form-item><p>乐享食间</p></el-form-item>
+            <el-form-item label="手机号" prop="pass">
+              <el-input type="text" v-model="ruleForm2.pass" placeHolder="请输入手机号" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="checkPass">
+              <el-input type="password" v-model="ruleForm2.checkPass" placeHolder="请输入密码" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+              <el-button  @click="resetForm('ruleForm2')">重置</el-button>
+              <br/>
+              <router-link to="/register">还没有账号?免费注册</router-link>
+            </el-form-item>
+          
         </el-form>
       </el-col>
     </el-row>
@@ -102,15 +103,18 @@
   }
 
   #login .el-row {
-    height: 400px;
+    height: 600px;
+    line-height: 600px;
+
   }
 
   #login .el-row .el-col {
+    /*margin: 0 auto;*/
     position: absolute;
     top: 50%;
-    left: 50%;
+    /*left: 50%;*/
     transform: translate(0, -50%);
-    transform: translateX(-50%);
+    /*transform: translateY(-50%);*/
   }
 
   #login .el-col p {
