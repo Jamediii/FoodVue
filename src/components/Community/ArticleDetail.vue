@@ -22,7 +22,7 @@
                 </router-link>
               </span><br/>
               <img :src=articlePic><br/>
-              {{articleContent}}
+              <p v-html="articleContent">{{articleContent}}</p>
             </el-main>
           </el-container>
         </el-col>
@@ -54,13 +54,15 @@
           //路由传参获取的id
           p_articleId:this.$route.params.articleId,
           //点赞按钮的状态,初始状态为false，未点击
-          isClick:false,
+          isClick:'false',
           typeName:'danger',
           btnValue:'赞'
         }
       },
       methods:{
         praise(){
+          // 判断是否登录
+          // if ()
           if (this.isClick == 'false') {
             this.typeName = 'info';
             this.btnValue = '已赞';
@@ -75,7 +77,7 @@
             //     console.log(err)
             //   });
           }
-          else {
+          else if (this.isClick == 'true') {
             this.typeName = 'danger';
             this.btnValue = '赞';
             this.isClick = 'false';
@@ -94,6 +96,8 @@
             this.articleContent = articleDetail[0].articleContent;
             this.articlePraiseNum = articleDetail[0].articlePraiseNum;
             this.articlePic = articleDetail[0].articlePic;
+            // 分段落
+            this.articleContent = this.articleContent.replace(/\/\//g, '<br/><br/>')
           })
           .catch(function (err) {
             console.log(err)

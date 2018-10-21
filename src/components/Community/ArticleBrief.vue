@@ -18,26 +18,21 @@
               <span>
                 <div class="rectangle"></div>
                 <router-link to="/community_author">&nbsp;
-                  爱料理 编辑部
-                  <!--{{articleAuthor}}-->
-                  发表于
-                  2018/10/13
-                  <!--{{articleTime}}-->
+                  {{item.authorName}} 发表于 2018/10/13
                 </router-link>
               </span><br/>
-              <span>
-                <!--{{articleContent}}-->
-                鱼类的营养价值高，其中有丰富的蛋白质、omega-3脂肪酸，助於预防心血管疾病等作用，可说是好处多多！
-                本週就带大家一同品嚐各式鱼料理，以简易的烹飪技法，让鱼的处理一点也不费力，轻鬆照顾全家人的健康！
-              </span>
+              <span v-html="item.articleContent">
+                {{item.articleContent}}
+              </span><span>……</span>
             </el-main>
             <el-footer>
               <el-button type="danger"><router-link tag="span" :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
             </el-footer>
           </el-container>
         </el-container>
-      <br/>
-      <el-row :gutter="20">
+
+      <el-row :gutter="20" style="background-color: white">
+        <br/>
         <el-col :span="12" :offset="5">
           <!--分页-->
           <div class="block">
@@ -71,6 +66,12 @@
         .then((res) => {
           this.articleList = res.data.data;
           this.len = res.data.data.length;
+          console.log(this.articleList.length);
+          // 分段落
+          for (var i=0;i<this.articleList.length;i++) {
+            this.articleList[i].articleContent = this.articleList[i].articleContent.replace(/\/\//g, '<br/>').substr(0,80)
+          }
+          // 分页
           this.handleInfo();
         })
         .catch((err) => {
@@ -96,16 +97,13 @@
         this.articleList = newArr;
         // 第一次进入页面显示this.articleList[]数组的第一个元素
         this.articleInfoList = this.articleList[0]
-        console.log(this.articleList[0])
+        // console.log(this.articleList[0])
       },
       currentPageNum(currentPage) {
         // currentPage为当前的页数
         // 显示当前页数对应的数据
         this.articleInfoList = this.articleList[currentPage - 1];
-      },
-      // handleCurrentChange(val) {
-      //   console.log(`当前页: ${val}`);
-      // }
+      }
     }
   }
 </script>
