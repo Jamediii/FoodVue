@@ -30,6 +30,8 @@ import RecipeDetail from'../components/Recipes/RecipeDetail.vue'
 import RecipeAuthor from '../components/Recipes/RecipeAuthor.vue'
 //导入服务条款
 import ServerItem from "../components/Public/ServerItem.vue"
+//导入分类的列表
+import RecipeClassList from '../components/Recipes/recipeClassList.vue'
 
 
 Vue.use(Router);
@@ -67,13 +69,13 @@ export default new Router({
           // children:community
         },
         {
-          path: 'activity',
+          path: 'activity/:activityId',
           name: 'Activity',
           component: Activity,
         },
         // 显示文章的全部内容
         {
-          path:'article_detail',
+          path:'article_detail/:articleId',
           component:ArticleDetail
         },
         //文章的作者
@@ -83,7 +85,7 @@ export default new Router({
         },
         //显示某个菜谱的全部内容
         {
-          path:'recipe_detail',
+          path:'recipe_detail/:detailsId',
           component:RecipeDetail
         },
         //菜谱的作者
@@ -124,21 +126,27 @@ export default new Router({
           name: 'Makemn',
           component: Makemn
         },
+        //分类后的菜谱路由
+        {
+          path: '/recipecl/:recipeClassifyId',
+          name: 'RecipeClassList',
+          component: RecipeClassList
+        },
+        //登录
+        {
+          path: '/login',
+          name: 'Login',
+          component: Login
+        },
+        //注册
+        {
+          path: '/register',
+          name: 'Register',
+          component: Register
+        },
       ]
     },
 
-    //登录
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    //注册
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
     //服务条款
     {
       path: '/sitem',

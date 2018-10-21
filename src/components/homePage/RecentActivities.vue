@@ -1,33 +1,48 @@
 <template>
   <!--活动显示部分-->
   <div id="recentActivity">
-    <el-row class="inner-RA">
-      <el-col :span="24">
-        <h2>近期活动</h2>
-        <p>这里可能有你意想不到的活动哦</p>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6" :push=1 v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
-        <el-card :body-style="{ padding: '0px' }">
-          <router-link to="/activity">
-            <img src="../../assets/popRecipeIcon.png" class="image">
-            <div style="padding: 14px;">
-              <span>活动名称</span>
-              <div class="bottom clearfix">
-                <p>截止时间</p>
+    <div class="w">
+      <el-row class="inner-RA">
+        <el-col :span="24">
+          <h2>近期活动</h2>
+          <p>这里可能有你意想不到的活动哦</p>
+        </el-col>
+      </el-row>
+      <el-row class="activity" :gutter="20">
+        <el-col :span="6" :push="6" v-for="(o, index) in recentAct" :key="index" v-if="index < 2">
+          <el-card :body-style="{ padding: '0px' }">
+            <router-link :to="`/activity/${o.activityId}`">
+              <img :src="o.activityImg" class="image">
+              <div style="padding: 14px;">
+                <span>{{o.activityName}}</span>
+                <div class="bottom clearfix">
+                  <p>{{o.activityState}}</p>
+                </div>
               </div>
-            </div>
-          </router-link>
-        </el-card>
-      </el-col>
-    </el-row>
+            </router-link>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+
   </div>
 </template>
 
 <script>
   export default {
-    name: "RecentActivities"
+    name: "RecentActivities",
+    data() {
+      return {
+        recentAct:[],
+      }
+    },
+    mounted() {
+      this.$axios.get("http://localhost:3000/competition").then((res) => {
+        this.recentAct = res.data.data;
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
   }
 </script>
 
@@ -35,7 +50,7 @@
   #recentActivity {
     margin-top: 20px;
     position: relative;
-    height: 400px;
+    height: 460px;
     background-color: #fdf6dc;
   }
 
@@ -47,6 +62,11 @@
 
   #recentActivity .inner-RA h2 {
     font-size: 40px;
+  }
+
+  #recentActivity .activity img{
+    height: 200px;
+    width: 100%;
   }
 
 </style>

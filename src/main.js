@@ -8,7 +8,10 @@ import router from './router'
 import axios from 'axios'
 import Vuex from 'vuex'
 import store from './store/store.js'
+import jquery from 'jquery'
+import animate from 'animate.css'
 
+Vue.use(animate);
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI);

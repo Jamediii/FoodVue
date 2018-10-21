@@ -3,7 +3,11 @@
     <br/>
     <el-row :gutter="30">
       <el-col :span="10" :offset="5">
-        <p style="font-size: 18px">爱料理 编辑部 发表的文章</p>
+        <p style="font-size: 18px">
+          爱料理 编辑部
+          <!--{{authorName}}-->
+          发表的文章
+        </p>
         <author-works></author-works>
       </el-col>
       <el-col :span="4">
@@ -26,6 +30,11 @@
       'author-brief':AuthorBrief,
       'author-works':AuthorWorks,
       'article-search':ArticleSearch
+    },
+    data(){
+      return{
+        authorName:''
+      }
     }
   }
 </script>

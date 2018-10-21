@@ -6,7 +6,8 @@ export default new Vuex.Store({
   state:{
     user:{
       userId: 556
-    }
+    },
+    RecipeRecom:{}
   },
 
 });

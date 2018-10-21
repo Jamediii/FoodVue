@@ -37,7 +37,7 @@
 
 <style scoped>
 #homepageModel .bigbg{
-  height: 1064px;
-  background: url("../../assets/rc_bg.jpg") top center no-repeat;
+  height: 1200px;
+  background: url("../../assets/rc_bg1.jpg") top center no-repeat;
 }
 </style>

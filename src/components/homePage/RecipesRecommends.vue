@@ -5,55 +5,82 @@
       <el-col class="irc-first" :span="24">
         <h2>总有一款适合你!</h2>
         <p>还拿不定主意吗？过来看看今日的菜谱推荐</p>
-        <el-col @click.native="chg"><i class="el-icon-refresh"></i></el-col>
+        <el-col @click.native="chg"><i id="changRe" class=" el-icon-refresh"></i></el-col>
       </el-col>
 
       <!--切换显示两个菜谱-->
-      <el-col v-show="isShowRC" class="show-rc-two" :span="24">
-        <el-col  :span="6" :push=5 v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="../../assets/popRecipeIcon.png" class="image">
-            <div style="padding: 14px;">
-              <span>菜谱名字</span>
-              <div class="bottom clearfix">
-                <p>作者名字</p>
+      <el-col v-show="isShowRC" class="show-rc-two showrc" :span="24">
+        <el-col :span="6" :push=5 v-for="(o,index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+          <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="recipesRImg[index]" class="image">
+              <div style="padding: 14px;">
+                <span>{{recipesRName[index]}}</span>
+                <div class="bottom clearfix">
+                  <p>{{recipesRAuthor[index]}}</p>
+                </div>
               </div>
-            </div>
-          </el-card>
+            </el-card>
+          </router-link>
+
         </el-col>
       </el-col>
 
       <!--切换显示三个菜谱-->
-      <el-col v-show="!isShowRC" class="show-rc-three" :span="24">
-        <el-col  :span="6" :push=1 v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="../../assets/popRecipeIcon.png" class="image">
-            <div style="padding: 14px;">
-              <span>菜谱名字</span>
-              <div class="bottom clearfix">
-                <p>作者名字</p>
+      <el-col v-show="!isShowRC" class="show-rc-three showrc" :span="24">
+        <el-col :span="6" :push=1 v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
+          <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="recipesRImg[index]" class="image">
+              <div style="padding: 14px;">
+                <span>{{recipesRName[index]}}</span>
+                <div class="bottom clearfix">
+                  <p>{{recipesRAuthor[index]}}</p>
+                </div>
               </div>
-            </div>
-          </el-card>
+            </el-card>
+          </router-link>
         </el-col>
       </el-col>
     </el-row>
-
-
   </div>
 </template>
 
 <script>
   export default {
     name: "RecipesRecommends",
-    data(){
+    data() {
       return {
-        isShowRC:true
+        isShowRC: true,
+        recipesRImg: [
+          "http://site.meishij.net/r/241/19/8567491/s8567491_148292490436361.jpg",
+          "https://s1.st.meishij.net/r/245/13/2378495/s2378495_152583854223746.jpg"
+        ],
+        recipeRcomId: [145, 215],
+        recipesRName: ["培根卷虾仁披萨", "小玛琳蛋糕"],
+        recipesRAuthor: ["秋分0923", "搬个凳子看戏08"],
+
       }
     },
-    methods:{
-      chg(){
-        this.isShowRC=!this.isShowRC;
+    methods: {
+      chg() {
+        this.isShowRC = !this.isShowRC;
+        var rcData = this.$store.state.RecipeRecom.data.data;
+        // console.log(rcData.length);
+        var len = rcData.length-1;
+        var rom = Math.abs(parseInt(Math.random() * len));
+        var start = rom - 10;
+        this.recipesRImg = [];
+        this.recipesRName = [];
+        this.recipesRAuthor = [];
+        this.recipeRcomId = [];
+        // console.log(start);
+        for (var i = start; i < rom; i++) {
+          this.recipeRcomId.push(rcData[i].detailsId);
+          this.recipesRImg.push(rcData[i].recipeCoverImg);
+          this.recipesRName.push(rcData[i].recipeName);
+          this.recipesRAuthor.push(rcData[i].accountName);
+        }
       }
     }
   }
@@ -61,7 +88,7 @@
 
 <style scoped>
   #recipesComm {
-    height: 500px;
+    height: 600px;
     padding-top: 30px;
     color: #fff;
   }
@@ -74,7 +101,7 @@
     font-size: 40px;
   }
 
-  #recipesComm .inner-RC .irc-first>p {
+  #recipesComm .inner-RC .irc-first > p {
     margin-top: 20px;
     font-size: 20px;
   }
@@ -82,4 +109,13 @@
   #recipesComm .inner-RC .irc-first {
     font-size: 60px;
   }
+
+  #recipesComm .inner-RC .showrc img {
+    height: 300px;
+    width: 100%;
+  }
+
+  /*#recipesComm .showrc .el-card img:hover {*/
+  /*background-color: rgba(255,255,255,0.4);*/
+  /*}*/
 </style>

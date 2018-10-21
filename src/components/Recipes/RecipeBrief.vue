@@ -1,11 +1,13 @@
 <template>
   <div>
-    <el-container>
+    <el-container v-for="(item,index) in recipeBriefList" :key="index">
       <el-main>
-        <img src="http://i1.chuimg.com/ba05c6ce8ae711e6a9a10242ac110002_1280w_1280h.jpg@2o_50sh_1pr_1l_660w_90q_1wh">
+        <img :src=item.recipeCoverImg>
       </el-main>
       <el-footer>
-        <router-link to="/recipe_detail"><span>绣球酥</span></router-link>
+        <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+          <span>{{item.recipeName}}</span>
+        </router-link>
       </el-footer>
     </el-container>
     <router-view></router-view>
@@ -14,7 +16,31 @@
 
 <script>
     export default {
-        name: "RecipeBrief"
+      name: "RecipeBrief",
+      data(){
+        return{
+          recipeBriefList:[],
+          //菜谱详情表内数据
+          // detailsId:'',
+          // recipeName:'',
+          // recipeBrief:'',
+          // recipeAuthor:'',
+          // recipePraiseNum:'',
+          // recipeCoverImg:'',
+        }
+      },
+      created(){
+        //根据id获取的菜谱
+        this.$axios.get('http://localhost:3000/recipes/all')
+          .then((res) =>{
+            var allData = res.data.data;
+            this.recipeBriefList.push(allData.splice(0,12));
+            console.log(this.recipeBriefList)
+          })
+          .catch(function (err) {
+            console.log(err)
+          });
+      }
     }
 </script>
 
@@ -22,7 +48,6 @@
 
   img{
     width: 90%;
-    /*height: 200px;*/
   }
 
   .el-footer {

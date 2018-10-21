@@ -1,30 +1,53 @@
 <template>
   <div id="container">
     <el-row :gutter="10">
-        <hr/>
-        <el-container>
-          <el-aside width="220px">
+      <el-container v-for="(item,index) in articleInfoList" :key="index">
+        <el-aside width="220px">
             <br/>
-            <img src="https://storage.googleapis.com/uploads-blog-icook/2018/10/a673c2ab-66週菜單.001-640x600.jpeg">
+            <img :src=item.articleCoverImg>
           </el-aside>
           <el-container>
             <el-header>
               <div class="triangle"></div>
-              <router-link to="/article_detail">【第66週】一週菜单：彩椒松阪猪、呛炒油麦菜、蒜香奶油烤鮭鱼</router-link>
+              <!--跳转路由是/article_detail/articleId，其中articleId是item.articleId，怎么实现拼接？-->
+              <router-link :to="{path:'/article_detail/' + item.articleId}">
+                {{item.articleName}}
+              </router-link>
             </el-header>
             <el-main>
               <span>
                 <div class="rectangle"></div>
-                <router-link to="/community_author">&nbsp;爱料理 编辑部 发表于 2018/10/13</router-link>
+                <router-link to="/community_author">&nbsp;
+                  爱料理 编辑部
+                  <!--{{articleAuthor}}-->
+                  发表于
+                  2018/10/13
+                  <!--{{articleTime}}-->
+                </router-link>
               </span><br/>
-              <span>鱼类的营养价值高，其中有丰富的蛋白质、omega-3脂肪酸，助於预防心血管疾病等作用，可说是好处多多！
-                本週就带大家一同品嚐各式鱼料理，以简易的烹飪技法，让鱼的处理一点也不费力，轻鬆照顾全家人的健康！</span>
+              <span>
+                <!--{{articleContent}}-->
+                鱼类的营养价值高，其中有丰富的蛋白质、omega-3脂肪酸，助於预防心血管疾病等作用，可说是好处多多！
+                本週就带大家一同品嚐各式鱼料理，以简易的烹飪技法，让鱼的处理一点也不费力，轻鬆照顾全家人的健康！
+              </span>
             </el-main>
             <el-footer>
-              <el-button type="danger"><router-link to="/article_detail">继续阅读</router-link></el-button>
+              <el-button type="danger"><router-link :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
             </el-footer>
           </el-container>
         </el-container>
+      <br/>
+      <el-row :gutter="20">
+        <el-col :span="12" :offset="5">
+          <!--分页-->
+          <div class="block">
+            <el-pagination
+              @current-change="currentPageNum" :current-page="currentPage" :page-size="pageSize" layout="prev, pager, next" :total="len">
+            </el-pagination>
+          </div>
+          <!--current-change当前页变动时候触发的事件-->
+        </el-col>
+      </el-row>
     </el-row>
     <router-view></router-view>
   </div>
@@ -32,11 +55,65 @@
 
 <script>
   export default {
-        name: "articleBrief"
+    name: "articleBrief",
+    data() {
+      return {
+        // 分页
+        articleInfoList: [],//每页显示的数据
+        articleList: [],//所有的数据
+        currentPage: 1,//当前页
+        len: 0,//默认总的数据长度
+        pageSize: 5,//默认每页显示的数量
+      }
+    },
+    created(){
+      this.$axios.get('http://localhost:3000/community/article/all')
+        .then((res) => {
+          this.articleList = res.data.data;
+          this.len = res.data.data.length;
+          this.handleInfo();
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    methods: {
+      handleInfo() {
+        // 页数，如果有小数，只取整数部分
+        let pageNum = Number(String(this.len / this.pageSize).split(".")[0]);
+        // 定义一个空数组
+        let newArr = [];
+        // 遍历获取的数据，每次遍历都从数组的0位置开始截取，截取数量为每页显示的数量
+        for (let i = 0; i < pageNum; i++) {
+          newArr.push(this.articleList.splice(0, this.pageSize));
+        }
+        // 判断剩余的数据有没有小于每一页的数量，如果小于，就把剩余的数据放进newArr数组
+        if (this.articleList.length < this.pageSize) {
+          newArr.push(this.articleList.splice(0, this.articleList.length));
+        }
+        // 将新的数组赋给articleList[],用来渲染页面
+        this.articleList = newArr;
+        // 第一次进入页面显示this.articleList[]数组的第一个元素
+        this.articleInfoList = this.articleList[0]
+        console.log(this.articleList[0])
+      },
+      currentPageNum(currentPage) {
+        // currentPage为当前的页数
+        // 显示当前页数对应的数据
+        this.articleInfoList = this.articleList[currentPage - 1];
+      },
+      // handleCurrentChange(val) {
+      //   console.log(`当前页: ${val}`);
+      // }
     }
+  }
 </script>
 
 <style scoped>
+  .header_height{
+    height: 40px;
+  }
   .router-link {
     text-decoration: none;
   }
@@ -51,18 +128,21 @@
     color: #333;
     text-align: left;
     line-height: 60px;
+    font-size: 18px;
   }
   .el-footer{
     background-color: white;
     color: #333;
     text-align: right;
     line-height: 60px;
+    border-bottom: 1px solid gainsboro;
   }
 
   .el-aside {
     background-color: white;
     color: #333;
     text-align: center;
+    border-bottom: 1px solid gainsboro;
   }
 
   .el-main {
@@ -70,6 +150,7 @@
     color: #333;
     text-align: left;
     line-height: 30px;
+    padding-top: 0px;
   }
 
   .triangle {

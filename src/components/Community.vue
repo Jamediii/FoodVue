@@ -9,9 +9,6 @@
           <el-header>所有文章&nbsp;&nbsp;>></el-header>
         </el-container>
         <article-brief></article-brief>
-        <article-brief></article-brief>
-        <article-brief></article-brief>
-        <article-brief></article-brief>
       </el-col>
       <el-col :span="4">
         <article-search></article-search><br/>
@@ -36,6 +33,7 @@
       'article-search':ArticleSearch,
       'author-list':AuthorList
     }
+
   }
 </script>
 

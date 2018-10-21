@@ -33,7 +33,17 @@
     },
     methods: {
       doMenu() {
-        this.$router.push('/makemn');
+        if(this.reNameInput.length){
+          this.$router.push('/makemn');
+        }else{
+          this.$alert('食谱名称不能为空或者过长！', '食谱名称不正确', {
+            confirmButtonText: '确定',
+            callback: action => {
+
+            }
+          });
+        }
+
       },
       checkInputNum() {
         this.wordLen = this.reNameInput.length;
