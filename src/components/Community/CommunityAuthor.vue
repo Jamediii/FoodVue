@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <br/>
+  <div class="w">
+    <p style="color: transparent">111</p>
     <el-row :gutter="30">
-      <el-col :span="10" :offset="5">
+      <el-col :span="15" :offset="2">
         <p style="font-size: 18px">
           爱料理 编辑部
           <!--{{authorName}}-->
@@ -10,7 +10,7 @@
         </p>
         <author-works></author-works>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <article-search></article-search><br/>
         <author-brief></author-brief>
       </el-col>

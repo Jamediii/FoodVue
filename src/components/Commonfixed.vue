@@ -46,7 +46,9 @@
                   </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item>文章集锦</el-dropdown-item>
-                  <el-dropdown-item>达人推荐</el-dropdown-item>
+                  <router-link to="/user_recipe">
+                    <el-dropdown-item>达人推荐</el-dropdown-item>
+                  </router-link>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>

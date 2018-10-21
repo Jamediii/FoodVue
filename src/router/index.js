@@ -33,6 +33,11 @@ import ServerItem from "../components/Public/ServerItem.vue"
 //导入分类的列表
 import RecipeClassList from '../components/Recipes/recipeClassList.vue'
 
+//达人推荐。用户上传的菜谱展示页
+import UserRecipe from '../components/Community/UserRecipe.vue'
+//达人推荐。用户上传的菜谱详情页
+import UserRecipeDetail from '../components/Community/UserRecipeDetail.vue'
+
 
 Vue.use(Router);
 
@@ -93,6 +98,18 @@ export default new Router({
           path:'recipe_author',
           component:RecipeAuthor
         },
+
+        //达人推荐。用户上传的菜谱展示页
+        {
+          path:'user_recipe',
+          component:UserRecipe
+        },
+        //达人推荐。用户上传的菜谱详情页
+        {
+          path:'user_recipe/:dietId',
+          component:UserRecipeDetail
+        },
+
         // 用户是否真的要制作菜谱路由
         {
           path: '/menu',
