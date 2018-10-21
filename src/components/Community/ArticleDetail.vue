@@ -1,8 +1,8 @@
 <template>
-    <div>
-      <br/>
+    <div class="w">
+      <p style="color: transparent">111</p>
       <el-row :gutter="30">
-        <el-col :span="11" :offset="4">
+        <el-col :span="15" :offset="2">
           <el-container>
             <el-header>
               <div class="triangle"></div>

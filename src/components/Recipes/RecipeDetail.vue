@@ -1,8 +1,8 @@
 <template>
-    <div id="container">
-      <br/>
+    <div id="container" class="w">
+      <p style="color: transparent">111</p>
       <el-row :gutter="20">
-        <el-col :span="12" :offset="6">
+        <el-col :span="18" :offset="3">
           <el-container>
             <el-header>
               <span style="font-weight: bold;font-size: 25px">
@@ -15,7 +15,6 @@
             </el-main>
 
             <el-footer>
-              <!--<el-row type="flex" class="row-bg" justify="space-between">-->
                 <el-col :span="20">
                   <span style="-ms-text-overflow: ellipsis">
                     {{recipeBrief}}
@@ -95,7 +94,8 @@
 
 <style scoped>
   img{
-    height: 500px;
+    /*width: 500px;*/
+    height: 400px;
   }
   #container{
     background-color: #fdf6dc;
