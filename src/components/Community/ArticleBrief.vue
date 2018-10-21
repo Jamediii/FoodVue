@@ -2,7 +2,7 @@
   <div id="container">
     <el-row :gutter="10">
       <el-container v-for="(item,index) in articleInfoList" :key="index">
-        <el-aside width="220px">
+        <el-aside width="310px">
             <br/>
             <img :src=item.articleCoverImg>
           </el-aside>
@@ -32,7 +32,7 @@
               </span>
             </el-main>
             <el-footer>
-              <el-button type="danger"><router-link :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
+              <el-button type="danger"><router-link tag="span" :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
             </el-footer>
           </el-container>
         </el-container>
@@ -114,14 +114,14 @@
   .header_height{
     height: 40px;
   }
-  .router-link {
+  a {
     text-decoration: none;
   }
   .router-link-active {
     text-decoration: none;
   }
   img{
-    width: 200px;
+    width: 280px;
   }
   .el-header{
     background-color: white;

@@ -3,17 +3,24 @@
     <br/>
     <!--<article-nav></article-nav>-->
     <el-row :gutter="30">
-      <el-col :span="10" :offset="5">
-        <!--<span style="font-size: 18px;color: #333;">所有文章</span>-->
-        <el-container>
+      <el-col :span="11" :offset="4">
+        <!--左边-->
+          <el-container>
           <el-header>所有文章&nbsp;&nbsp;>></el-header>
-        </el-container>
-        <article-brief></article-brief>
+          <el-main>
+          <article-brief></article-brief>
+          </el-main>
+          </el-container>
       </el-col>
-      <el-col :span="4">
-        <article-search></article-search><br/>
-        <author-list></author-list>
-      </el-col>
+      <!--右边-->
+      <!--<div id="right">-->
+        <el-col :span="5">
+          <article-search></article-search><br/>
+          <author-list></author-list>
+        </el-col>
+      <!--</div>-->
+
+
     </el-row>
     <br/>
   </div>
@@ -38,6 +45,11 @@
 </script>
 
 <style scoped>
+  /*#right{*/
+    /*position: fixed;*/
+    /*top: 300px;*/
+    /*left: 1000px;*/
+  /*}*/
   div{
     background-color: #fdf6dc;
   }
@@ -51,6 +63,11 @@
     text-align: left;
     line-height: 60px;
     font-size: 16px;
+  }
+  .el-main {
+    background-color: white;
+    color: #333;
+    text-align: left;
   }
 
 </style>

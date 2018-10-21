@@ -6,28 +6,25 @@
           <el-container>
             <el-header>
               <span style="font-weight: bold;font-size: 25px">
-                <!--土豆沙拉丨健康·三餐-->
                 {{recipeName}}
               </span>
             </el-header>
 
             <el-main>
-              <!--<img src="http://i1.chuimg.com/a38a44ee4d4511e7947d0242ac110002_1280w_853h.jpg@2o_50sh_1pr_1l_660w_90q_1wh ">-->
               <img :src=recipeCoverImg>
             </el-main>
 
             <el-footer>
-              <el-row type="flex" class="row-bg" justify="space-between">
-                <el-col :span="10">
-                  <span>
-                    <!--无蛋黄酱仍旧超级creamy的土豆沙拉-->
-                    <!--{{recipeBrief}}-->
+              <!--<el-row type="flex" class="row-bg" justify="space-between">-->
+                <el-col :span="20">
+                  <span style="-ms-text-overflow: ellipsis">
+                    {{recipeBrief}}
                   </span>
                 </el-col>
                 <el-col :span="2">
                   <el-button type="danger">收藏</el-button>
                 </el-col>
-              </el-row>
+              <!--</el-row>-->
             </el-footer>
           </el-container>
 

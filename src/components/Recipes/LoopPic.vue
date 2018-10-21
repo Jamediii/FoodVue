@@ -1,15 +1,10 @@
 <template>
   <div class="block">
-    <!--<span class="demonstration">Click 指示器触发</span>-->
-    <!--<el-carousel trigger="click" height="600px">-->
-      <!--<el-carousel-item v-for="item in imgList" :key="item.id">-->
-        <!--<router-link to="/recipe_detail"><img :src=item.idView></router-link>-->
-      <!--</el-carousel-item>-->
-    <!--</el-carousel>-->
-
-    <el-carousel :interval="4000" type="card" height="350px">
+    <el-carousel :interval="4000" type="card" height="450px">
         <el-carousel-item v-for="item in imgList" :key="item.id">
-          <router-link to="/recipe_detail"><img :src=item.idView></router-link>
+          <router-link :to="{path:'/recipe_detail/' + item.recipeId}">
+            <img :src=item.idView>
+          </router-link>
         </el-carousel-item>
     </el-carousel>
 
@@ -25,16 +20,18 @@
             imgList:[
               {
                 id:0,
-                recipeId:'271',
+                recipeId:'150',
                 idView:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/172428/large_a0c06dfc2edb7388.jpg'
               },
               {
                 id:1,
-                idView:'http://i2.chuimg.com/89245e2689e811e6b87c0242ac110003_2048w_1365h.jpg?imageView2/2/w/660/interlace/1/q/90'
+                recipeId:'151',
+                idView:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/208916/large_fcb196f7acf86079.jpg'
               },
               {
                 id:2,
-                idView:'http://i2.chuimg.com/b6aa3cfa8ab811e6b87c0242ac110003_1440w_1080h.jpg?imageView2/2/w/660/interlace/1/q/90'
+                recipeId:'155',
+                idView:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/175203/large_1070dd4cf3a6697b.jpg'
               },
             ]
           }
@@ -46,20 +43,6 @@
   img{
     width: 100%;
   }
-  /*.el-carousel__item h3 {*/
-    /*color: #475669;*/
-    /*font-size: 14px;*/
-    /*opacity: 0.75;*/
-    /*margin: 0;*/
-  /*}*/
-
-  .el-carousel__item:nth-child(2n) {
-    /*background-color: #99a9bf;*/
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    /*background-color: #d3dce6;*/
-  }
 
   .el-carousel__item h3 {
     color: #475669;
@@ -68,6 +51,5 @@
     line-height: 200px;
     margin: 0;
   }
-
 
 </style>

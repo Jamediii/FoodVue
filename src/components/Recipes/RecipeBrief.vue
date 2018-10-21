@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container v-for="(item,index) in recipeBriefList" :key="index">
+    <el-container v-for="(item,index) in recipeBriefList" :key="index" v-if="index<3">
       <el-main>
         <img :src=item.recipeCoverImg>
       </el-main>
@@ -20,13 +20,6 @@
       data(){
         return{
           recipeBriefList:[],
-          //菜谱详情表内数据
-          // detailsId:'',
-          // recipeName:'',
-          // recipeBrief:'',
-          // recipeAuthor:'',
-          // recipePraiseNum:'',
-          // recipeCoverImg:'',
         }
       },
       created(){
@@ -34,7 +27,7 @@
         this.$axios.get('http://localhost:3000/recipes/all')
           .then((res) =>{
             var allData = res.data.data;
-            this.recipeBriefList.push(allData.splice(0,12));
+            this.recipeBriefList=allData;
             console.log(this.recipeBriefList)
           })
           .catch(function (err) {

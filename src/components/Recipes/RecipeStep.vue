@@ -55,6 +55,7 @@
     background-color: white;
     color: #333;
     text-align: left;
+    padding: 15px;
   }
 
   .el-main {
