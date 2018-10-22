@@ -31,7 +31,7 @@
               <span>{{o.articleName}}</span>
               <ul>
                 <li><span class="glyphicon glyphicon glyphicon-user"></span>{{o.authorName}}</li>
-                <li><span class="glyphicon glyphicon glyphicon-heart"></span>{{o.articlePraiseNum}}</li>
+                <li><span class="el-icon-star-on"></span>{{o.articlePraiseNum}}</li>
               </ul>
             </el-col>
           </router-link>

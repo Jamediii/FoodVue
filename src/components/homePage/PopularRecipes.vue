@@ -8,17 +8,26 @@
         <el-col>
           <el-col :span="4">&nbsp;</el-col>
           <el-col :span="4" style="margin: 20px 10px;" v-for="(o, index) in recipepop" :key="index" v-if="index < 4">
-            <router-link :to="`recipe_detail/${o.detailsId}`">
+
+
               <el-card :body-style="{ padding: '0px' }">
                 <img :src="o.recipeCoverImg" class="image">
                 <div style="padding: 14px;">
-                  <span>{{o.recipeName}}  <span style="color:#FF7979;" class="glyphicon glyphicon glyphicon-heart"></span>  {{o.recipePraiseNum}}</span>
+                  <router-link :to="`recipe_detail/${o.detailsId}`">
+                  <span>{{o.recipeName}}  <span style="color:#FF7979;"
+                                                class="el-icon-star-on">
+
+                  </span>  {{o.recipePraiseNum}}</span>
+                  </router-link>
                   <div class="bottom clearfix">
-                    <p><span style="color:#FF7979;" class="glyphicon glyphicon glyphicon-user"></span>   {{o.accountName}}</p>
+
+                    <p><span style="color:#FF7979;" class=""></span> {{o.accountName}}
+                      <button class="right" @click="addcollection(o.detailsId)">收藏</button>
+                    </p>
                   </div>
                 </div>
               </el-card>
-            </router-link>
+
           </el-col>
         </el-col>
       </el-col>
@@ -27,11 +36,14 @@
 </template>
 
 <script>
+  //导入收藏，数据传到本地
+  import {collectionLS} from '../../assets/collectionLocalStorage.js'
+
   export default {
     name: "PopularRecipes",
     data() {
       return {
-        recipepop:[],
+        recipepop: [],
       }
     },
     mounted() {
@@ -46,7 +58,18 @@
           console.log(error);
         });
     },
-    methods: {}
+    methods: {
+      //收藏,将数据传到本地
+      addcollection(id) {
+        if(this.$store.state.user.state){
+          collectionLS.collection(id);
+        }else{
+          this.$router.push('/login');
+        }
+
+      }
+
+    }
   }
 </script>
 

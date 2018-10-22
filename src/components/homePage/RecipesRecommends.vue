@@ -22,7 +22,6 @@
               </div>
             </el-card>
           </router-link>
-
         </el-col>
       </el-col>
 
@@ -67,7 +66,7 @@
         this.isShowRC = !this.isShowRC;
         var rcData = this.$store.state.RecipeRecom.data.data;
         // console.log(rcData.length);
-        var len = rcData.length-1;
+        var len = rcData.length - 1;
         var rom = Math.abs(parseInt(Math.random() * len));
         var start = rom - 10;
         this.recipesRImg = [];
@@ -76,10 +75,10 @@
         this.recipeRcomId = [];
         // console.log(start);
         for (var i = start; i < rom; i++) {
-          this.recipeRcomId.push(rcData[i].detailsId);
           this.recipesRImg.push(rcData[i].recipeCoverImg);
           this.recipesRName.push(rcData[i].recipeName);
           this.recipesRAuthor.push(rcData[i].accountName);
+          this.recipeRcomId.push(rcData[i].detailsId);
         }
       }
     }
