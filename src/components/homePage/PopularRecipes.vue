@@ -22,7 +22,7 @@
                   <div class="bottom clearfix">
 
                     <p><span style="color:#FF7979;" class=""></span> {{o.accountName}}
-                      <button class="right" @click="addcollection(o.detailsId)">收藏</button>
+                      <!--<button class="right" @click="addcollection(o.detailsId)">收藏</button>-->
                     </p>
                   </div>
                 </div>

@@ -4,9 +4,7 @@ Vue.use(Vuex)
 //导出vue实例
 export default new Vuex.Store({
   state:{
-    user:{
-      userId: 556
-    },
+    user:{},
     RecipeRecom:{}
   },
 

@@ -20,12 +20,32 @@
                   </span>
             </el-col>
             <el-col :span="2">
-              <el-button type="danger">收藏</el-button>
+              <el-button id="addColBtn" @click="addCollection"  type="danger">收藏</el-button>
             </el-col>
           </el-footer>
         </el-container>
         <user-recipe-food-table></user-recipe-food-table>
         <user-recipe-step></user-recipe-step>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <!--评论部分-->
+      <el-col class="comment" :span="18" :offset="3">
+        <p>评论专区</p>
+        <el-input
+          type="textarea"
+          style="auto-size:none"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          placeholder="请输入内容"
+          v-model="userComm">
+        </el-input>
+        <el-button @click="addComment">添加评论</el-button>
+        <el-col class="commentTxt" v-for="o in commentText">
+          <el-card shadow="never">
+            <h4>{{o.accountName}}</h4>
+            <p>{{o.userComment}}</p>
+          </el-card>
+        </el-col>
       </el-col>
     </el-row>
     <br/>
@@ -35,6 +55,7 @@
 <script>
   import UserRecipeFoodTable from './UserRecipeFoodTable'
   import UserRecipeStep from './UserRecipeStep'
+  import {collectionLS} from '../../assets/collectionLocalStorage.js'
   export default {
     name: "UserRecipeDetail",
     components:{
@@ -50,7 +71,11 @@
         accountName:'',
         dietPhoto:'',
         //路由传参获取的id
-        p_dietId:this.$route.params.dietId
+        p_dietId:this.$route.params.dietId,
+        //输入评论部分
+        userComm: "",
+        //显示评论内容
+        commentText: [],
       }
     },
     created(){
@@ -71,7 +96,60 @@
         .catch(function (err) {
           console.log(err)
         });
+    },
+    mounted(){
+      //根据id获取评论内容
+      this.$axios.post('http://localhost:3000/comment/showConmment', {
+        menu_Id: this.p_recipeId
+      })
+        .then((res) => {
+          this.commentText = res.data.data;
+        })
+        .catch(function (err) {
+          console.log(err)
+        });
+    },
+    methods:{
+      //添加评论
+      addComment() {
+        if(this.$store.state.user.state){
+          this.$axios.post('http://localhost:3000/comment/addComment', {
+            userId: this.$store.state.user.userId,
+            userComment: this.userComm,
+            detailsId: this.p_recipeId
+          })
+            .then((res) => {
+              if(res.data.data){
+                this.$axios.post('http://localhost:3000/comment/showConmment', {
+                  menu_Id: this.p_recipeId
+                })
+                  .then((res) => {
+                    this.commentText = res.data.data;
+                  })
+                  .catch(function (err) {
+                    console.log(err)
+                  });
+              }
+            })
+            .catch(function (err) {
+              console.log(err)
+            });
+        }else{
+          this.$router.push('/login');
+        }
+
+      },
+      //加入收藏
+      addCollection(){
+        if(this.$store.state.user.state){
+          $("#addColBtn span").text("已收藏");
+          collectionLS.collection(this.p_recipeId);
+        }else{
+          this.$router.push('/login');
+        }
+      }
     }
+
   }
 </script>
 

@@ -137,9 +137,15 @@ export default new Router({
           component: fhUser,
           children: fhBrowseUser
         },
+        // 用户是否真的要制作菜谱路由
+        {
+          path: '/menu',
+          name: 'Menu',
+          component: Menu
+        },
         // 用户填写菜谱路由
         {
-          path: '/makemn',
+          path: '/makemn/:menuName',
           name: 'Makemn',
           component: Makemn
         },

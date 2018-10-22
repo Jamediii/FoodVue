@@ -11,12 +11,13 @@
             <span style="color:#a94442;" v-else-if="!count">超过{{wordLen-20}}个字</span>
           </div>
           <p>建议不要加上类似人名的名称，例如"王小丫的厨房"，避免食谱名称过长</p>
-          <input type="checkbox" v-model="flog"><router-link to="/sitem">发布食谱即同意《乐享食间服务条款》</router-link><br>
+          <input type="checkbox" v-model="flog">
+          <router-link to="/sitem">发布食谱即同意《乐享食间服务条款》</router-link>
+          <br>
           <el-button style="width: 200px;" type="warning" @click="doMenu" :disabled="!flog">确定</el-button>
         </el-card>
       </el-col>
     </el-row>
-
   </div>
 </template>
 
@@ -28,18 +29,17 @@
         flog: false,
         reNameInput: "",
         count: true,
-        wordLen:0
+        wordLen: 0
       }
     },
     methods: {
       doMenu() {
-        if(this.reNameInput.length){
-          this.$router.push('/makemn');
-        }else{
+        if (this.reNameInput.length) {
+          this.$router.push(`/makemn/${this.reNameInput}`);
+        } else {
           this.$alert('食谱名称不能为空或者过长！', '食谱名称不正确', {
             confirmButtonText: '确定',
             callback: action => {
-
             }
           });
         }
@@ -59,9 +59,10 @@
 
 <style scoped>
   /*同意网站协议规则部分开始*/
-  #agreeRule{
-    font-size:16px;
+  #agreeRule {
+    font-size: 16px;
   }
+
   #agreeRule hr {
     background-color: #666;;
     height: 1px;
@@ -72,5 +73,11 @@
     font-size: 18px;
     color: #333;
   }
+
+  a:hover {
+    color: blue;
+    text-decoration: underline;
+  }
+
   /*同意网站协议规则部分结束*/
 </style>

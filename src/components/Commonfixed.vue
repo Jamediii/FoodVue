@@ -45,7 +45,7 @@
                   享食社区<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>文章集锦</el-dropdown-item>
+                  <el-dropdown-item><router-link to="/community">文章集锦</router-link></el-dropdown-item>
                   <router-link to="/user_recipe">
                     <el-dropdown-item>达人推荐</el-dropdown-item>
                   </router-link>
@@ -167,7 +167,7 @@
     },
     methods: {
       toEdit() {
-        this.$router.push("/user/edit");
+        this.$router.push("/modifyinfo");
       },
       //搜索匹配方法
       searchMathing() {
@@ -220,13 +220,13 @@
           this.recipeSearchId = id;
         } else if ($("#search .myselect select").val() == "按食谱作者") {
           //根据用户ID获取到用户相应的菜谱
-          this.$axios.post('http://localhost:3000/recipes/findbyuid', {
-            userId: id
-          }).then((res) => {
-            console.log(res+"......");
-          }).catch((err) => {
-            console.log(err);
-          })
+          // this.$axios.post('http://localhost:3000/recipes/findbyuid', {
+          //   userId: id
+          // }).then((res) => {
+          //   console.log(res+"......");
+          // }).catch((err) => {
+          //   console.log(err);
+          // })
         }
       },
       //退出登录
@@ -243,6 +243,7 @@
           this.$router.push('/recipe_detail/' + this.recipeSearchId);
         } else if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱作者") {
           //根据用户id跳转到用户相应的用户做的菜谱。。。。。
+          this.$router.push("/fhuser/"+this.recipeSearchId);
         }
 
       }
