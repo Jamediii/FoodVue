@@ -71,9 +71,9 @@
             if (res.data.data.state) {
               this.$store.state.user.userId = res.data.data.userId;
               this.$store.state.user.name = res.data.data.name;
+              this.$store.state.isShow = true;
+              this.$store.state.isLoginHide = false;
               localStorage.setItem('Flag', "isLogin");
-              this.$store.state.isShow=true;
-              this.$store.state.isLoginHide=false;
               this.$router.replace('/');
             } else {
               this.$alert('用户名或者验证码错误！！', '登录失败', {
@@ -105,12 +105,9 @@
   }
 
   #login .el-row .el-col {
-    /*margin: 0 auto;*/
     position: absolute;
     top: 50%;
-    /*left: 50%;*/
     transform: translate(0, -50%);
-    /*transform: translateY(-50%);*/
   }
 
   #login .el-col p {

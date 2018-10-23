@@ -6,13 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      state:false,
-      userId:0,
-      name:""
+      state: false,
+      userId: 0,
+      name: ""
     },
     RecipeRecom: {},
-    isShow:false,
-    isLoginHide:true,
+    isShow: false,
+    // isLoginHide: true,
   },
   //获取属性状态
   getters: {
@@ -25,9 +25,9 @@ export default new Vuex.Store({
       state.state.user.state = flag
     }
   },
-  actions:{
-    setUser({commit,flag}){
-      commit("userStatus",flag)
+  actions: {
+    setUser({commit, flag}) {
+      commit("userStatus", flag)
     }
   }
 

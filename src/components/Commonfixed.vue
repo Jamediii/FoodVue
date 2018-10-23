@@ -46,16 +46,16 @@
           </ul>
           <!--导航栏右边-->
           <ul class="nav navbar-nav navbar-right">
-            <li v-if="$store.state.isShow">
+            <li v-if="this.$store.state.isShow">
               <router-link to="/user">个人中心</router-link>
             </li>
-            <li v-if="$store.state.isLoginHide">
+            <li v-if ="!this.$store.state.isShow">
               <router-link to="/login">登录</router-link>
             </li>
-            <li v-if="$store.state.isLoginHide">
+            <li v-if="!this.$store.state.isShow">
               <router-link to="/register">注册</router-link>
             </li>
-            <li style="margin-top: 15px;margin-left: 15px;" v-if="$store.state.isShow" class="navSetting">
+            <li style="margin-top: 15px;margin-left: 15px;" v-if="this.$store.state.isShow" class="navSetting">
               <el-dropdown>
                   <span class="el-dropdown-link" >
                     <a href="javascript:void(0)"><i class="el-icon-setting"></i></a>
@@ -65,12 +65,9 @@
                     <router-link to="/modifyinfo">修改资料</router-link>
                   </el-dropdown-item>
                   <el-dropdown-item @click.native="exitEdit">退出登录</el-dropdown-item>
-
                 </el-dropdown-menu>
               </el-dropdown>
-
             </li>
-
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -134,12 +131,12 @@
         recipeSearchId: 0,
         // //判断是否登录，是否显示
         // isShow: false,
-        // //登录隐藏
+        // // //登录隐藏
         // isLoginHide: true,
       }
     },
-    updated() {
-
+    created(){
+      this.$store.state.isShow = Boolean(localStorage.getItem("Flag") === 'isLogin')
     },
     mounted() {
       this.$axios.post('http://localhost:3000/recipes/find').then((res) => {
@@ -151,13 +148,11 @@
         //   this.raNameBefore.push(sdata[i].accountName);
         // }
         this.checkData = res.data.data;
-
       }).catch((err) => {
         console.log(err);
       });
-
-
     },
+
     methods: {
       //退出登录
       exitEdit() {
@@ -171,7 +166,6 @@
             this.$router.push("/");
           }
         });
-
       },
       //搜索匹配方法
       searchMathing() {
