@@ -1,5 +1,5 @@
 <template>
-  <!--文章详情-->
+  <!--菜谱详情-->
   <div id="container" class="w" >
     <p style="color: transparent">111</p>
     <el-row :gutter="20" >
@@ -12,7 +12,7 @@
           </el-header>
 
           <el-main>
-            <img :src=recipeCoverImg>
+            <img :src="recipeCoverImg">
           </el-main>
 
           <el-footer>

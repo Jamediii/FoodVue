@@ -10,7 +10,6 @@ export default new Vuex.Store({
     },
     RecipeRecom: {},
     isShow: false,
-    // isLoginHide: true,
   },
   //获取属性状态
   getters: {

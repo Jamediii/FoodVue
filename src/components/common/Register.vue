@@ -99,7 +99,6 @@
               password:this.registerInfo.passPwd
             })
               .then((res)=> {
-                // console.log(res);
                 this.$alert('注册成功！！', '注册信息', {
                   confirmButtonText: '确定',
                   callback: () => {

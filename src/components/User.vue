@@ -39,7 +39,7 @@
 
         <!--去用户修改页面-->
         <router-link to="/modifyinfo">
-          <el-button class="chang-userInfo"> 编辑</el-button>
+          <el-button class="chang-userInfo">{{userid}} 编辑</el-button>
         </router-link>
       </div>
 
@@ -52,7 +52,6 @@
 
 <script>
   import UserTh from './User/UserTh';
-
   export default {
     name: "User",
     data() {
@@ -81,7 +80,7 @@
     },
     components: {
       'app-userth': UserTh,
-    }
+    },
 
   }
 </script>

@@ -1,5 +1,4 @@
 <template>
-
   <div id="Sowingmap" class="w">
     <!--<p style="color: transparent">111</p>-->
     <el-row :gutter="20">
@@ -37,7 +36,6 @@
             </el-col>
           </router-link>
         </el-card>
-
       </el-col>
     </el-row>
   </div>
