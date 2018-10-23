@@ -26,7 +26,7 @@
               </span><span>……</span>
             </el-main>
             <el-footer>
-              <el-button type="danger"><router-link tag="span" :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
+              <el-button style="background-color: #8cccc1;"><router-link tag="span" :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
             </el-footer>
           </el-container>
         </el-container>

@@ -175,25 +175,26 @@ export default new Router({
           component: RecipeClassList,
 
         },
-        //登录
-        {
-          path: '/login',
-          name: 'Login',
-          component: Login,
-          meta:{
-            isLogin:false
-          }
-        },
-        //注册
-        {
-          path: '/register',
-          name: 'Register',
-          component: Register,
-          meta:{
-            isLogin:false
-          }
-        },
+
       ]
+    },
+    //登录
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      meta:{
+        isLogin:false
+      }
+    },
+    //注册
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
+      meta:{
+        isLogin:false
+      }
     },
 
     //服务条款

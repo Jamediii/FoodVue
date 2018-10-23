@@ -36,7 +36,7 @@
   }
 
   #userRecipeRecom .el-header {
-    background-color: #fae8c8;
+    background-color: #8cccc1;
     color: #333;
     text-align: left;
     line-height: 60px;

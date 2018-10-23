@@ -52,7 +52,7 @@
 
 <style scoped>
   #footer {
-    background-color: #FAE8C8;
+    background-color: #daeae8;
     padding-top:20px;
   }
   #footer .el-row .el-col:first-child p{

@@ -218,14 +218,6 @@
           this.recipeSearchId = id;
         } else if ($("#search .myselect select").val() == "按食谱作者") {
           this.recipeSearchId = id;
-          //根据用户ID获取到用户相应的菜谱
-          // this.$axios.post('http://localhost:3000/recipes/findbyuid', {
-          //   userId: id
-          // }).then((res) => {
-          //   console.log(res + "......");
-          // }).catch((err) => {
-          //   console.log(err);
-          // })
         }
       },
 
@@ -251,16 +243,18 @@
   nav.navbar-default {
     background-color: #fff;
     margin-bottom: 0;
+    color:#8cccc1;
   }
+
 
   .navbar {
     border: 1px solid transparent;
-    border-bottom-color: #f19f11fa;
+    border-bottom-color: #daeae8;
   }
 
   nav.navbar-default .navbar-nav > .active > a {
     color: #fff;
-    background-color: #f19f11fa;
+    background-color: #8cccc1;
   }
 
   nav .ulDown {
@@ -330,11 +324,11 @@
   /*搜索部分结束*/
 
   /*与搜索栏替换的标题部分开始*/
-  #search, #projTitle {
+  #search {
     padding: 10px 0;
     height: 144px;
     box-sizing: border-box;
-    background-color: #FAE8C8;
+    background-color: #daeae8;
   }
 
   #search, #projTitle .el-col > span {

@@ -6,10 +6,10 @@
       <!--右侧菜谱部分-->
       <el-col :span="18">
         <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
-        <el-main>
+        <el-main style="padding:0">
           <el-row class="innerRCL" >
             <el-col class="rclLeft" >
-              <el-card style="border:1px solid transparent;border-bottom-color:#ccc; " shadow="never"  v-for="(o,index) in articleInfoList" :key="index">
+              <el-card style="border:1px solid transparent;border-bottom-color:#ccc;padding:0; " shadow="never"  v-for="(o,index) in articleInfoList" :key="index">
                 <router-link :to="`/recipe_detail/${o.detailsId}`">
                   <el-col :span="8">
                     <img :src="o.recipeCoverImg" alt="">
@@ -151,11 +151,12 @@
 
 <style scoped>
   #recipeCList .el-header {
-    background-color: #fae8c8;
+    background-color: #8cccc1;
     color: #333;
     text-align: left;
     line-height: 60px;
     font-size: 16px;
+    color:#fff;
   }
 
   #recipeCList .rclLeft img {
@@ -176,7 +177,8 @@
     font-size: 16px;
     font-weight: normal;
     padding:0 20px;
-    background-color: #fae8c8;
+    background-color: #8cccc1;
+    color:#fff;
     margin-top: 0;
     margin-bottom: 20px;
   }

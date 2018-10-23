@@ -88,7 +88,7 @@
   #popRecipes .bg1 > p {
     width: 100px;
     height: 100px;
-    background: url("../../assets/popRecipeIcon.png") center no-repeat;
+    background: url("../../assets/icon_sakura.png") center no-repeat;
     margin: 10px auto;
   }
 
