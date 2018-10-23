@@ -17,6 +17,9 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 
+// localhost地址
+import LocalHost from './components/Public/LocalHost';
+global.$LH = LocalHost;
 
 /* eslint-disable no-new */
 new Vue({
