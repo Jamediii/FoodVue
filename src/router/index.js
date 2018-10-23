@@ -16,6 +16,7 @@ import HomePageMiddle from '../components/homePage/HomePageMiddle.vue'
 // 用户确定制作菜谱界面
 import Menu from '../components/Public/Menu.vue'
 // 用户制作菜谱界面
+// import Makemn from '../components/Public/Menu/MakemnCopy-0.vue'
 import Makemn from '../components/Public/Menu/Makemn.vue'
 //添加活动组件
 import Activity from '../components/Activity.vue'
