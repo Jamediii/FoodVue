@@ -9,14 +9,23 @@ import userJoin from '../../components/fhUser/UserThChildren/UserJoin'
 export const fhBrowseUser = [
   {
     path: 'recipe',
-    component: userRecipe
+    component: userRecipe,
+    meta:{
+      isLogin:true
+    }
   },
   {
     path: 'fans',
-    component: userFans
+    component: userFans,
+    meta:{
+      isLogin:true
+    }
   },
   {
     path: 'join',
-    component: userJoin
-  },
+    component: userJoin,
+    meta:{
+      isLogin:true
+    }
+},
 ];

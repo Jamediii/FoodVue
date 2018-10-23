@@ -1,9 +1,10 @@
 <template>
 
   <div id="Sowingmap" class="w">
+    <!--<p style="color: transparent">111</p>-->
     <el-row :gutter="20">
       <!--轮播图部分-->
-      <el-col :xs="12" :sm="14" :md="16" :lg="17" :xl="17">
+      <el-col :xs="24" :sm="24" :md="16" :lg="17" :xl="17">
         <div class="block">
           <el-carousel>
             <el-carousel-item v-for="(item,index) in imgs" :key="index">
@@ -24,14 +25,14 @@
       <el-col class="ArticleRemRight" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 3">
           <router-link :to="`/article_detail/${o.articleId}`">
-            <el-col :span="10">
+            <el-col :span="7" >
               <img width="100px" :src="o.articleCoverImg" alt="">
             </el-col>
-            <el-col :span="14">
+            <el-col :span="13 " :offset="4">
               <span>{{o.articleName}}</span>
               <ul>
                 <li><span class="glyphicon glyphicon glyphicon-user"></span>{{o.authorName}}</li>
-                <li><span class="el-icon-star-on"></span>{{o.articlePraiseNum}}</li>
+                <li><span class="glyphicon glyphicon-heart"></span>{{o.articlePraiseNum}}</li>
               </ul>
             </el-col>
           </router-link>
@@ -90,6 +91,7 @@
 
   #Sowingmap .block img {
     height: 460px;
+    width: 100%;
   }
 
   #Sowingmap .el-col p {
@@ -117,7 +119,7 @@
 
   /*右边文章推荐部分开始*/
   #Sowingmap .ArticleRemRight .el-card {
-    padding: 10px;
+    /*padding: 10px;*/
     margin-bottom: 10px;
   }
 

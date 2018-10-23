@@ -7,7 +7,6 @@
 <script>
   export default {
     name: 'App',
-
   }
 </script>
 
@@ -18,10 +17,10 @@
   }
 
   body{
-    background-color: #fdf6dc;
+    background-color: #fff;
   }
   .w {
-    width: 1200px;
+    width: 80%;
     margin: 0 auto;
   }
   a {
@@ -36,5 +35,13 @@
   }
   .left{
     float: left;
+  }
+  /*公共头部样式*/
+  .title.el-header{
+    background-color: #fae8c8;
+    color: #333;
+    text-align: left;
+    line-height: 60px;
+    font-size: 16px;
   }
 </style>

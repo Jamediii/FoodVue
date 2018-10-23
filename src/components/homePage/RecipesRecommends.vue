@@ -9,8 +9,8 @@
       </el-col>
 
       <!--切换显示两个菜谱-->
-      <el-col v-show="isShowRC" class="show-rc-two showrc" :span="24">
-        <el-col :span="6" :push=5 v-for="(o,index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+      <el-col v-show="isShowRC" class="show-rc-two showrc w" :span="24">
+        <el-col :span="5" :push=6 v-for="(o,index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
           <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
             <el-card :body-style="{ padding: '0px' }">
               <img :src="recipesRImg[index]" class="image">
@@ -27,7 +27,7 @@
 
       <!--切换显示三个菜谱-->
       <el-col v-show="!isShowRC" class="show-rc-three showrc" :span="24">
-        <el-col :span="6" :push=1 v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
+        <el-col :span="4" :push=2 v-for="(o, index) in 4" :key="o" :offset="index > 0 ? 1 : 0">
           <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
             <el-card :body-style="{ padding: '0px' }">
               <img :src="recipesRImg[index]" class="image">
@@ -110,7 +110,7 @@
   }
 
   #recipesComm .inner-RC .showrc img {
-    height: 300px;
+    height: 200px;
     width: 100%;
   }
 

@@ -12,22 +12,37 @@ import userJoin from '../../components/User/UserThChildren/UserJoin'
 export const browseUser = [
   {
     path: 'collection',
-    component: userCollection
+    component: userCollection,
+    meta:{
+      isLogin:true
+    }
   },
   {
     path: 'recipe',
-    component: userRecipe
+    component: userRecipe,
+    meta:{
+      isLogin:true
+    }
   },
   {
     path: 'fans',
-    component: userFans
+    component: userFans,
+    meta:{
+      isLogin:true
+    }
   },
   {
     path: 'draft',
-    component: userDraft
+    component: userDraft,
+    meta:{
+      isLogin:true
+    }
   },
   {
     path: 'join',
-    component: userJoin
+    component: userJoin,
+    meta:{
+      isLogin:true
+    }
   },
 ];

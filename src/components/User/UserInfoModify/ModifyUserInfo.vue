@@ -1,28 +1,34 @@
 <template>
   <div class="w">
     <div class="clearfloat">
-      <app-basic class="content" v-if="show" :userid="userId"></app-basic>
-      <app-Pwd class="content" v-else :userid="userId"></app-Pwd>
-      <!--左侧选择-->
-      <el-menu default-active="1"
-               class="el-menu-vertical-demo"
-               @open="handleOpen" @close="handleClose"
-               :collapse="isCollapse">
-        <!-- 展开或者收起 -->
-        <!--<el-radio-group v-model="isCollapse"
-                        style="margin-bottom: 20px;">
-          <el-button size="mini" :label="false" v-show="isCollapse">展开</el-button>
-          <el-button size="mini" :label="true" v-show="!isCollapse">收起</el-button>
-        </el-radio-group>-->
-        <el-menu-item index="1" @click="show=true">
-          <i class="el-icon-menu"></i>
-          <span slot="title">信息更改</span>
-        </el-menu-item>
-        <el-menu-item index="2" @click="show=false">
-          <i class="el-icon-setting"></i>
-          <span slot="title">密码更改</span>
-        </el-menu-item>
-      </el-menu>
+      <el-row >
+        <el-col :span="6">
+          <h3>资料修改</h3>
+          <div class="grid-content ">
+            <!--左侧选择-->
+            <el-menu default-active="1"
+                     class="el-menu-vertical-demo"
+                     @open="handleOpen" @close="handleClose"
+                     :collapse="isCollapse">
+              <el-menu-item style="border-right:0" index="1" @click="show=true">
+                <i class="el-icon-menu"></i>
+                <span slot="title">信息更改</span>
+              </el-menu-item>
+              <el-menu-item index="2" @click="show=false">
+                <i class="el-icon-setting"></i>
+                <span slot="title">密码更改</span>
+              </el-menu-item>
+            </el-menu>
+          </div>
+        </el-col>
+        <!--右侧-->
+        <el-col :span="18" style="border-left:1px solid #ccc">
+          <div class="grid-content">
+            <app-basic class="content" v-if="show" :userid="userId"></app-basic>
+            <app-Pwd class="content" v-else :userid="userId"></app-Pwd>
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -62,21 +68,21 @@
 </script>
 
 <style scoped>
-  /*浮动清除*/
-  .clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
-  .clearfloat{zoom:1}
+  /*!*浮动清除*!*/
+  /*.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}*/
+  /*.clearfloat{zoom:1}*/
 
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 300px;
-  }
-  .el-menu-vertical-demo {
-    float: left;
-    margin-left: calc(-100% - 400px);
-    height: 800px;
-  }
-  .content {
-    float: left;
-    width: 100%;
-  }
+  /*.el-menu-vertical-demo:not(.el-menu--collapse) {*/
+  /*width: 200px;*/
+  /*min-height: 300px;*/
+  /*}*/
+  /*.el-menu-vertical-demo {*/
+  /*float: left;*/
+  /*margin-left: calc(-100% - 400px);*/
+  /*height: 800px;*/
+  /*}*/
+  /*.content {*/
+  /*float: left;*/
+  /*width: 100%;*/
+  /*}*/
 </style>

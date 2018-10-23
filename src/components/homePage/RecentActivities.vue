@@ -9,7 +9,7 @@
         </el-col>
       </el-row>
       <el-row class="activity" :gutter="20">
-        <el-col :span="6" :push="6" v-for="(o, index) in recentAct" :key="index" v-if="index < 2">
+        <el-col :span="6" :push="5" v-for="(o, index) in recentAct" :key="index" v-if="index < 2" :offset="index > 0 ? 3 : 0">
           <el-card :body-style="{ padding: '0px' }">
             <router-link :to="`/activity/${o.activityId}`">
               <img :src="o.activityImg" class="image">
@@ -51,7 +51,7 @@
     margin-top: 20px;
     position: relative;
     height: 460px;
-    background-color: #fdf6dc;
+    background-color: #fff;
   }
 
   #recentActivity .inner-RA h2, #recentActivity .inner-RA p {

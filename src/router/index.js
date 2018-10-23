@@ -62,18 +62,22 @@ export default new Router({
           name: 'HomePageMiddle',
           component: HomePageMiddle,
         },
+        //菜谱
         {
           path: 'recipes',
           name: 'Recipes',
           component: Recipes,
+
           // children:recipeContent
         },
+        //文章推荐
         {
           path: 'community',
           name: 'Community',
           component: Community,
-          // children:community
+
         },
+        //活动详情
         {
           path: 'activity/:activityId',
           name: 'Activity',
@@ -82,40 +86,39 @@ export default new Router({
         // 显示文章的全部内容
         {
           path:'article_detail/:articleId',
-          component:ArticleDetail
+          component:ArticleDetail,
+
         },
         //文章的作者
         {
           path:'community_author',
-          component:CommunityAuthor
+          component:CommunityAuthor,
+
         },
         //显示某个菜谱的全部内容
         {
           path:'recipe_detail/:detailsId',
-          component:RecipeDetail
+          component:RecipeDetail,
+
         },
         //菜谱的作者
         {
           path:'recipe_author',
-          component:RecipeAuthor
+          component:RecipeAuthor,
+
         },
 
         //达人推荐。用户上传的菜谱展示页
         {
           path:'user_recipe',
-          component:UserRecipe
+          component:UserRecipe,
+
         },
         //达人推荐。用户上传的菜谱详情页
         {
           path:'user_recipe/:dietId',
-          component:UserRecipeDetail
-        },
+          component:UserRecipeDetail,
 
-        // 用户是否真的要制作菜谱路由
-        {
-          path: '/menu',
-          name: 'Menu',
-          component: Menu
         },
         // 根组件一定要带'/',子组件则不需要
         {
@@ -123,50 +126,72 @@ export default new Router({
           path: '/user',
           name: 'User',
           component: User,
-          children: browseUser
+          children: browseUser,
+          meta:{
+            isLogin:true
+          }
         },
         {
           // 用户资料修改路由
           path: '/modifyinfo',
           name: 'ModifyUserInfo',
-          component: ModifyUserInfo
+          component: ModifyUserInfo,
+          meta:{
+            isLogin:true
+          }
         },
         {
           // 用户粉丝--显示路由
           path: '/fhuser/:userId',
           name: 'fhUser',
           component: fhUser,
-          children: fhBrowseUser
+          children: fhBrowseUser,
+          meta:{
+            isLogin:true
+          }
         },
         // 用户是否真的要制作菜谱路由
         {
           path: '/menu',
           name: 'Menu',
-          component: Menu
+          component: Menu,
+          meta:{
+            state:true
+          }
         },
         // 用户填写菜谱路由
         {
           path: '/makemn/:menuName',
           name: 'Makemn',
-          component: Makemn
+          component: Makemn,
+          meta:{
+            isLogin:true
+          }
         },
         //分类后的菜谱路由
         {
           path: '/recipecl/:recipeClassifyId',
           name: 'RecipeClassList',
-          component: RecipeClassList
+          component: RecipeClassList,
+
         },
         //登录
         {
           path: '/login',
           name: 'Login',
-          component: Login
+          component: Login,
+          meta:{
+            isLogin:false
+          }
         },
         //注册
         {
           path: '/register',
           name: 'Register',
-          component: Register
+          component: Register,
+          meta:{
+            isLogin:false
+          }
         },
       ]
     },
@@ -175,7 +200,10 @@ export default new Router({
     {
       path: '/sitem',
       name: 'ServerItem',
-      component: ServerItem
+      component: ServerItem,
+      meta:{
+        isLogin:true
+      }
     }
   ],
   mode:'history'

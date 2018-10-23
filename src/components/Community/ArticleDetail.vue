@@ -1,8 +1,9 @@
 <template>
     <div class="w">
       <p style="color: transparent">111</p>
-      <el-row :gutter="30">
-        <el-col :span="15" :offset="2">
+      <el-row :gutter="20">
+        <el-col :span="17" >
+          <el-header class="title">享食社区&nbsp;&nbsp;>>&nbsp;文章详情</el-header>
           <el-container>
             <el-header>
               <div class="triangle"></div>
@@ -15,10 +16,8 @@
                 <div class="rectangle"></div>
                 <router-link to="/community_author">&nbsp;
                   爱料理 编辑部
-                  <!--{{articleAuthor}}-->
                   发表于
                   2018/10/13
-                  <!--{{articleTime}}-->
                 </router-link>
               </span><br/>
               <img :src=articlePic><br/>
@@ -26,7 +25,7 @@
             </el-main>
           </el-container>
         </el-col>
-        <el-col :span="5">
+        <el-col :span="7">
           <article-search></article-search><br/>
           <author-list></author-list>
         </el-col>
@@ -108,11 +107,12 @@
 
 <style scoped>
   div{
-    background-color: #fdf6dc;
+    /*background-color: #fdf6dc;*/
   }
   img{
     width: 500px;
   }
+
   .el-header {
     background-color: white;
     color: #333;

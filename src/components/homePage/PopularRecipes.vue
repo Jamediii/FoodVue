@@ -4,33 +4,34 @@
     <el-row class="bg1">
       <p></p>
       <h2>最受欢迎食谱</h2>
-      <el-col>
+      <div class="w">
         <el-col>
-          <el-col :span="4">&nbsp;</el-col>
-          <el-col :span="4" style="margin: 20px 10px;" v-for="(o, index) in recipepop" :key="index" v-if="index < 4">
-
-
+          <el-col >
+            <!--<el-col :span="3">&nbsp;</el-col>-->
+            <el-col :span="4" v-for="(o, index) in recipepop" :key="index" v-if="index < 5" :offset="index > 0 ? 1 : 0">
               <el-card :body-style="{ padding: '0px' }">
                 <img :src="o.recipeCoverImg" class="image">
                 <div style="padding: 14px;">
                   <router-link :to="`recipe_detail/${o.detailsId}`">
                   <span>{{o.recipeName}}  <span style="color:#FF7979;"
-                                                class="el-icon-star-on">
+                                                class="glyphicon glyphicon-heart">
 
                   </span>  {{o.recipePraiseNum}}</span>
                   </router-link>
                   <div class="bottom clearfix">
 
-                    <p><span style="color:#FF7979;" class=""></span> {{o.accountName}}
+                    <p><span style="color:#FF7979;" class="glyphicon glyphicon-user"></span> {{o.accountName}}
                       <!--<button class="right" @click="addcollection(o.detailsId)">收藏</button>-->
                     </p>
                   </div>
                 </div>
               </el-card>
 
+            </el-col>
           </el-col>
         </el-col>
-      </el-col>
+      </div>
+
     </el-row>
   </div>
 </template>

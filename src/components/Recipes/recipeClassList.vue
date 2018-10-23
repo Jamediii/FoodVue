@@ -1,16 +1,22 @@
 <template>
   <!--菜谱分类列表详情-->
-  <div id="recipeCList" class="w" >
-    <el-row class="innerRCL" :gutter="20" :span="24">
-      <el-col class="rclLeft" :span="14" :offset="2">
-        <el-card shadow="always" v-for="(o,index) in articleInfoList" :key="index">
-          <router-link :to="`/recipe_detail/${o.detailsId}`">
-            <el-col :span="10">
-              <img :src="o.recipeCoverImg" alt="">
-            </el-col>
-            <el-col :span="14">
-              <h3>{{o.recipeName}}</h3>
-              <p style="
+  <div id="recipeCList"  class="w">
+    <p style="height:20px;"></p>
+    <el-row :gutter="20">
+      <!--右侧菜谱部分-->
+      <el-col :span="18">
+        <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
+        <el-main>
+          <el-row class="innerRCL" >
+            <el-col class="rclLeft" >
+              <el-card style="border:1px solid transparent;border-bottom-color:#ccc; " shadow="never"  v-for="(o,index) in articleInfoList" :key="index">
+                <router-link :to="`/recipe_detail/${o.detailsId}`">
+                  <el-col :span="8">
+                    <img :src="o.recipeCoverImg" alt="">
+                  </el-col>
+                  <el-col :span="15" :offset="1">
+                    <h3>{{o.recipeName}}</h3>
+                    <p style="
              display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -18,19 +24,36 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:4;margin-top:20px;"
-                 class="rclBrief">{{o.recipeBrief}}</p>
-              <p>
-                <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
-                <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
-              </p>
+                       class="rclBrief">{{o.recipeBrief}}</p>
+                    <p>
+                      <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
+                      <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
+                    </p>
+                  </el-col>
+                </router-link>
+              </el-card>
             </el-col>
-          </router-link>
-        </el-card>
+          </el-row>
+          <!--分页功能-->
+          <el-row :gutter="20">
+            <el-col :span="12" :offset="5">
+              <!--分页-->
+              <div class="block">
+                <el-pagination
+                  @current-change="currentPageNum" :current-page="currentPage"
+                  :page-size="pageSize" layout="prev, pager, next" :total="len">
+                </el-pagination>
+              </div>
+              <!--current-change当前页变动时候触发的事件-->
+            </el-col>
+          </el-row>
+        </el-main>
       </el-col>
+      <!--右侧文章作者推荐-->
       <el-col class="rclRight" :span="6"  >
         <div class="grid-content">
-          <h3>作者推荐</h3>
-          <el-card class="box-card" v-for="(o,index) in articleInfoList" :key="index" v-if="index <5">
+          <h3>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}作者推荐</h3>
+          <el-card shadow="never" class="box-card" v-for="(o,index) in articleInfoList" :key="index" v-if="index <5">
             <div class="text item">
               <el-col :span="10">
                 <img :src="o.headPhoto" alt="">
@@ -43,20 +66,6 @@
         </div>
       </el-col>
     </el-row>
-    <!--分页功能-->
-    <el-row :gutter="20">
-      <el-col :span="12" :offset="5">
-        <!--分页-->
-        <div class="block">
-          <el-pagination
-            @current-change="currentPageNum" :current-page="currentPage"
-            :page-size="pageSize" layout="prev, pager, next" :total="len">
-          </el-pagination>
-        </div>
-        <!--current-change当前页变动时候触发的事件-->
-      </el-col>
-    </el-row>
-    <!--<app-pagenation ref="c1" :aldata = "fData"></app-pagenation>-->
   </div>
 </template>
 
@@ -73,6 +82,7 @@
         currentPage: 1,//当前页
         len: 0,//默认总的数据长度
         pageSize: 5,//默认每页显示的数量
+        recipeClassName:"",//菜谱分类对应的名称
       }
     },
 
@@ -81,6 +91,7 @@
       this.$axios.get("http://localhost:3000/recipes/classify/" + this.$route.params.recipeClassifyId)
         .then((res) => {
           this.recipeClassOne = res.data.data;
+          this.recipeClassName=this.recipeClassOne[0].recipeClassifyName;
           this.fData = res.data.data;
           // console.log(this.recipeClassOne);
           this.len = res.data.data.length;
@@ -88,6 +99,7 @@
         }).catch((err) => {
         console.log(err);
       })
+
     },
     watch: {
       $route() {
@@ -95,6 +107,7 @@
         this.$axios.get("http://localhost:3000/recipes/classify/" + this.$route.params.recipeClassifyId)
           .then((res) => {
             this.recipeClassOne = res.data.data;
+            this.recipeClassName=this.recipeClassOne[0].recipeClassifyName;
             // console.log(this.recipeClassOne);
             this.len = res.data.data.length;
             this.handleInfo();
@@ -137,22 +150,22 @@
 </script>
 
 <style scoped>
-
-  #recipeCList .rclLeft, #recipeCList .rclRight {
-    margin-top: 20px;
+  #recipeCList .el-header {
+    background-color: #fae8c8;
+    color: #333;
+    text-align: left;
+    line-height: 60px;
+    font-size: 16px;
   }
 
   #recipeCList .rclLeft img {
     height: 200px;
     width: 100%;
+    margin-bottom: 20px;
   }
 
   #recipeCList .rclLeft .el-col p span {
     color: #FF7979;
-  }
-
-  #recipeCList .rclLef p.rclBrief {
-    /*显示行数*/
   }
 
   #recipeCList .rclRight h3 {
@@ -160,7 +173,12 @@
     height: 60px;
     line-height: 60px;
     display: block;
+    font-size: 16px;
+    font-weight: normal;
+    padding:0 20px;
     background-color: #fae8c8;
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 
   #recipeCList .rclRight img {

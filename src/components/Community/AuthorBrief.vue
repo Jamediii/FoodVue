@@ -37,6 +37,7 @@
             var authorBrief = res.data.data;
             console.log(authorBrief);
             this.authorName = authorBrief[0].authorName;
+            this.$emit('authorName',this.authorName);
             this.authorBrief = authorBrief[0].authorBrief;
             this.authorImg = authorBrief[0].authorImg;
           })

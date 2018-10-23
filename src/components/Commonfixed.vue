@@ -1,126 +1,114 @@
 <template>
+
   <div>
-    <!--导航栏部分-->
-    <el-row id="nav">
-      <el-col :span="24">
-        <el-menu :default-active="this.$router.path" router
-                 class="el-menu-demo "
-                 background-color="#FAE8C8"
-                 text-color="#333333"
-                 active-text-color="#ffd04b" mode="horizontal">
-          <el-menu-item index="/" @click="isShow=true">
-            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">乐享食间首页</el-col>
-          </el-menu-item>
-          <el-menu-item index="11" disabled width="10px">
-            <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"><span>|</span></el-col>
-          </el-menu-item>
-          <el-menu-item index="/recipes" @click="isShow=false">
-            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-              <el-dropdown>
-                <span class="el-dropdown-link">
-                  逛食谱<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <router-link to="/recipecl/1">
-                    <el-dropdown-item>家常菜</el-dropdown-item>
-                  </router-link>
-                  <router-link to="/recipecl/2">
-                    <el-dropdown-item>西餐</el-dropdown-item>
-                  </router-link>
-                  <router-link to="/recipecl/3">
-                    <el-dropdown-item>烘焙</el-dropdown-item>
-                  </router-link>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <!--逛食谱<i class="el-icon-arrow-down"></i>-->
-            </el-col>
-          </el-menu-item>
-          <el-menu-item index="11" disabled width="10px">
-            <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1"><span>|</span></el-col>
-          </el-menu-item>
-          <el-menu-item index="/community" @click="isShow=false">
-            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-              <el-dropdown>
-                <span class="el-dropdown-link">
-                  享食社区<i class="el-icon-arrow-down el-icon--right"></i>
-                  </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item><router-link to="/community">文章集锦</router-link></el-dropdown-item>
-                  <router-link to="/user_recipe">
-                    <el-dropdown-item>达人推荐</el-dropdown-item>
-                  </router-link>
-                </el-dropdown-menu>
-              </el-dropdown>
-            </el-col>
-          </el-menu-item>
-          <div class="right">
-            <el-menu-item class="right" index="/">
-              <!--设置部分-->
-              <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-                <el-dropdown class="setting">
-              <span class="el-dropdown-link">
-                <i class="el-icon-setting"></i>
-              </span>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="toEdit">修改资料</el-dropdown-item>
-                    <el-dropdown-item @click.native="exitEdit">退出登录</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </el-col>
-            </el-menu-item>
-            <el-menu-item index="/register" class="right">
-              <el-col v-show="!this.$store.state.user.state" :xs="3" :sm="3" :md="3" :lg="3" :xl="3">注册</el-col>
-            </el-menu-item>
-            <el-menu-item index="/login" class="right">
-              <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="3">{{loginState}}</el-col>
-            </el-menu-item>
-            <el-menu-item index="/user" class="right">
-              <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-                <div>{{name}}</div>
-              </el-col>
-            </el-menu-item>
-          </div>
-        </el-menu>
-      </el-col>
-    </el-row>
+    <!--最新版本的 Bootstrap 核心 CSS 文件-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <nav class="navbar navbar-default ">
+      <div class="container-fluid w">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <!--导航栏左边-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="javascript:void(0)">乐享食间</a>
 
-    <!--首页应该出现的部分-->
-    <el-row id="projTitle" v-if="isShow">
-      <el-col :offset="7" :xs="2" :sm="4" :md="3" :lg="5" :xl="5">
-        <img src="../assets/Hlogo.png" width="100px" alt="">
-      </el-col>
-      <el-col :xs="15" :sm="13" :md="14" :lg="12" :xl="12">
-        <span>享受厨房小事</span>
-      </el-col>
-    </el-row>
-
-    <!--搜索部分-->
-    <el-row id="search" v-else="isShow">
-      <el-col :offset="3" :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-        <img src="../assets/Hlogo.png" width="100px" alt="">
-      </el-col>
-      <el-col  class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3">
-        <select style="height:40px;width: 80%;" name="" id="">
-          <option value="按食谱名称">按食谱名称</option>
-          <option value="按食谱作者">按食谱作者</option>
-        </select>
-      </el-col>
-      <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
-        <input style="height: 40px;width: 100%;" v-model="inputsel" @keyup="searchMathing" placeholder="请输入内容"/>
-        <div v-if="showlist" class="searchList">
-          <ul>
-            <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index <= showMathing.length">
-              {{o.name}}
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+              <router-link to="/">首页</router-link>
+            </li>
+            <li>
+              <router-link to="/recipes">逛食谱</router-link>
+            </li>
+            <li>
+              <router-link to="/recipecl/1">家常菜</router-link>
+            </li>
+            <li>
+              <router-link to="/recipecl/2">西餐</router-link>
+            </li>
+            <li>
+              <router-link to="/recipecl/3">烘焙</router-link>
+            </li>
+            <li>
+              <router-link to="/community">享食社区</router-link>
+            </li>
+            <li>
+              <router-link to="/user_recipe">达人推荐</router-link>
             </li>
           </ul>
-        </div>
-      </el-col>
-      <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-        <el-button @click="findRec">搜寻</el-button>
-      </el-col>
-      <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-        <router-link to="/menu"><span style="background-color: #fff;"><i class="el-icon-edit"></i>写食谱</span></router-link>
-      </el-col>
+          <!--导航栏右边-->
+          <ul class="nav navbar-nav navbar-right">
+            <li v-if="$store.state.isShow">
+              <router-link to="/user">个人中心</router-link>
+            </li>
+            <li v-if="$store.state.isLoginHide">
+              <router-link to="/login">登录</router-link>
+            </li>
+            <li v-if="$store.state.isLoginHide">
+              <router-link to="/register">注册</router-link>
+            </li>
+            <li style="margin-top: 15px;margin-left: 15px;" v-if="$store.state.isShow" class="navSetting">
+              <el-dropdown>
+                  <span class="el-dropdown-link" >
+                    <a href="javascript:void(0)"><i class="el-icon-setting"></i></a>
+                  </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>
+                    <router-link to="/modifyinfo">修改资料</router-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item @click.native="exitEdit">退出登录</el-dropdown-item>
+
+                </el-dropdown-menu>
+              </el-dropdown>
+
+            </li>
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!--搜索部分-->
+    <el-row id="search">
+      <div class="w">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <img src="../assets/Hlogo.png" width="100px" alt="">
+        </el-col>
+        <el-col class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3" :offset="2">
+          <select style="height:40px;width: 80%;" name="" id="">
+            <option value="按食谱名称">按食谱名称</option>
+            <option value="按食谱作者">按食谱作者</option>
+          </select>
+        </el-col>
+        <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
+          <input style="height: 40px;width: 100%;" v-model="inputsel" @keyup="searchMathing" placeholder="请输入内容"/>
+          <div v-if="showlist" class="searchList">
+            <ul>
+              <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index <= showMathing.length">
+                {{o.name}}
+              </li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-button @click="findRec">搜寻</el-button>
+        </el-col>
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4" :offset="1">
+          <router-link to="/menu" class="right"><span style="background-color: #fff;"><i
+            class="el-icon-edit"></i>写食谱</span>
+          </router-link>
+        </el-col>
+      </div>
+
     </el-row>
     <router-view></router-view>
   </div>
@@ -128,27 +116,32 @@
 
 <script>
 
+  $(function () {
+    //添加选中样式
+    $("nav.navbar-default .nav>li").click(function () {
+      $("li").removeClass("active");
+      $(this).addClass("active");
+    });
+  });
   export default {
     name: "Commonfixed",
     data() {
       return {
         inputsel: '',
-        isShow: true,
-        // loginState:"登录"
         checkData: [],
-        // raNameBefore: [],
         showMathing: [],
-        // rsNameBefore: [],
         showlist: false,
-        recipeSearchId: 0
+        recipeSearchId: 0,
+        // //判断是否登录，是否显示
+        // isShow: false,
+        // //登录隐藏
+        // isLoginHide: true,
       }
     },
+    updated() {
+
+    },
     mounted() {
-      if (this.$route.path == '/') {
-        this.isShow = true;
-      } else {
-        this.isShow = false;
-      }
       this.$axios.post('http://localhost:3000/recipes/find').then((res) => {
         // var sdata = res.data.data;
         // console.log(sdata);
@@ -161,13 +154,24 @@
 
       }).catch((err) => {
         console.log(err);
-      })
+      });
 
 
     },
     methods: {
-      toEdit() {
-        this.$router.push("/modifyinfo");
+      //退出登录
+      exitEdit() {
+        localStorage.removeItem("Flag");
+        this.$store.state.user.state = false;
+        this.$alert('登录退出', '是否退出登录', {
+          confirmButtonText: '确定',
+          callback: () => {
+            this.$store.state.isShow = false;
+            this.$store.state.isLoginHide = true;
+            this.$router.push("/");
+          }
+        });
+
       },
       //搜索匹配方法
       searchMathing() {
@@ -219,23 +223,18 @@
         if ($("#search .myselect select").val() == "按食谱名称") {
           this.recipeSearchId = id;
         } else if ($("#search .myselect select").val() == "按食谱作者") {
+          this.recipeSearchId = id;
           //根据用户ID获取到用户相应的菜谱
           // this.$axios.post('http://localhost:3000/recipes/findbyuid', {
           //   userId: id
           // }).then((res) => {
-          //   console.log(res+"......");
+          //   console.log(res + "......");
           // }).catch((err) => {
           //   console.log(err);
           // })
         }
       },
-      //退出登录
-      exitEdit() {
-        if (this.$store.state.user.state) {
-          this.$store.state.user.state = false;
-        }
-        // return this.$store.state.user.state = false;
-      },
+
       //单击搜寻按钮，找到相应的结果
       findRec() {
         if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱名称") {
@@ -243,38 +242,45 @@
           this.$router.push('/recipe_detail/' + this.recipeSearchId);
         } else if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱作者") {
           //根据用户id跳转到用户相应的用户做的菜谱。。。。。
-          this.$router.push("/fhuser/"+this.recipeSearchId);
+          this.$router.push("/fhuser/" + this.recipeSearchId);
         }
 
       }
     },
-    computed: {
-      name() {
-        if (this.$store.state.user.state) {
-          return "去我的页面"
-        }
-      },
-      loginState() {
-        if (this.$store.state.user.state) {
-          return "欢迎" + this.$store.state.user.name;
-        } else {
-          return "登录";
-        }
-      },
 
-    },
 
   }
 </script>
 
 <style scoped>
   /*导航栏部分开始*/
-  #nav {
-    background-color: #FAE8C8;
+  nav.navbar-default {
+    background-color: #fff;
+    margin-bottom: 0;
   }
 
-  #nav .el-menu {
-    border-bottom-color: #f9d422;
+  .navbar {
+    border: 1px solid transparent;
+    border-bottom-color: #f19f11fa;
+  }
+
+  nav.navbar-default .navbar-nav > .active > a {
+    color: #fff;
+    background-color: #f19f11fa;
+  }
+
+  nav .ulDown {
+    position: absolute;
+    /*line-height: 30px;*/
+    width: 200%;
+    background-color: #fff;
+    margin-top: 1px;
+    z-index: 9999999;
+  }
+
+  nav .ulDown li {
+    margin: 10px;
+    text-align: center;
   }
 
   /*导航栏部分结束*/
@@ -310,7 +316,7 @@
   #search .inputSearch .searchList {
     position: absolute;
     top: 82px;
-    z-index: 999999;
+    z-index: 99999;
     border: 1px solid #ccc;
     border-top-color: transparent;
     width: 100%;

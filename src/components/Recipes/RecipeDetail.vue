@@ -1,8 +1,9 @@
 <template>
-  <div id="container" class="w">
+  <!--文章详情-->
+  <div id="container" class="w" >
     <p style="color: transparent">111</p>
-    <el-row :gutter="20">
-      <el-col :span="18" :offset="3">
+    <el-row :gutter="20" >
+      <el-col :span="18" >
         <el-container>
           <el-header>
               <span style="font-weight: bold;font-size: 25px">
@@ -178,7 +179,7 @@
   }
 
   #container {
-    background-color: #fdf6dc;
+    /*background-color: #fdf6dc;*/
   }
 
   span {
@@ -207,7 +208,7 @@
   }
 
   .row-bg {
-    background-color: #f9fafc;
+    /*background-color: #f9fafc;*/
   }
 
   .el-row {

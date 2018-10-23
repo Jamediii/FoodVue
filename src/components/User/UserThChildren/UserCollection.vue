@@ -9,7 +9,7 @@
     <!-- 有收藏情况下 -->
     <div v-else-if="isArray">
       <el-row :gutter="12" v-for="(o,index) in recipesY">
-        <el-col style="margin-top:10px;" :span="8" :offset="index > 0 ? 2 : 0">
+        <el-col style="margin-top:10px;" :span="8" >
           <el-card shadow="always">
             <el-col :span="8">
               <img :src="o.recipeCoverImg" alt="">

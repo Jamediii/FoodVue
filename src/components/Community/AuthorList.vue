@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header>享食社区文章作者&nbsp;&nbsp;>></el-header>
+    <el-header>享食社区&nbsp;&nbsp;>>&nbsp;&nbsp;文章作者</el-header>
     <el-main>
       <ul>
         <li>
