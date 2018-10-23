@@ -1,8 +1,8 @@
 <template>
-  <div style="background-color:#fff; width: 80%; margin: 0 auto">
+  <div class="w">
 
     <el-row>
-      <el-col :span="8" :pull="1">
+      <el-col :span="8" :push="4">
         <!-- 菜谱名称 + 大图 + 简介 -->
         <el-form ref="form"
                  :model="form"
@@ -33,7 +33,7 @@
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="8" :push="1">
+      <el-col :span="8" :push="5">
         <!-- 烹饪时间 + 份量 + 食材 -->
         <el-form label-position="top"
                  label-width="80px"
@@ -87,7 +87,7 @@
                         @mouseover.native="showIco(icoChange.foodIco,key)"
                         @mouseleave.native="hideIco(icoChange.foodIco,key)">
                   <i class="el-icon-circle-close-outline"
-                     v-if=icoChange.foodIco[key]
+                     v-if='icoChange.foodIco[key] === true'
                      style="font-size: 30px;vertical-align: middle;color:red"></i>
                   <i class="el-icon-circle-close"
                      v-else
@@ -109,14 +109,14 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="16" :push="4">
+      <el-col :span="20" :push="4">
         <el-form ref="form"
                  :model="form"
                  label-width="80px"
                  label-position="top">
           <el-form-item label="步骤(可以一次上傳多張圖片)">
             <div v-for="(obj,key) in form.steplist">
-              <div style="overflow: hidden">
+              <div style="overflow: hidden; width: 100%">
                 <!-- 图片上传 -->
                 <div class="leftPhoto">
                   <label :for="`step${key}`">
@@ -193,6 +193,7 @@
               Name: ''
             }
           ],
+          // 步骤图片名 + 步骤内容
           steplist: [
             {
               stepPhoto: '',
@@ -289,11 +290,9 @@
       // 显示图标
       showIco(keyObj,key) {
         keyObj[key] = false;
-        console.log(keyObj);
       },
       hideIco(keyObj,key) {
         keyObj[key] = true;
-        console.log(keyObj);
       },
       // 隐藏图标
       // 删除列表
@@ -302,7 +301,6 @@
           this.$message.error('不允许你再删除了! :(');
           return false;
         }
-        console.log(key);
         formArray.splice(key, 1);
       },
       // 增加列表<要增加的表名>
@@ -318,6 +316,7 @@
             stepPhoto: '',
             stepContent: ''
           });
+          this.icoChange.stepIco.push(true,true);
         }
       }
     },

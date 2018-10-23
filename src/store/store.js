@@ -7,8 +7,6 @@ export default new Vuex.Store({
   state: {
     user: {
       state: false,
-      userId: 0,
-      name: ""
     },
     RecipeRecom: {},
     isShow: false,

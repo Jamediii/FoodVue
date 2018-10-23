@@ -69,8 +69,8 @@
         })
           .then((res) => {
             if (res.data.data.state) {
-              this.$store.state.user.userId = res.data.data.userId;
-              this.$store.state.user.name = res.data.data.name;
+              this.$store.state.user = res.data.data;
+              // this.$store.state.user.name = res.data.data.name;
               this.$store.state.isShow = true;
               this.$store.state.isLoginHide = false;
               localStorage.setItem('Flag', "isLogin");

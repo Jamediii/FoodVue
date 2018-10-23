@@ -66,12 +66,14 @@
     // methods: {
     // },
     // 页面加载后就去获取 -- 查看自己的信息
-    created() {
+    mounted() {
       this.$router.push('/user/recipe');
+      console.log(this.$getters.state.user.userId);
       this.userId = this.$store.state.user.userId;
       let userId = this.userId;
       this.$axios.get(`http://127.0.0.1:3000/users/${userId}`)
         .then((result) => {
+          console.log(result);
           this.userInfo = result.data.data[0];
         }).catch(err => {
         console.log(err);

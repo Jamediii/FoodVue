@@ -53,11 +53,12 @@
         isShowRC: true,
         recipesRImg: [
           "http://site.meishij.net/r/241/19/8567491/s8567491_148292490436361.jpg",
-          "https://s1.st.meishij.net/r/245/13/2378495/s2378495_152583854223746.jpg"
+          "https://s1.st.meishij.net/r/245/13/2378495/s2378495_152583854223746.jpg",
+          "https://s1.st.meishij.net/r/216/197/6174466/s6174466_153562539934985.jpg"
         ],
-        recipeRcomId: [145, 215],
-        recipesRName: ["培根卷虾仁披萨", "小玛琳蛋糕"],
-        recipesRAuthor: ["秋分0923", "搬个凳子看戏08"],
+        recipeRcomId: [145, 215, 8],
+        recipesRName: ["培根卷虾仁披萨", "小玛琳蛋糕", "辣炒相顾根"],
+        recipesRAuthor: ["秋分0923", "搬个凳子看戏08", "心随彧动"],
 
       }
     },
