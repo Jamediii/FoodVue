@@ -69,7 +69,7 @@
       this.$router.push('/user/recipe');
       this.userId = localStorage.getItem('userId');
       let userId = this.userId;
-      this.$axios.get(`http://127.0.0.1:3000/users/${userId}`)
+      this.$axios.get(`${$LH.url}/users/${userId}`)
         .then((result) => {
           this.userInfo = result.data.data[0];
         }).catch(err => {

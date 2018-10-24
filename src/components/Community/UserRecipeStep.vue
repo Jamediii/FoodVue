@@ -28,7 +28,7 @@
     },
     created(){
       //根据id获取的菜谱
-      this.$axios.get('http://localhost:3000/recipes/users/details/' + this.p_dietId)
+      this.$axios.get(`${$LH.url}/recipes/users/details/` + this.p_dietId)
         .then((res) =>{
           var allData = res.data.data;
           this.recipeStepList = allData[2];

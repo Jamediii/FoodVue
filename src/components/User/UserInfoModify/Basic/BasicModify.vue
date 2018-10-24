@@ -79,9 +79,9 @@
       return {
         // 提交路由
         url: {
-          basic: 'http://127.0.0.1:3000/users/setting',
-          headPhoto: 'http://127.0.0.1:3000/users/setting/headPhoto',
-          settingWall: 'http://127.0.0.1:3000/users/setting/settingWall'
+          basic: `${$LH.url}/users/setting`,
+          headPhoto: `${$LH.url}/users/setting/headPhoto`,
+          settingWall: `${$LH.url}/users/setting/settingWall`
         },
         // 判断格式是否正确 + 绑定的表单内容
         form: {

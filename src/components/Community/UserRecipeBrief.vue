@@ -44,7 +44,7 @@
       },
       created(){
         //根据id获取的菜谱
-        this.$axios.get('http://localhost:3000/recipes/users/all')
+        this.$axios.get(`${$LH.url}/recipes/users/all`)
           .then((res) =>{
             var allData = res.data.data;
             this.userRecipeBriefList=allData;

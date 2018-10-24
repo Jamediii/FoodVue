@@ -84,7 +84,7 @@
 
         url: {
         //  密码校验
-          checkPassUrl: 'http://127.0.0.1:3000/login',
+          checkPassUrl: `${$LH.url}/login`,
         },
 
         ruleForm2: {

@@ -49,7 +49,7 @@
     },
     mounted() {
       //获取排序后所有菜谱的信息
-      this.$axios.get('http://localhost:3000/recipes/order')
+      this.$axios.get(`${$LH.url}/recipes/order`)
         .then((res) => {
           this.$store.state.RecipeRecom = res;
           this.recipepop = res.data.data;

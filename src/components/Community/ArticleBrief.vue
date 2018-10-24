@@ -62,7 +62,7 @@
       }
     },
     created(){
-      this.$axios.get('http://localhost:3000/community/article/all')
+      this.$axios.get(`${$LH.url}/community/article/all`)
         .then((res) => {
           this.articleList = res.data.data;
           this.len = res.data.data.length;

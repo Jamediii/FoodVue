@@ -32,7 +32,7 @@
         }
       },
       mounted(){
-        this.$axios.get('//localhost:3000/community/author/details/1')
+        this.$axios.get(`${$LH.url}/community/author/details/1`)
           .then((res)=>{
             var authorBrief = res.data.data;
             console.log(authorBrief);

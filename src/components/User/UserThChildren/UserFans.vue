@@ -41,7 +41,7 @@
     mounted() {
       // 获取 我的Id
       let userId = this.userid;
-      this.$axios.get(`http://localhost:3000/users/fans/${userId}`)
+      this.$axios.get(`${$LH.url}/users/fans/${userId}`)
         .then((result) => {
           this.recipesY = result.data.data;
           // 获取到每个粉丝的id
@@ -49,7 +49,7 @@
           for (let i = 0; i < length; i++) {
             let fansId = result.data.data[i].userId;
             // 获取到每个粉丝的菜谱信息
-            this.$axios.get(`http://localhost:3000/recipes/brief/${fansId}`)
+            this.$axios.get(`${$LH.url}/recipes/brief/${fansId}`)
               .then(fansResult => {
                 this.recipes.push(fansResult.data.data);
                 console.log(this.recipes);

@@ -234,7 +234,7 @@
     },
     // 挂载时显示的图片
     mounted() {
-      this.$axios.get('http://localhost:3000/recipes/basicPhoto')
+      this.$axios.get(`${$LH.url}/recipes/basicPhoto`)
         .then(result => {
           this.basicPhoto = result.data.data.basicPhoto.replace(':', ':/');
           this.stepsPhoto = result.data.data.stepsPhoto.replace(':', ':/');
@@ -387,7 +387,7 @@
         }
         this.$axios({
           method: 'post',
-          url: 'http://localhost:3000/operat/upload',
+          url: `${$LH.url}/operat/upload`,
           data: formData,
         }).then(() => {
           this.$message({

@@ -55,7 +55,7 @@
         arr = collectionRecipeId.split(',');
       }
       for(var i =0;i< arr.length;i++ ){
-        this.$axios.get('http://localhost:3000/recipes/brief/'+arr[i])
+        this.$axios.get(`${$LH.url}/recipes/brief/${arr[i]}`)
           .then((result) => {
             this.recipesY.push(result.data.data[0]);
           }).catch((err) => {

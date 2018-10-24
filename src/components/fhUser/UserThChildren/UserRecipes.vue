@@ -29,7 +29,7 @@
     mounted() {
       let userId = this.userid;
       // 获取菜谱基本信息
-      this.$axios.get(`http://localhost:3000/operat/${userId}`).then((result) => {
+      this.$axios.get(`${$LH.url}/operat/${userId}`).then((result) => {
         if (typeof result.data.data === "string") {
           this.isArray = false;
         }

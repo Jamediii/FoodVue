@@ -80,7 +80,7 @@
     },
     created(){
       //根据id获取的菜谱
-      this.$axios.get('http://localhost:3000/recipes/users/details/' + this.p_dietId)
+      this.$axios.get(`${$LH.url}/recipes/users/details/` + this.p_dietId)
         .then((res) =>{
           var allData = res.data.data;
           var dietDetail = allData[0];
@@ -99,7 +99,7 @@
     },
     mounted(){
       //根据id获取评论内容
-      this.$axios.post('http://localhost:3000/comment/showConmment', {
+      this.$axios.post(`${$LH.url}/comment/showConmment`, {
         menu_Id: this.p_recipeId
       })
         .then((res) => {
@@ -113,14 +113,14 @@
       //添加评论
       addComment() {
         if(this.$store.state.user.state){
-          this.$axios.post('http://localhost:3000/comment/addComment', {
+          this.$axios.post(`${$LH.url}/comment/addComment`, {
             userId: this.$store.state.user.userId,
             userComment: this.userComm,
             detailsId: this.p_recipeId
           })
             .then((res) => {
               if(res.data.data){
-                this.$axios.post('http://localhost:3000/comment/showConmment', {
+                this.$axios.post(`${$LH.url}/comment/showConmment`, {
                   menu_Id: this.p_recipeId
                 })
                   .then((res) => {

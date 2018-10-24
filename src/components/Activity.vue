@@ -79,7 +79,7 @@
     mounted() {
       var myid = this.$route.params.activityId;
       //根据活动ID获取活动详情
-      this.$axios.post("http://localhost:3000/competition/activityDetail", {
+      this.$axios.post(`${$LH.url}/competition/activityDetail`, {
         activityId: myid
       })
         .then((res) => {
@@ -95,7 +95,7 @@
       });
 
       //根据活动ID获取活动结果
-      this.$axios.post("http://localhost:3000/competition/aresult", {
+      this.$axios.post(`${$LH.url}/competition/aresult`, {
         AdetailId: myid
       })
         .then((res) => {

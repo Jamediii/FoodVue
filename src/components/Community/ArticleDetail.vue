@@ -85,7 +85,7 @@
       },
       created(){
         //根据id获取的文章
-        this.$axios.get('http://localhost:3000/community/article/details/' + this.p_articleId)
+        this.$axios.get(`${$LH.url}/community/article/details/` + this.p_articleId)
           .then((res) =>{
             var articleDetail = res.data.data;
             // console.log(articleDetail[0]);

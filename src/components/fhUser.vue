@@ -42,7 +42,7 @@
       this.userId = this.$route.params.userId;
       this.$router.push(`/fhuser/${this.userId}/recipe`);
       // 获取用户基本信息
-      this.$axios.get(`http://127.0.0.1:3000/users/${this.userId}`)
+      this.$axios.get(`${$LH.url}/users/${this.userId}`)
         .then((result) => {
           this.userInfo = result.data.data[0];
           console.log(this.userInfo);

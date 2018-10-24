@@ -57,7 +57,7 @@
     },
     mounted() {
       //获取所有的菜谱简介
-      this.$axios.get('http://localhost:3000/recipes/all')
+      this.$axios.get(`${$LH.url}/recipes/all`)
         .then((res) => {
           this.$store.state.recipeBrief = res.data.data;
         })
@@ -66,7 +66,7 @@
         });
 
       //获取获取文章推荐
-      this.$axios.get("http://localhost:3000/community/article/all")
+      this.$axios.get(`${$LH.url}/community/article/all`)
         .then((res) => {
           this.homepageArt = res.data.data;
         }).catch((err) => {

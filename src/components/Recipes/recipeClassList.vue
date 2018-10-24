@@ -88,7 +88,7 @@
 
     mounted() {
       //根据id获取分类下的菜谱
-      this.$axios.get("http://localhost:3000/recipes/classify/" + this.$route.params.recipeClassifyId)
+      this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
         .then((res) => {
           this.recipeClassOne = res.data.data;
           this.recipeClassName=this.recipeClassOne[0].recipeClassifyName;
@@ -104,7 +104,7 @@
     watch: {
       $route() {
         //根据id获取分类下的菜谱
-        this.$axios.get("http://localhost:3000/recipes/classify/" + this.$route.params.recipeClassifyId)
+        this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
           .then((res) => {
             this.recipeClassOne = res.data.data;
             this.recipeClassName=this.recipeClassOne[0].recipeClassifyName;

@@ -37,7 +37,7 @@
       }
     },
     mounted() {
-      this.$axios.get("http://localhost:3000/competition").then((res) => {
+      this.$axios.get(`${$LH.url}/competition`).then((res) => {
         this.recentAct = res.data.data;
       }).catch((err) => {
         console.log(err);

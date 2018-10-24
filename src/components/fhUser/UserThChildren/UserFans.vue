@@ -39,7 +39,7 @@
     mounted() {
       // 获取 达人/粉丝 的Id
       let userId = this.userid;
-      this.$axios.get(`http://localhost:3000/users/fans/${userId}`)
+      this.$axios.get(`${$LH.url}/users/fans/${userId}`)
         .then((result) => {
           this.recipesY = result.data.data;
         }).catch((err) => {
