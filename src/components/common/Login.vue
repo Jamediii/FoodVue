@@ -26,8 +26,8 @@
                 </el-form-item>
 
                 <el-form-item>
-                  <el-button class="left" @click="submitForm('ruleForm2')">登录</el-button>
-                  <el-button class="right" @click="resetForm('ruleForm2')">重置</el-button>
+                  <el-button class="left" type="primary" @click="submitForm('ruleForm2')">登录</el-button>
+                  <el-button class="right" type="primary" @click="resetForm('ruleForm2')">重置</el-button>
                   <br/>
                   <!--<router-link to="/register">还没有账号?免费注册</router-link>-->
                 </el-form-item>
@@ -82,7 +82,7 @@
     },
     methods: {
       submitForm() {
-        this.$axios.post('http://localhost:3000/login', {
+        this.$axios.post(`${$LH.url}/login`, {
           userPNo: this.ruleForm2.pass,
           userPwd: this.ruleForm2.checkPass
         })
@@ -102,7 +102,6 @@
                 var headerHeight = $("#switcher").height();
                 $("#iframe").attr("height", $(window).height() - 54 + "px");
               }
-
               $(window).resize(function () {
                 fixHeight();
               }).resize();
@@ -160,7 +159,8 @@
   }
   #login .box-card .el-button {
 
-    background-color: #ec7309;
+    background-color: #87d6c8;
+    border:0;
     width: 45%;
     color: #fff;
   }

@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/proxy": {
-        target: "https://www.meishij.net/ajax",//目标地址
+        target: "http://v.juhe.cn",//目标地址
         "changeOrigin": true,//跨域访问设置，true代表跨域
         "pathRewrite": {//路径改写规则
           "^/proxy": ""  //以/my/为开头的改写为''

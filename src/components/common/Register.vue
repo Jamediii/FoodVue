@@ -1,44 +1,51 @@
 <template>
   <div id="register">
     <div class="w">
-      <div class="logoPic">
-        <img src="../../assets/Hlogo.png" alt="">
-      </div>
       <el-row>
-        <el-col :span="20">
-          <el-card class="box-card">
+        <el-col :span="8" :offset="12">
+          <div>
+            <img src="../../assets/login.png" alt="">
+          </div>
+        </el-col>
+        <el-col :span="9" :offset="1">
+          <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span class="titleStyle">新用户注册</span>
               <span class="right titleStyle ">已有账号，<router-link class="a-color" to="/login">直接登录>></router-link></span>
             </div>
             <div class="text item">
-                <el-form :model="registerInfo" status-icon :rules="rules2" ref="registerInfo"
-                         class="demo-ruleForm">
-                  <!--<el-form-item><p>乐享食间</p></el-form-item>-->
-                  <el-form-item label="" prop="nickName">
-                    <el-input type="text" v-model="registerInfo.nickName" placeHolder="请输入昵称"
-                              autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="" prop="phoneNum">
-                    <el-input type="text" v-model="registerInfo.phoneNum" placeHolder="请输入手机号"
-                              autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="" prop="passPwd">
-                    <el-input type="password" v-model="registerInfo.passPwd" placeHolder="请输入密码"
-                              autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="" prop="checkPwd">
-                    <el-input type="password" v-model="registerInfo.checkPwd" placeHolder="请确认密码"
-                              autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button type="primary" @click="submitRegister('registerInfo')">提交</el-button>
-                    <el-button @click="resetRegister('registerInfo')">重置</el-button>
-                    <br/>
-                    <!--<router-link to="/login">已有账号?马上登录</router-link>-->
-                  </el-form-item>
+              <el-form :model="registerInfo" status-icon :rules="rules2" ref="registerInfo"
+                       class="demo-ruleForm">
+                <!--<el-form-item><p>乐享食间</p></el-form-item>-->
+                <el-form-item label="" prop="nickName">
+                  <el-input type="text" v-model="registerInfo.nickName" placeHolder="请输入昵称"
+                            autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="" prop="phoneNum">
+                  <el-input type="text" v-model="registerInfo.phoneNum" placeHolder="请输入手机号"
+                            autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="" prop="passPwd">
+                  <el-input type="password" v-model="registerInfo.passPwd" placeHolder="请输入密码"
+                            autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="" prop="checkPwd">
+                  <el-input type="password" v-model="registerInfo.checkPwd" placeHolder="请确认密码"
+                            autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="" prop="VeriCode">
+                  <el-input style="width: 45%" type="text" v-model="registerInfo.VeriCode" placeHolder="请输入验证码"
+                            autocomplete="off"></el-input>
+                  <el-button type="primary" @click="checkVeriCode" style="width: 45%" class="right">获取验证码</el-button>
+                </el-form-item>
+                <el-form-item>
+                  <el-button class="left" type="primary" @click="submitRegister('registerInfo')">提交</el-button>
+                  <!--<el-button class="right" type="primary" @click="resetRegister('registerInfo')">重置</el-button>-->
+                  <br/>
+                  <!--<router-link to="/login">已有账号?马上登录</router-link>-->
+                </el-form-item>
 
-                </el-form>
+              </el-form>
             </div>
           </el-card>
         </el-col>
@@ -81,6 +88,17 @@
       var validatePass4 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入电话号码'));
+        } else if (value.length != 11) {
+          callback(new Error('手机号码格式不正确'));
+        } else {
+          callback();
+        }
+      };
+      var validatePass5 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入验证码'));
+        } else if (value != this.registerInfo.checkVeriCode) {
+          callback(new Error('验证码输入不正确'));
         } else {
           callback();
         }
@@ -91,6 +109,8 @@
           phoneNum: '',
           passPwd: '',
           checkPwd: '',
+          VeriCode: '',
+          checkVeriCode: ''
         },
         rules2: {
           passPwd: [
@@ -105,6 +125,9 @@
           phoneNum: [
             {validator: validatePass4, trigger: 'blur'}
           ],
+          VeriCode: [
+            {validator: validatePass5, trigger: 'blur'}
+          ],
         }
       };
     },
@@ -112,7 +135,7 @@
       submitRegister(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.post('http://localhost:3000/register', {
+            this.$axios.post(`${$LH.url}/register`, {
               accountName: this.registerInfo.nickName,
               phoneNo: this.registerInfo.phoneNum,
               password: this.registerInfo.passPwd
@@ -136,19 +159,28 @@
       },
       resetRegister(formName) {
         this.$refs[formName].resetFields();
+      },
+      checkVeriCode() {
+
+        this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}码&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     }
-
   }
 </script>
 
 <style scoped>
   #register {
     position: relative;
+    background-color: #f8f8f7;
   }
 
   #register .el-row {
-    /*height: 300px;*/
     height: 600px;
   }
 
@@ -157,20 +189,30 @@
 
   }
 
+  #register .box-card {
+    padding: 15px;
+    background-color: #fff;
+  }
+
+  #register .box-card .el-button {
+    background-color: #87d6c8;
+    border: 0;
+    width: 100%;
+    color: #fff;
+  }
+
   .a-color {
     color: #3ea000;
   }
 
-  #register .logoPic img{
+  #register .logoPic img {
     width: 10%;
   }
 
   #register .el-row .el-col {
     position: absolute;
     top: 50%;
-    /*left: 50%;*/
     transform: translate(0, -50%);
-    /*transform: translateX(-50%);*/
   }
 
   #register .el-col p {
