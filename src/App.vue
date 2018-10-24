@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: relative; overflow: hidden">
     <canvas ref="canvas"></canvas>
     <div id="app">
       <router-view/>
@@ -13,11 +13,11 @@
     props: {
       point: {
         type: Number,
-        default: 25 // 生成的星星（点）的个数, 默认25个
+        default: 15 // 生成的星星（点）的个数
       },
       lineColor: {
         type: String,
-        default: 'rgba(45,140,210,0.2)' // 线的颜色
+        default: 'rgba(45,140,210,0.4)' // 线的颜色
       },
       roundColor: {
         type: String,
@@ -216,15 +216,9 @@
     /*float: left;*/
   }
 
-  .starry-sky {
-    width: 100%;
-    height: 100%;
-  }
-
   canvas {
     position: absolute;
     width: 100%;
-    height: 100%;
-    z-index: -1;
+    height: 2000px;
   }
 </style>

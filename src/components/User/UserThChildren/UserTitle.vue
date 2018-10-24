@@ -48,7 +48,7 @@
   }
 
   #content {
-    /*height: 300px;*/
+    min-height: 300px;
     font-size: 18px;
     box-sizing: border-box;
   }

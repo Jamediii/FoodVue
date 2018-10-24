@@ -122,10 +122,12 @@
   @keyframes showUserName {
     from {
       font-size: 16px;
+      box-shadow: 0 0;
     }
     to {
       font-size: 14px;
       transform: translateY(-10px);
+      box-shadow: 1px 1px 3px #bdc321;
     }
   }
 

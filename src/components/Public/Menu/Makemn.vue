@@ -70,14 +70,14 @@
                   <el-input
                     placeholder="食材名称"
                     v-model="obj.Name">
-                    <i slot="suffix" class="ele-ico-third-caigoushicai"></i>
+                    <i slot="suffix" class="el-ico-third-caigoushicai"></i>
                   </el-input>
                 </el-col>
                 <el-col :span="6" :offset="2">
                   <el-input placeholder="数量"
                             type="number"
                             v-model="obj.Num">
-                    <i slot="suffix" class="ele-ico-third-shuzishurukuang"></i>
+                    <i slot="suffix" class="el-ico-third-shuzi"></i>
                   </el-input>
                 </el-col>
                 <el-col :span="2"
@@ -300,6 +300,10 @@
           this.form.steplist[fileSrc].stepPHName = simpleFile.name
         }
         console.log(simpleFile);
+        if (simpleFile.size /1024 / 1024 > 3) {
+          this.$message.error('上传图片大小不能超过 3MB(￣▽￣)"!');
+          return false;
+        }
         if (!/image\/\w+/.test(simpleFile.type)) {
           this.$notify.error({
             title: '错误',

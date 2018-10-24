@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import './assets/icon/iconfont.css'
 import App from './App'
 import router from './router'
 import axios from 'axios'
@@ -11,6 +10,8 @@ import Vuex from 'vuex'
 import store from './store/store.js'
 import jquery from 'jquery'
 // import animate from 'animate.css'
+
+import './assets/icon/iconfont.css'
 
 // Vue.use(animate);
 Vue.prototype.$axios = axios

@@ -68,21 +68,4 @@
 </script>
 
 <style scoped>
-  /*!*浮动清除*!*/
-  /*.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}*/
-  /*.clearfloat{zoom:1}*/
-
-  /*.el-menu-vertical-demo:not(.el-menu--collapse) {*/
-  /*width: 200px;*/
-  /*min-height: 300px;*/
-  /*}*/
-  /*.el-menu-vertical-demo {*/
-  /*float: left;*/
-  /*margin-left: calc(-100% - 400px);*/
-  /*height: 800px;*/
-  /*}*/
-  /*.content {*/
-  /*float: left;*/
-  /*width: 100%;*/
-  /*}*/
 </style>

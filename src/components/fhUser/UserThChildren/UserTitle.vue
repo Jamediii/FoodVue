@@ -6,13 +6,13 @@
           <router-link :to="`/fhuser/${userid}/recipe`"></router-link>
         </el-tab-pane>
 
-        <el-tab-pane label="拥有粉丝" name="fans">
+        <!--<el-tab-pane label="拥有粉丝" name="fans">
           <router-link :to="`/fhuser/${userid}/fans`"></router-link>
-        </el-tab-pane>
+        </el-tab-pane>-->
 
-        <el-tab-pane label="参加赛事" name="join">
+        <!--<el-tab-pane label="参加赛事" name="join">
           <router-link :to="`/fhuser/${userid}/join`"></router-link>
-        </el-tab-pane>
+        </el-tab-pane>-->
         <div id="content">
           <router-view :userid="userid" v-if="isRouterAlive"></router-view>
         </div>
@@ -49,7 +49,7 @@
     border: 1px solid #fdf6dc;
   }
   #content {
-    height: 300px;
+    min-height: 300px;
     font-size: 18px;
     box-sizing: border-box;
   }

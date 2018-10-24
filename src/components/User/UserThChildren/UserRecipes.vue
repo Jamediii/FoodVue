@@ -13,6 +13,7 @@
         <el-col :span="11">
           <div v-for="(data,key) in recipesY">
             <div class="receipeBox" @click="toDetailed(data.detailsId)">
+              <i>审核通过</i>
               <div class="receipeLeft">
                 <img :src="data.recipeCoverImg" width="30%" :alt="data.recipeName">
               </div>
@@ -21,7 +22,9 @@
                   <span>{{data.recipeName}}</span>
                 </div>
                 <div class="receipeBrief">
-
+                  <div>
+                    {{data.recipeBrief}}
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,7 +75,11 @@
         })
         .catch((err) => {
           console.log(err.message);
-        })
+        });
+      // 评论数 (过审菜谱才有)
+      this.$axios.post(`${$LH.url}/comment`,{
+
+      })
     },
     methods: {
       toDetailed(detailsId) {
@@ -103,13 +110,28 @@
   /* 有菜谱了 */
   .receipeBox {
     width: 100%;
+    height: 200px;
     margin-bottom: 10px;
+    padding: 10px;
     border: 1px solid #999999;
     position: relative;
     overflow: hidden;
   }
+
+  /* 过审图标 */
+  .receipeBox>i {
+    position: absolute;
+    font-style: normal;
+    color: red;
+    width: 100px;
+    height: 100px;
+    z-index: 20000;
+    right: 0;
+    top: 0;
+  }
+
   .receipeBox:hover {
-    animation: receipeY 300ms ease-in;
+    animation: receipeY 200ms ease-out;
     /* 设置停留在最后一帧 */
     animation-fill-mode: forwards;
   }
@@ -131,6 +153,11 @@
     position: absolute;
     left: 270px;
     top: 20px;
+  }
+
+  .receipeBrief {
+    padding-top: 20px;
+    padding-right: 20px;
   }
 
   .receipeName>span {
