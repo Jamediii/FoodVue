@@ -15,26 +15,28 @@
 
         <p>開始感受到炎炎夏日的威力,最適合來道麻辣開胃的川味料理,溫順椒香拌著麵條及軟嫩的雞腿肉,爽脆的黃瓜,交織出豐富層次~另人純垂涎三尺的美味</p>
         <!--<ul>-->
-          <!--<li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>-->
-          <!--<li><span class="glyphicon glyphicon glyphicon-heart"></span>点赞数</li>-->
-          <!--<li><span class="glyphicon glyphicon glyphicon-comment"></span>评论数</li>-->
+        <!--<li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>-->
+        <!--<li><span class="glyphicon glyphicon glyphicon-heart"></span>点赞数</li>-->
+        <!--<li><span class="glyphicon glyphicon glyphicon-comment"></span>评论数</li>-->
         <!--</ul>-->
       </el-col>
       <!--右边文章推荐部分-->
       <el-col class="ArticleRemRight" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 4">
-          <router-link :to="`/article_detail/${o.articleId}`">
-            <el-col :span="7" >
-              <img width="100px" :src="o.articleCoverImg" alt="">
-            </el-col>
-            <el-col :span="13 " :offset="4">
+
+          <el-col :span="7">
+            <img width="100px" :src="o.articleCoverImg" alt="">
+          </el-col>
+          <el-col :span="13 " :offset="4">
+            <router-link class="text-color" :to="`/article_detail/${o.articleId}`">
               <span>{{o.articleName}}</span>
-              <ul>
-                <li><span class="glyphicon glyphicon glyphicon-user"></span>{{o.authorName}}</li>
-                <li><span class="glyphicon glyphicon-heart"></span>{{o.articlePraiseNum}}</li>
-              </ul>
-            </el-col>
-          </router-link>
+            </router-link>
+            <ul>
+              <li><span class="glyphicon glyphicon glyphicon-user"></span>{{o.authorName}}</li>
+              <li><span class="glyphicon glyphicon-heart"></span>{{o.articlePraiseNum}}</li>
+            </ul>
+          </el-col>
+
         </el-card>
       </el-col>
     </el-row>
@@ -83,7 +85,6 @@
     margin-top: 40px;
   }
 
-
   #Sowingmap .block {
     width: 100%;
   }
@@ -119,10 +120,15 @@
   #Sowingmap .ArticleRemRight .el-card {
     /*padding: 10px;*/
     margin-bottom: 10px;
+    height:100%;
   }
 
   #Sowingmap .ArticleRemRight .el-card ul span {
     font-size: 14px;
+  }
+
+  #Sowingmap .ArticleRemRight img{
+    margin-bottom: 20px;
   }
 
   /*右边文章推荐部分结束*/

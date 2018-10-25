@@ -9,17 +9,19 @@
         </el-col>
       </el-row>
       <el-row class="activity" :gutter="20">
-        <el-col :span="6" :push="5" v-for="(o, index) in recentAct" :key="index" v-if="index < 2" :offset="index > 0 ? 3 : 0">
+        <el-col :span="6" v-for="(o, index) in recentAct" :key="index" v-if="index < 4">
           <el-card :body-style="{ padding: '0px' }">
-            <router-link :to="`/activity/${o.activityId}`">
-              <img :src="o.activityImg" class="image">
-              <div style="padding: 14px;">
+
+            <img :src="o.activityImg" class="image">
+            <div style="padding: 14px;">
+              <router-link :to="`/activity/${o.activityId}`">
                 <span>{{o.activityName}}</span>
-                <div class="bottom clearfix">
-                  <p>{{o.activityState}}</p>
-                </div>
+              </router-link>
+              <div class="bottom clearfix">
+                <p>{{o.activityState}}</p>
               </div>
-            </router-link>
+            </div>
+
           </el-card>
         </el-col>
       </el-row>
@@ -33,7 +35,7 @@
     name: "RecentActivities",
     data() {
       return {
-        recentAct:[],
+        recentAct: [],
       }
     },
     mounted() {
@@ -64,7 +66,7 @@
     font-size: 40px;
   }
 
-  #recentActivity .activity img{
+  #recentActivity .activity img {
     height: 200px;
     width: 100%;
   }

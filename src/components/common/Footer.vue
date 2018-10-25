@@ -6,7 +6,7 @@
         <p>爱上厨房，让你体验不同的厨房生活！</p>
         <p>推荐使用Chrome/火狐/IE9以上的浏览器</p>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <ul>
           <li><strong>逛食谱</strong></li>
           <li>热门食谱</li>
@@ -14,7 +14,7 @@
           <li>最爱家常菜</li>
         </ul>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="5">
         <ul>
           <li><strong>社区活动</strong></li>
           <li>达人推荐</li>
@@ -29,14 +29,11 @@
           <li>lxms@163.com</li>
         </ul>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="right">
         <ul>
           <li><strong>社交平台</strong></li>
           <li><span>微信</span><span>QQ</span><span>微博</span></li>
         </ul>
-      </el-col>
-      <el-col :span="1">
-        <i class="el-icon-caret-top"></i>
       </el-col>
 
     </el-row>
@@ -44,6 +41,7 @@
 </template>
 
 <script>
+
   export default {
     name: "Footer",
     
@@ -64,6 +62,7 @@
   #footer .el-col i, #footer .el-col span{
     border:1px solid #ccc;
     border-radius: 50%;
+
   }
   #footer .el-col i{
     font-size: 40px;
@@ -77,4 +76,6 @@
     display: inline-block;
     text-align: center;
   }
+
+
 </style>

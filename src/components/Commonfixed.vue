@@ -15,7 +15,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="javascript:void(0)">乐享食间</a>
+          <router-link class="navbar-brand" to="/">乐享食间</router-link>
 
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -48,7 +48,7 @@
             <li v-if="this.$store.state.isShow">
               <router-link to="/user">个人中心</router-link>
             </li>
-            <li v-if ="!this.$store.state.isShow">
+            <li v-if="!this.$store.state.isShow">
               <router-link to="/login">登录</router-link>
             </li>
             <li v-if="!this.$store.state.isShow">
@@ -56,7 +56,7 @@
             </li>
             <li style="margin-top: 15px;margin-left: 15px;" v-if="this.$store.state.isShow" class="navSetting">
               <el-dropdown>
-                  <span class="el-dropdown-link" >
+                  <span class="el-dropdown-link">
                     <a href="javascript:void(0)"><i class="el-icon-setting"></i></a>
                   </span>
                 <el-dropdown-menu slot="dropdown">
@@ -79,16 +79,17 @@
           <img src="../assets/Hlogo.png" width="100px" alt="">
         </el-col>
         <el-col class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3" :offset="2">
-          <select style="height:40px;width: 80%;border-radius: 4px;border-color:#dcdfe6;color:#606266;outline:none;" name="" id="">
+          <select style="height:40px;width: 80%;border-radius: 4px;border-color:#dcdfe6;color:#606266;outline:none;"
+                  name="" id="" >
             <option value="按食谱名称">按食谱名称</option>
             <option value="按食谱作者">按食谱作者</option>
           </select>
         </el-col>
         <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
-          <el-input style="height: 40px;width: 100%;" v-model="inputsel" @keyup="searchMathing" placeholder="请输入内容"/>
+          <el-input style="height: 40px;width: 100%;" v-model="inputsel" @keyup.native="searchMathing" placeholder="请输入内容"/>
           <div v-if="showlist" class="searchList">
             <ul>
-              <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index <= showMathing.length">
+              <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index < showMathing.length">
                 {{o.name}}
               </li>
             </ul>
@@ -104,6 +105,7 @@
         </el-col>
       </div>
     </el-row>
+
     <router-view></router-view>
 
   </div>
@@ -116,6 +118,7 @@
       $("li").removeClass("active");
       $(this).addClass("active");
     });
+
   });
   export default {
     name: "Commonfixed",
@@ -132,7 +135,7 @@
         // isLoginHide: true,
       }
     },
-    created(){
+    created() {
       this.$store.state.isShow = Boolean(localStorage.getItem("Flag") === 'isLogin')
     },
     mounted() {
@@ -145,6 +148,7 @@
         //   this.raNameBefore.push(sdata[i].accountName);
         // }
         this.checkData = res.data.data;
+        console.log(this.checkData);
       }).catch((err) => {
         console.log(err);
       });
@@ -153,11 +157,12 @@
     methods: {
       //退出登录
       exitEdit() {
-        localStorage.removeItem("Flag");
         this.$store.state.user.state = false;
         this.$alert('登录退出', '是否退出登录', {
           confirmButtonText: '确定',
           callback: () => {
+            localStorage.removeItem("Flag");
+            localStorage.removeItem("userId");
             this.$store.state.isShow = false;
             this.$store.state.isLoginHide = true;
             this.$router.push("/");
@@ -227,8 +232,8 @@
           //根据用户id跳转到用户相应的用户做的菜谱。。。。。
           this.$router.push("/fhuser/" + this.recipeSearchId);
         }
+      },
 
-      }
     },
 
 
@@ -238,11 +243,11 @@
 <style scoped>
   /*导航栏部分开始*/
   nav.navbar-default {
-    background-color: #fff;
+    /*background-color: #fff;*/
     margin-bottom: 0;
-    color:#8cccc1;
+    color: #8cccc1;
+    background: linear-gradient(to top,#daeae8 0%,#daeae800);
   }
-
 
   .navbar {
     border: 1px solid transparent;
@@ -250,8 +255,9 @@
   }
 
   nav.navbar-default .navbar-nav > .active > a {
-    color: #fff;
-    background-color: #8cccc1;
+    /*color: #fff;*/
+    /*background-color: #8cccc1;*/
+    background: linear-gradient(to top,#daeae800 0%,#daeae8);
   }
 
   nav .ulDown {
@@ -328,10 +334,10 @@
     background-color: #daeae8;
   }
 
-  #search{
+  #search {
     line-height: 144px;
   }
 
-
   /*与搜索栏替换的标题部分结束*/
+
 </style>

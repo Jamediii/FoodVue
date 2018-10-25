@@ -221,4 +221,8 @@
     width: 100%;
     height: 2000px;
   }
+
+  .text-color {
+    color:#303133;
+  }
 </style>

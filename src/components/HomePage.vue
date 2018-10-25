@@ -2,10 +2,12 @@
   <div>
     <app-commonfixed></app-commonfixed>
     <app-footer></app-footer>
+
   </div>
 </template>
 
 <script>
+
   import Commonfixed from './Commonfixed.vue'
   import Footer from './common/Footer.vue'
 export default {
@@ -17,7 +19,8 @@ export default {
   components:{
     'app-footer':Footer,
     'app-commonfixed':Commonfixed
-  }
+  },
+
 }
 </script>
 
@@ -37,4 +40,6 @@ li {
 a {
   color: #42b983;
 }
+
+
 </style>

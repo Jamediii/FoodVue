@@ -1,7 +1,8 @@
 <template>
   <!--最受欢迎食谱部分-->
   <div id="popRecipes" class="w">
-    <div class="icon-title"><p></p>每日编辑推荐</div>
+    <!--<div class="icon-title">每日编辑推荐</div>-->
+    <el-header >>>&nbsp;&nbsp;每日编辑推荐</el-header>
     <el-row :gutter="20">
       <div>
         <!--<el-col :span="3">&nbsp;</el-col>-->
@@ -57,7 +58,6 @@
         } else {
           this.$router.push('/login');
         }
-
       },
 
     }
@@ -81,12 +81,12 @@
 
   #popRecipes img {
     width: 100%;
-    height: 100%;
+    height: 220px;
   }
 
   #popRecipes div.icon-title {
     font-size: 16px;
-    color: #12937c;
+    color: #303133;
     margin-top: 20px;
   }
 
@@ -98,9 +98,17 @@
     border: 1px solid transparent;
     /*border-radius: 0;*/
   }
+  #popRecipes .el-header {
+    background-color: #8cccc1;
+    color: #333;
+    text-align: left;
+    line-height: 60px;
+    font-size: 16px;
+    color:#fff;
+  }
 
   .fontcolor {
-    color: #12937c;
+    color: #303133;
   }
 
 </style>

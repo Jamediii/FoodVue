@@ -1,7 +1,7 @@
 <template>
   <!--菜谱随意逛部分-->
-  <div id="recipesComm">
-    <el-row class="inner-RC">
+  <div id="recipesComm" class="w">
+    <el-row class="inner-RC" :gutter="20">
       <el-col class="irc-first" :span="24">
         <h2>总有一款适合你!</h2>
         <p>还拿不定主意吗？过来看看今日的菜谱推荐</p>
@@ -9,36 +9,40 @@
       </el-col>
 
       <!--切换显示两个菜谱-->
-      <el-col style="margin-top: 60px;" v-show="isShowRC" class="show-rc-two showrc w" :span="24">
-        <el-col :span="5" :push=6 v-for="(o,index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
-          <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="recipesRImg[index]" class="image">
-              <div style="padding: 14px;">
-                <span>{{recipesRName[index]}}</span>
-                <div class="bottom clearfix">
-                  <p>{{recipesRAuthor[index]}}</p>
-                </div>
+      <el-col style="margin-top: 80px;" v-show="isShowRC" class="show-rc-two showrc" :span="24">
+        <el-col :span="6" :push="4" v-for="(o,index) in 3" :key="o">
+
+          <el-card :body-style="{ padding: '0px' }">
+            <img :src="recipesRImg[index]" class="image">
+            <div style="padding: 14px;" class="left">
+              <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
+                <span style="white-space: nowrap">{{recipesRName[index]}}</span>
+              </router-link>
+              <div class="bottom clearfix">
+                <p>by&nbsp;{{recipesRAuthor[index]}}</p>
               </div>
-            </el-card>
-          </router-link>
+            </div>
+          </el-card>
+
         </el-col>
       </el-col>
 
       <!--切换显示三个菜谱-->
-      <el-col style="margin-top: 60px;" v-show="!isShowRC" class="show-rc-three showrc" :span="24">
-        <el-col :span="4" :push=2 v-for="(o, index) in 4" :key="o" :offset="index > 0 ? 1 : 0">
-          <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="recipesRImg[index]" class="image">
-              <div style="padding: 14px;">
+      <el-col style="margin-top: 80px;" v-show="!isShowRC" class="show-rc-three showrc" :span="24">
+        <el-col :span="6" v-for="(o, index) in 4" :key="o">
+
+          <el-card :body-style="{ padding: '0px' }">
+            <img :src="recipesRImg[index]" class="image">
+            <div style="padding: 14px;" class="left">
+              <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
                 <span>{{recipesRName[index]}}</span>
-                <div class="bottom clearfix">
-                  <p>{{recipesRAuthor[index]}}</p>
-                </div>
+              </router-link>
+              <div class="bottom clearfix">
+                <p>by&nbsp;{{recipesRAuthor[index]}}</p>
               </div>
-            </el-card>
-          </router-link>
+            </div>
+          </el-card>
+
         </el-col>
       </el-col>
     </el-row>
@@ -86,10 +90,8 @@
             this.recipesRImg.push("https://cp1.douguo.com/upload/caiku/5/6/9/yuan_5698cb4e6331389fd3de25f746f88299.jpg");
             this.recipesRName.push("草莓蛋糕卷");
             this.recipesRAuthor.push("NB轮回");
-            this.recipeRcomId.push(278);
+            this.recipeRcomId.push(272);
           }
-
-
         }
       }
     }
@@ -108,12 +110,12 @@
   }
 
   #recipesComm .inner-RC h2 {
-    font-size: 40px;
+    font-size: 30px;
   }
 
   #recipesComm .inner-RC .irc-first > p {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 18px;
   }
 
   #recipesComm .inner-RC .irc-first {
