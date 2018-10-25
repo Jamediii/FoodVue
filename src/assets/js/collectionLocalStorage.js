@@ -2,15 +2,22 @@
 export const collectionLS = {
   collection(detailsId) {
     if (localStorage) {
-      var detailsIds = "";
-      var len = localStorage.getItem("detailsIds");
-      if (!len) {
-        localStorage.setItem('detailsIds', detailsId);
+      let detailsIds = [];
+      let userId = localStorage.getItem('userId');
+      let len = JSON.parse(localStorage.getItem("detailsIds")); // 数组
+      if (len.length === 0) {
+        detailsIds.push({userId,collect:[detailsId]});
+        localStorage.setItem('detailsIds', JSON.stringify(detailsIds));
       } else {
-        detailsIds += localStorage.getItem("detailsIds") + "," + detailsId;
-        localStorage.setItem('detailsIds', detailsIds);
+        for(let i = 0; i < len.length; i++) {
+          if (len[i].userId === userId) {
+            len[i].collect.push(detailsId);
+          }else {
+            detailsIds.push({userId,collect:[detailsId]});
+          }
+        }
+        localStorage.setItem('detailsIds', JSON.stringify(detailsIds));
       }
-
     }
   }
 };

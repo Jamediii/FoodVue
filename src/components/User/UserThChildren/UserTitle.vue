@@ -8,7 +8,7 @@
         <el-tab-pane label="收藏宝典" name="collection">
           <router-link to="/user/collection"></router-link>
         </el-tab-pane>
-        <el-tab-pane label="拥有粉丝" name="fans">
+        <el-tab-pane label="关注达人" name="fans">
           <router-link to="/user/fans"></router-link>
         </el-tab-pane>
         <!--<el-tab-pane label="未完成草稿" name="draft"><router-link to="/user/draft"></router-link></el-tab-pane>-->

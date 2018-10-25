@@ -12,7 +12,7 @@
           </div>
           <p>建议不要加上类似人名的名称，例如"王小丫的厨房"，避免食谱名称过长</p>
           <input type="checkbox" v-model="flog">
-          <router-link to="/sitem">发布食谱即同意《乐享食间服务条款》</router-link>
+          发布食谱即同意<router-link to="/sitem">《乐享食间服务条款》</router-link>
           <br>
           <el-button style="width: 200px;" type="warning" @click="doMenu" :disabled="!flog">确定</el-button>
         </el-card>

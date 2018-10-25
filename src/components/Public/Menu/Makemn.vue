@@ -299,7 +299,6 @@
           var simpleFile = this.$refs[inputName][0].files[0];
           this.form.steplist[fileSrc].stepPHName = simpleFile.name
         }
-        console.log(simpleFile);
         if (simpleFile.size /1024 / 1024 > 3) {
           this.$message.error('上传图片大小不能超过 3MB(￣▽￣)"!');
           return false;
@@ -400,6 +399,25 @@
           });
         }).catch(() => {
           this.$message.error('上传失败,赶快看看是哪里出错了');
+        });
+      },
+      // 取消上传
+      cancelBtn() {
+        this.$confirm('此操作将永久删除该菜谱, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+          this.$router.push('/user/recipe');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出'
+          });
         });
       }
     },

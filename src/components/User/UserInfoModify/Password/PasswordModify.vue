@@ -80,8 +80,8 @@
         }
       };
       return {
+        userId: localStorage.getItem('userId'),
         active: 0,
-
         url: {
         //  密码校验
           checkPassUrl: `${$LH.url}/login`,
@@ -111,12 +111,13 @@
             method: 'post',
             url: _this.url.checkPassUrl,
             data:{
-              userPNo: _this.userid,
+              userPNo: _this.userId,
               userPwd: _this.ruleForm2.pass
             }
           }).then(result=>{
-            if (result.state) {
+            if (result.data.code === 200) {
               _this.active++;
+              _this.ruleForm2.pass = '';
             }else {
               _this.$message.error('密码校验错误,请重新输入');
             }
@@ -128,7 +129,22 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
+            this.$axios({
+              method: 'post',
+              url: `${$LH.url}/register/update`,
+              data: {
+                id: this.userId,
+                password: this.ruleForm2.pass
+              }
+            }).then(()=> {
+              this.$message({
+                message: '恭喜你，密码修改成功',
+                type: 'success'
+              });
+              this.$router.push('user/recipe');
+            }).catch(err => {
+              console.log(err);
+            });
           } else {
             console.log('error submit!!');
             return false;

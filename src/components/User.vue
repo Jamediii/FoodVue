@@ -96,7 +96,6 @@
       // 加载基本图片
       this.$axios.get(`${$LH.url}/recipes/basicPhoto`)
         .then(async result => {
-          console.log(result.data.data);
           this.basicHead = await result.data.data.userHeadPhoto;
           this.basicWall = await result.data.data.userSettingWall;
           if (!this.userInfo.headPhoto) {
@@ -150,12 +149,14 @@
           formData.append('file', simpleFile); // 图片
           this.$axios({
             method: 'post',
-            url: `${$LH.url}/users/setting/headPhoto`,
+            url: `${$LH.url}/users/setting/settingWall`,
             data: formData
           }).then((result) => {
             this.$message({
-              message: '上传成功!',
+              message: '背景上传成功!:D',
               type: 'success'
+            }).catch(err => {
+              this.$message.error('网络开了个小差,上传失败了呢!(っ °Д °;)っ');
             });
           });
         } else {
@@ -164,12 +165,14 @@
           formData.append('file', simpleFile); // 图片
           this.$axios({
             method: 'post',
-            url: `${$LH.url}/users/setting/settingWall`,
+            url: `${$LH.url}/users/setting/headPhoto`,
             data: formData
           }).then((result) => {
             this.$message({
-              message: '上传成功!',
+              message: '头像上传成功!:D',
               type: 'success'
+            }).catch(err => {
+              this.$message.error('网络开了个小差,上传失败了呢!(っ °Д °;)っ');
             });
           });
         }

@@ -53,7 +53,6 @@
       <!--用户头像 + 背景-->
       <app-ph :url="url" :form="form"></app-ph>
 
-
       <!-- 提交 -->
       <el-row>
         <el-col :span="16" :offset="4">
@@ -79,7 +78,7 @@
       return {
         // 提交路由
         url: {
-          basic: `${$LH.url}/users/setting`,
+          basic: `${$LH.url}/users/setting/userInfo`,
           headPhoto: `${$LH.url}/users/setting/headPhoto`,
           settingWall: `${$LH.url}/users/setting/settingWall`
         },
@@ -106,9 +105,11 @@
     },
     props: ['userid'],
     mounted() {
-      this.form.userId = this.userid;
-      this.$axios.get(`http://localhost:3000/users/${this.userid}`)
+      this.form.userId = localStorage.getItem('userId');
+      console.log(this.form.userId);
+      this.$axios.get(`${$LH.url}/users/${this.form.userId}`)
         .then(result => {
+          console.log(result.data.data);
           this.form.name = result.data.data[0].accountName;
           this.form.phoneNo = result.data.data[0].phoneNo;
           if (result.data.data[0].sex === null || result.data.data[0].sex === '男') {
@@ -129,30 +130,22 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
             let _this = this;
-            // // 基本信息上传
-            // this.$axios({
-            //   method: 'post',
-            //   url: _this.url.basic,
-            //   data: _this.form
-            // }).then(res => {
-            //   console.log(res.data);
-            // }).catch(err => {
-            //   console.log(err);
-            // });
-
-
-            // // 头像上传
-            // this.$axios({
-            //   method: 'post',
-            //   url: _this.url.headPhoto,
-            //   data: _this.formHead
-            // }).then(res => {
-            //   console.log(res.data);
-            // }).catch(err => {
-            //   console.log(err);
-            // });
+            // 基本信息上传
+            this.$axios({
+              method: 'post',
+              url: _this.url.basic,
+              data: _this.form
+            }).then(res => {
+              console.log(res.data);
+            }).catch(err => {
+              console.log(err);
+            });
+            this.$message({
+              message: '恭喜你，信息修改成功',
+              type: 'success'
+            })
+            this.$router.push('/user/recipe');
           } else {
             console.log('error submit!!');
             return false;

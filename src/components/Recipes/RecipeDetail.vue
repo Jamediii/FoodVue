@@ -1,9 +1,9 @@
 <template>
   <!--菜谱详情-->
-  <div id="container" class="w" >
+  <div id="container" class="w">
     <p style="color: transparent">111</p>
-    <el-row :gutter="20" >
-      <el-col :span="18" >
+    <el-row :gutter="20">
+      <el-col :span="18">
         <el-container>
           <el-header>
               <span style="font-weight: bold;font-size: 25px">
@@ -69,6 +69,8 @@
     },
     data() {
       return {
+        // 用户Id
+        userId: '',
         //菜谱详情表内数据
         detailsId: '',
         recipeName: '',
@@ -100,6 +102,8 @@
       }
     },
     created() {
+      // 获取用户Id
+      this.userId = localStorage.getItem('userId');
       //根据id获取的菜谱
       this.$axios.get(`${$LH.url}/recipes/details/` + this.p_recipeId)
         .then((res) => {
@@ -128,19 +132,34 @@
         .catch(function (err) {
           console.log(err)
         });
-      this.WXConfig.wxShowMenu();
+      // 获取存储
+      let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
+      let userId = this.userId;
+      // detailsIdsArray存在的情况下
+      if (detailsIdsArray) {
+        for (let i = 0; i < detailsIdsArray.length; i++) {
+          if (detailsIdsArray[i].userId === userId) {
+            for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
+              console.log(detailsIdsArray[i].collect[j] === this.p_recipeId);
+              if (detailsIdsArray[i].collect[j] === this.p_recipeId) {
+                $("#addColBtn span").text("已收藏");
+              }
+            }
+          }
+        }
+      }
     },
     methods: {
       //添加评论
       addComment() {
-        if(this.$store.state.user.state){
+        if (this.$store.state.user.state) {
           this.$axios.post(`${$LH.url}/comment/addComment`, {
             userId: this.$store.state.user.userId,
             userComment: this.userComm,
             detailsId: this.p_recipeId
           })
             .then((res) => {
-              if(res.data.data){
+              if (res.data.data) {
                 this.$axios.post(`${$LH.url}/comment/showConmment`, {
                   menu_Id: this.p_recipeId
                 })
@@ -155,22 +174,89 @@
             .catch(function (err) {
               console.log(err)
             });
-        }else{
+        } else {
           this.$router.push('/login');
         }
 
       },
-      //加入收藏
-      addCollection(){
-        if(this.$store.state.user.state){
-          $("#addColBtn span").text("已收藏");
-          collectionLS.collection(this.p_recipeId);
-        }else{
-          this.$router.push('/login');
+      //加入收藏 + 取消收藏
+      addCollection() {
+        // 登录状态
+        if (localStorage.getItem("Flag") === 'isLogin') {
+          // 获取Id
+          let userId = this.userId;
+          // 获取存储 -- 存在 / 不存在
+          let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
+          // 加入收藏
+          if ($("#addColBtn span").text() === '收藏') {
+            // 一开始就有保存其他人的 === 存在
+            if (detailsIdsArray != null) {
+              for (let i = 0; i < detailsIdsArray.length; i++) {
+                if (detailsIdsArray[i].userId === userId) {
+                  detailsIdsArray[i].collect.push(this.p_recipeId);
+                } else {
+                  detailsIdsArray.push({userId, collect: [this.p_recipeId]});
+                }
+              }
+            } else {
+              //  ==== 不存在
+              let newArray = [];
+              newArray.push({userId, collect: [this.p_recipeId]});
+              $("#addColBtn span").text("已收藏");
+              this.$notify({
+                title: '成功',
+                message: '收藏宝典成功!d=====(￣▽￣*)b',
+                type: 'success'
+              });
+              localStorage.setItem('detailsIds', JSON.stringify(newArray));
+              return;
+            }
+            $("#addColBtn span").text("已收藏");
+            this.$notify({
+              title: '成功',
+              message: '收藏宝典成功!d=====(￣▽￣*)b',
+              type: 'success'
+            });
+          } else {
+            //  取消收藏 ---- 收藏过的情况下 detailsIdsArray存在的情况下
+            for (let i = 0; i < detailsIdsArray.length; i++) {
+              if (detailsIdsArray[i].userId === userId) {
+                for(let j = 0; j < detailsIdsArray[i].collect.length; j++) {
+                  if (detailsIdsArray[i].collect[j] === this.p_recipeId) {
+                    this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+                      confirmButtonText: '确定',
+                      cancelButtonText: '取消',
+                      type: 'warning'
+                    }).then(() => {
+                      this.$notify({
+                        title: '成功',
+                        message: '取消收藏成功!(っ °Д °;)っ',
+                        type: 'success'
+                      });
+                      detailsIdsArray[i].collect.splice(j,1);
+                      $("#addColBtn span").text('收藏');
+                    }).catch(() => {
+                      this.$message({
+                        type: 'info',
+                        message: '取消操作'
+                      });
+                    });
+                  }
+                }
+              }
+            }
+          }
+          localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+        } else {
+          // 未登录状态
+          this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push('/login');
+            }
+          });
         }
       },
-
-
     }
   }
 </script>
@@ -221,7 +307,8 @@
   .el-col {
     border-radius: 4px;
   }
-  .commentTxt{
+
+  .commentTxt {
     line-height: 16px;
     text-align: left;
     margin-bottom: 20px;

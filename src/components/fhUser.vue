@@ -35,10 +35,8 @@
         <!--等级-->
         <!--经验-->
 
-        <!--去用户修改页面-->
-        <router-link to="/modifyinfo">
-          <el-button class="chang-userInfo">编辑</el-button>
-        </router-link>
+        <!--关注粉丝-->
+        <el-button class="chang-userInfo" @click.native="joinFans">{{concern}}<i class="el-icon-star-on"></i></el-button>
       </div>
 
       <div style="margin-top: 80px">
@@ -58,6 +56,8 @@
         basicHead: '', // 基础头像
         basicWall: '', // 基础背景图片
         userId: '', // 我的id
+        // 关注 / 已关注
+        concern: '关注',
         userInfo: {
           headPhoto: '',
           settingWall: ''
@@ -93,12 +93,23 @@
         .catch(err => {
           console.log(err);
         });
+      // 看是否有关注
+      this.$axios.get(`${$LH.url}/users/queryFans/${localStorage.getItem('userId')}/${this.userId}`)
+        .then(result => {
+          console.log(result.data.data[0]);
+          if (!result.data.data[0]) {
+            this.concern = '关注'
+          }else {
+            this.concern = '已关注'
+          }
+        })
+        .catch()
     },
     components: {
       'app-userth': UserTh,
     },
     methods: {
-      // 预览 + 上传
+      // 预览
       changeBg(inputName, fileSrc) {
         if (typeof FileReader == 'undefined') {
           this.$notify.error({
@@ -127,6 +138,46 @@
           console.log(fileSrc);
           _this.userInfo[fileSrc] = this.result;
         };
+      },
+      // 关注
+      joinFans() {
+        //用户的Id
+        let userId = localStorage.getItem('userId');
+        // 关注的Id
+        let fansId = this.userId;
+        if (this.concern === '关注') {
+          // 去关注
+          this.$axios.get(`${$LH.url}/users/joinFans/${userId}/${fansId}`)
+            .then(() => {
+              this.$message({
+                message: '关注成功ԅ(¯﹃¯ԅ)',
+                type: 'success'
+              });
+              this.concern = '已关注';
+            })
+            .catch(err => {
+              this.$notify.error({
+                title: '错误',
+                message: '似乎网络开了点小差呢,关注失败了ㄟ( ▔, ▔ )ㄏ'
+              });
+            });
+        }else {
+          // 取关
+          this.$axios.get(`${$LH.url}/users/abolishFans/${userId}/${fansId}`)
+            .then(() => {
+              this.$message({
+                message: '取消关注成功ヽ(*。>Д<)o゜',
+                type: 'success'
+              });
+              this.concern = '关注';
+            })
+            .catch(err => {
+              this.$notify.error({
+                title: '错误',
+                message: '似乎网络开了点小差呢,取消关注失败了ㄟ( ▔, ▔ )ㄏ'
+              });
+            });
+        }
       }
     }
   }
