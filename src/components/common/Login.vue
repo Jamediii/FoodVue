@@ -1,8 +1,8 @@
 <template>
   <!--登录-->
   <div id="login">
-    <div class="w">
-      <el-row>
+    <div class="w animated fadeInLeft">
+      <el-row :style="`height:${Screenheight}px`">
         <el-col :span="8" :offset="1">
           <div>
             <img src="../../assets/login.png" alt="">
@@ -24,7 +24,8 @@
                   <el-input type="password" v-model="ruleForm2.checkPass" placeHolder="请输入密码"
                             autocomplete="off"></el-input>
                 </el-form-item>
-
+                <p style="font-size:14px;" class="left"><a href="javascript:void(0)">忘记密码?</a></p>
+                <br/>
                 <el-form-item>
                   <el-button class="left" type="primary" @click="submitForm('ruleForm2')">登录</el-button>
                   <el-button class="right" type="primary" @click="resetForm('ruleForm2')">重置</el-button>
@@ -33,7 +34,7 @@
                 </el-form-item>
 
               </el-form>
-              <P style="font-size:16px;">使用第三方登录></P>
+
             </div>
           </el-card>
         </el-col>
@@ -66,6 +67,7 @@
       };
 
       return {
+        Screenheight : window.screen.availHeight,
         ruleForm2: {
           pass: '',
           checkPass: '',
@@ -136,14 +138,8 @@
     background-color: #f8f8f7;
   }
 
-  #login .el-row {
-    height: 600px;
-    /*line-height: 600px;*/
-
-  }
-
   #login .el-row .clearfix span {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   #login .el-row .clearfix span > a {
@@ -156,6 +152,7 @@
 
   #login .box-card .el-form-item{
     clear:both;
+
   }
   #login .box-card .el-button {
 
@@ -179,7 +176,7 @@
     font-size: 20px;
     /*background-color: #ec5541;*/
     margin: 0 auto;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
   }
 
   #login .el-col .el-form-item {

@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <!--最新版本的 Bootstrap 核心 CSS 文件-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
@@ -73,7 +72,6 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-
     <!--搜索部分-->
     <el-row id="search">
       <div class="w">
@@ -81,13 +79,13 @@
           <img src="../assets/Hlogo.png" width="100px" alt="">
         </el-col>
         <el-col class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3" :offset="2">
-          <select style="height:40px;width: 80%;" name="" id="">
+          <select style="height:40px;width: 80%;border-radius: 4px;border-color:#dcdfe6;color:#606266;outline:none;" name="" id="">
             <option value="按食谱名称">按食谱名称</option>
             <option value="按食谱作者">按食谱作者</option>
           </select>
         </el-col>
         <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
-          <input style="height: 40px;width: 100%;" v-model="inputsel" @keyup="searchMathing" placeholder="请输入内容"/>
+          <el-input style="height: 40px;width: 100%;" v-model="inputsel" @keyup="searchMathing" placeholder="请输入内容"/>
           <div v-if="showlist" class="searchList">
             <ul>
               <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index <= showMathing.length">
@@ -105,14 +103,13 @@
           </router-link>
         </el-col>
       </div>
-
     </el-row>
     <router-view></router-view>
+
   </div>
 </template>
 
 <script>
-
   $(function () {
     //添加选中样式
     $("nav.navbar-default .nav>li").click(function () {
@@ -331,14 +328,10 @@
     background-color: #daeae8;
   }
 
-  #search, #projTitle .el-col > span {
+  #search{
     line-height: 144px;
   }
 
-  #projTitle .el-col > span {
-    font-size: 50px;
-    font-family: "楷体";
-  }
 
   /*与搜索栏替换的标题部分结束*/
 </style>

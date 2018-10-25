@@ -59,7 +59,7 @@
 <script>
   import RecipeFoodTable from './RecipeFoodTable'
   import RecipeStep from './RecipeStep'
-  import {collectionLS} from '../../assets/collectionLocalStorage.js'
+  import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
 
   export default {
     name: "RecipeDetail",
@@ -128,6 +128,7 @@
         .catch(function (err) {
           console.log(err)
         });
+      this.WXConfig.wxShowMenu();
     },
     methods: {
       //添加评论
@@ -167,7 +168,9 @@
         }else{
           this.$router.push('/login');
         }
-      }
+      },
+
+
     }
   }
 </script>

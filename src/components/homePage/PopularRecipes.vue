@@ -1,44 +1,34 @@
 <template>
   <!--最受欢迎食谱部分-->
-  <div id="popRecipes">
-    <el-row class="bg1">
-      <p></p>
-      <h2>最受欢迎食谱</h2>
-      <div class="w">
-        <el-col>
-          <el-col >
-            <!--<el-col :span="3">&nbsp;</el-col>-->
-            <el-col :span="4" v-for="(o, index) in recipepop" :key="index" v-if="index < 5" :offset="index > 0 ? 1 : 0">
-              <el-card :body-style="{ padding: '0px' }">
-                <img :src="o.recipeCoverImg" class="image">
-                <div style="padding: 14px;">
-                  <router-link :to="`recipe_detail/${o.detailsId}`">
-                  <span>{{o.recipeName}}  <span style="color:#FF7979;"
-                                                class="glyphicon glyphicon-heart">
-
-                  </span>  {{o.recipePraiseNum}}</span>
-                  </router-link>
-                  <div class="bottom clearfix">
-
-                    <p><span style="color:#FF7979;" class="glyphicon glyphicon-user"></span> {{o.accountName}}
-                      <!--<button class="right" @click="addcollection(o.detailsId)">收藏</button>-->
-                    </p>
-                  </div>
-                </div>
-              </el-card>
-
-            </el-col>
-          </el-col>
+  <div id="popRecipes" class="w">
+    <div class="icon-title"><p></p>每日编辑推荐</div>
+    <el-row :gutter="20">
+      <div>
+        <!--<el-col :span="3">&nbsp;</el-col>-->
+        <el-col class="showRecipe" :span="6" v-for="(o, index) in recipepop" :key="index" v-if="index < 8">
+          <el-card shadow="hover" :body-style="{ padding: '0px' }">
+            <img :src="o.recipeCoverImg" class="image im">
+            <div style="padding: 14px;">
+              <router-link :to="`recipe_detail/${o.detailsId}`">
+                  <span>{{o.recipeName}}
+                    <span style="color:#FF7979;" class="glyphicon glyphicon-heart"></span> {{o.recipePraiseNum}}</span>
+              </router-link>
+              <div class="bottom clearfix">
+                by&nbsp;<span>{{o.accountName}}</span>
+                <!--<button class="right" @click="addcollection(o.detailsId)">收藏</button>-->
+              </div>
+            </div>
+          </el-card>
         </el-col>
       </div>
-
     </el-row>
   </div>
 </template>
 
 <script>
   //导入收藏，数据传到本地
-  import {collectionLS} from '../../assets/collectionLocalStorage.js'
+  import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
+
 
   export default {
     name: "PopularRecipes",
@@ -62,46 +52,55 @@
     methods: {
       //收藏,将数据传到本地
       addcollection(id) {
-        if(this.$store.state.user.state){
+        if (this.$store.state.user.state) {
           collectionLS.collection(id);
-        }else{
+        } else {
           this.$router.push('/login');
         }
 
-      }
+      },
 
     }
   }
+
 </script>
 
 <style scoped>
   #popRecipes {
-    margin-top: 20px;
+    height: 760px;
+    margin-top: 40px;
     position: relative;
   }
 
-  #popRecipes .bg1 {
-    height: 540px;
-    background: url("../../assets/bg_pic.png") center no-repeat;
-  }
+  /*#popRecipes .icon-title {*/
+  /*width: 50px;*/
+  /*height: 50px;*/
+  /*background: url("../../assets/icon_sakura.png") center no-repeat;*/
+  /*margin: 10px auto;*/
+  /*}*/
 
-  #popRecipes .bg1 > p {
-    width: 100px;
-    height: 100px;
-    background: url("../../assets/icon_sakura.png") center no-repeat;
-    margin: 10px auto;
-  }
-
-  #popRecipes .bg1 img {
+  #popRecipes img {
     width: 100%;
-    height: 200px;
+    height: 100%;
   }
 
-  #popRecipes .bg1 h2 {
-    text-align: center;
-    font-size: 40px;
+  #popRecipes div.icon-title {
+    font-size: 16px;
+    color: #12937c;
     margin-top: 20px;
   }
 
+  #popRecipes .showRecipe {
+    margin-top: 16px;
+  }
+
+  #popRecipes .showRecipe .el-card {
+    border: 1px solid transparent;
+    /*border-radius: 0;*/
+  }
+
+  .fontcolor {
+    color: #12937c;
+  }
 
 </style>

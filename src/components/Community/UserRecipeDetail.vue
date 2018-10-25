@@ -55,7 +55,7 @@
 <script>
   import UserRecipeFoodTable from './UserRecipeFoodTable'
   import UserRecipeStep from './UserRecipeStep'
-  import {collectionLS} from '../../assets/collectionLocalStorage.js'
+  import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
   export default {
     name: "UserRecipeDetail",
     components:{

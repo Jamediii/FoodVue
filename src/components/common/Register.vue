@@ -1,7 +1,7 @@
 <template>
   <div id="register">
-    <div class="w">
-      <el-row>
+    <div class="w animated fadeInLeft ">
+      <el-row :style="`height:${screenHeightr}px;`">
         <el-col :span="8" :offset="12">
           <div>
             <img src="../../assets/login.png" alt="">
@@ -97,20 +97,21 @@
       var validatePass5 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入验证码'));
-        } else if (value != this.registerInfo.checkVeriCode) {
+        } else if (value != 654654) {
           callback(new Error('验证码输入不正确'));
         } else {
           callback();
         }
       };
       return {
+        screenHeightr:window.screen.availHeight,
         registerInfo: {
           nickName: '',
           phoneNum: '',
           passPwd: '',
           checkPwd: '',
           VeriCode: '',
-          checkVeriCode: ''
+          checkVeriState: ''
         },
         rules2: {
           passPwd: [
@@ -141,12 +142,14 @@
               password: this.registerInfo.passPwd
             })
               .then((res) => {
-                this.$alert('注册成功！！', '注册信息', {
-                  confirmButtonText: '确定',
-                  callback: () => {
-                    this.$router.push('/login');
-                  }
-                });
+                if(this.registerInfo.checkVeriState == 200){
+                  this.$alert('注册成功！！', '注册信息', {
+                    confirmButtonText: '确定',
+                    callback: () => {
+                      this.$router.push('/login');
+                    }
+                  });
+                }
               })
               .catch(function (error) {
                 console.log(error);
@@ -161,10 +164,10 @@
         this.$refs[formName].resetFields();
       },
       checkVeriCode() {
-
-        this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}码&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
+        this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
           .then((res) => {
-            console.log(res);
+              this.registerInfo.checkVeriState=res.status;
+            console.log(res.status);
           })
           .catch(function (error) {
             console.log(error);
@@ -179,11 +182,6 @@
     position: relative;
     background-color: #f8f8f7;
   }
-
-  #register .el-row {
-    height: 600px;
-  }
-
   .titleStyle {
     font-size: 16px;
 

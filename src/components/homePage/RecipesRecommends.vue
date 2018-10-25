@@ -9,7 +9,7 @@
       </el-col>
 
       <!--切换显示两个菜谱-->
-      <el-col v-show="isShowRC" class="show-rc-two showrc w" :span="24">
+      <el-col style="margin-top: 60px;" v-show="isShowRC" class="show-rc-two showrc w" :span="24">
         <el-col :span="5" :push=6 v-for="(o,index) in 3" :key="o" :offset="index > 0 ? 2 : 0">
           <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
             <el-card :body-style="{ padding: '0px' }">
@@ -26,7 +26,7 @@
       </el-col>
 
       <!--切换显示三个菜谱-->
-      <el-col v-show="!isShowRC" class="show-rc-three showrc" :span="24">
+      <el-col style="margin-top: 60px;" v-show="!isShowRC" class="show-rc-three showrc" :span="24">
         <el-col :span="4" :push=2 v-for="(o, index) in 4" :key="o" :offset="index > 0 ? 1 : 0">
           <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
             <el-card :body-style="{ padding: '0px' }">
@@ -76,10 +76,20 @@
         this.recipeRcomId = [];
         // console.log(start);
         for (var i = start; i < rom; i++) {
-          this.recipesRImg.push(rcData[i].recipeCoverImg);
-          this.recipesRName.push(rcData[i].recipeName);
-          this.recipesRAuthor.push(rcData[i].accountName);
-          this.recipeRcomId.push(rcData[i].detailsId);
+          if (rcData[i]) {
+            this.recipesRImg.push(rcData[i].recipeCoverImg);
+            this.recipesRName.push(rcData[i].recipeName);
+            this.recipesRAuthor.push(rcData[i].accountName);
+            this.recipeRcomId.push(rcData[i].detailsId);
+          } else {
+            console.log(rcData[i]);
+            this.recipesRImg.push("https://cp1.douguo.com/upload/caiku/5/6/9/yuan_5698cb4e6331389fd3de25f746f88299.jpg");
+            this.recipesRName.push("草莓蛋糕卷");
+            this.recipesRAuthor.push("NB轮回");
+            this.recipeRcomId.push(278);
+          }
+
+
         }
       }
     }
@@ -113,6 +123,21 @@
   #recipesComm .inner-RC .showrc img {
     height: 200px;
     width: 100%;
+  }
+
+  /*旋转效果*/
+  #recipesComm .irc-first {
+    position: relative;
+  }
+
+  #recipesComm .irc-first #changRe {
+    transition: all 1s;
+    position: absolute;
+    z-index: 999999999;
+  }
+
+  #recipesComm .irc-first #changRe:hover {
+    transform: rotate(180deg);
   }
 
   /*#recipesComm .showrc .el-card img:hover {*/

@@ -2,7 +2,7 @@
   <div id="footer">
     <el-row class="w">
       <el-col :span="6">
-        <img src="../../assets/Hlogo.png" width="100" alt="">
+        <!--<img src="../../assets/Hlogo.png" width="100" alt="">-->
         <p>爱上厨房，让你体验不同的厨房生活！</p>
         <p>推荐使用Chrome/火狐/IE9以上的浏览器</p>
       </el-col>

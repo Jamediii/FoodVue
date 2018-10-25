@@ -5,7 +5,7 @@
       <!--轮播图部分-->
       <el-col :xs="24" :sm="24" :md="16" :lg="17" :xl="17">
         <div class="block">
-          <el-carousel>
+          <el-carousel height="400px">
             <el-carousel-item v-for="(item,index) in imgs" :key="index">
               <img :src="item.pic" alt="">
               <!--<router-link to="/recipe_detail"></router-link>-->
@@ -22,7 +22,7 @@
       </el-col>
       <!--右边文章推荐部分-->
       <el-col class="ArticleRemRight" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
-        <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 3">
+        <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 4">
           <router-link :to="`/article_detail/${o.articleId}`">
             <el-col :span="7" >
               <img width="100px" :src="o.articleCoverImg" alt="">
@@ -83,12 +83,12 @@
     margin-top: 40px;
   }
 
+
   #Sowingmap .block {
     width: 100%;
   }
 
   #Sowingmap .block img {
-    height: 460px;
     width: 100%;
   }
 
