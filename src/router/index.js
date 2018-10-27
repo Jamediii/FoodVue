@@ -31,6 +31,8 @@ import RecipeDetail from'../components/Recipes/RecipeDetail.vue'
 import RecipeAuthor from '../components/Recipes/RecipeAuthor.vue'
 //导入服务条款
 import ServerItem from "../components/Public/ServerItem.vue"
+//导入注册协议
+import RegistrationAgreement from '../components/common/RegistrationAgreement.vue'
 //导入分类的列表
 import RecipeClassList from '../components/Recipes/recipeClassList.vue'
 
@@ -146,9 +148,9 @@ export default new Router({
           name: 'fhUser',
           component: fhUser,
           children: fhBrowseUser,
-          meta:{
-            isLogin:true
-          }
+          // meta:{
+          //   isLogin:true
+          // }
         },
         // 用户是否真的要制作菜谱路由
         {
@@ -205,6 +207,12 @@ export default new Router({
       meta:{
         isLogin:true
       }
+    },
+    //注册协议
+    {
+      path: '/regagreement',
+      name: 'RegistrationAgreement',
+      component: RegistrationAgreement,
     }
   ],
   mode:'history'

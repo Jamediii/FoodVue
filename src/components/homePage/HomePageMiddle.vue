@@ -27,7 +27,7 @@
         // console.log(scrollT);
         $("#recipesComm").offset({"top":scrollT});
       }
-      console.log($(window).scrollTop());
+      // console.log($(window).scrollTop());
 
       if($(window).scrollTop() <=200){
         $("#topArrow").css("display","none");

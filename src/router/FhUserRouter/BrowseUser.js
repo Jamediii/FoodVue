@@ -10,22 +10,22 @@ export const fhBrowseUser = [
   {
     path: 'recipe',
     component: userRecipe,
-    meta:{
-      isLogin:true
-    }
+    // meta:{
+    //   isLogin:true
+    // }
   },
   {
     path: 'fans',
     component: userFans,
-    meta:{
-      isLogin:true
-    }
+    // meta:{
+    //   isLogin:true
+    // }
   },
   {
     path: 'join',
     component: userJoin,
-    meta:{
-      isLogin:true
-    }
+    // meta:{
+    //   isLogin:true
+    // }
 },
 ];

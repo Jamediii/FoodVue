@@ -38,6 +38,12 @@
                             autocomplete="off"></el-input>
                   <el-button type="primary" @click="checkVeriCode" style="width: 45%" class="right">获取验证码</el-button>
                 </el-form-item>
+               <p>
+                  <input type="checkbox" v-model="beSureReg">
+                  我已经阅读并且同意，
+                  <router-link style="color:#337ab7" to="/regagreement">乐享美食注册协议</router-link>
+                </p>
+                <br/>
                 <el-form-item>
                   <el-button class="left" type="primary" @click="submitRegister('registerInfo')">提交</el-button>
                   <!--<el-button class="right" type="primary" @click="resetRegister('registerInfo')">重置</el-button>-->
@@ -56,6 +62,7 @@
 </template>
 
 <script>
+
   export default {
     name: "Register",
     data() {
@@ -104,15 +111,17 @@
         }
       };
       return {
-        screenHeightr:window.screen.availHeight,
+        screenHeightr: window.screen.availHeight,
         registerInfo: {
           nickName: '',
           phoneNum: '',
           passPwd: '',
           checkPwd: '',
           VeriCode: '',
-          checkVeriState: ''
+          checkVeriState: '',
+
         },
+        beSureReg: false,
         rules2: {
           passPwd: [
             {validator: validatePass, trigger: 'blur'}
@@ -135,21 +144,21 @@
     methods: {
       submitRegister(formName) {
         this.$refs[formName].validate((valid) => {
-          if (valid) {
+          if (valid && this.registerInfo.checkVeriState == 200 && this.beSureReg) {
             this.$axios.post(`${$LH.url}/register`, {
               accountName: this.registerInfo.nickName,
               phoneNo: this.registerInfo.phoneNum,
               password: this.registerInfo.passPwd
             })
               .then((res) => {
-                if(this.registerInfo.checkVeriState == 200){
-                  this.$alert('注册成功！！', '注册信息', {
-                    confirmButtonText: '确定',
-                    callback: () => {
-                      this.$router.push('/login');
-                    }
-                  });
-                }
+
+                this.$alert('注册成功！！', '注册信息', {
+                  confirmButtonText: '确定',
+                  callback: () => {
+                    this.$router.push('/login');
+                  }
+                });
+
               })
               .catch(function (error) {
                 console.log(error);
@@ -166,14 +175,15 @@
       checkVeriCode() {
         this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
           .then((res) => {
-              this.registerInfo.checkVeriState=res.status;
+            this.registerInfo.checkVeriState = res.status;
             console.log(res.status);
           })
           .catch(function (error) {
             console.log(error);
           });
       }
-    }
+    },
+
   }
 </script>
 
@@ -182,6 +192,7 @@
     position: relative;
     background-color: #f8f8f7;
   }
+
   .titleStyle {
     font-size: 16px;
 
@@ -227,5 +238,10 @@
   #register .el-col .el-form-item .el-input {
     /*text-align: center;*/
     width: 100%;
+  }
+
+  #register .el-col .el-form-item .agreen{
+    font-size: 14px;
+    font-style: normal;
   }
 </style>
