@@ -1,7 +1,9 @@
 <template>
+  <!--<link rel="stylesheet" type="text/css" href="../../../static/css/style.css" />-->
   <!--菜谱分类列表详情-->
   <div id="recipeCList"  class="w">
     <p style="height:20px;"></p>
+    <div>
     <el-row :gutter="20">
       <!--右侧菜谱部分-->
       <el-col :span="18">
@@ -17,13 +19,13 @@
                   <el-col :span="15" :offset="1">
                     <h3>{{o.recipeName}}</h3>
                     <p style="
-             display: -webkit-box;
-              white-space: pre-wrap;
-              word-wrap: break-word;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              -webkit-box-orient: vertical;
-              -webkit-line-clamp:4;margin-top:20px;"
+                     display: -webkit-box;
+                      white-space: pre-wrap;
+                      word-wrap: break-word;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp:4;margin-top:20px;"
                        class="rclBrief">{{o.recipeBrief}}</p>
                     <p>
                       <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
@@ -66,14 +68,19 @@
         </div>
       </el-col>
     </el-row>
+    </div>
   </div>
 </template>
 
 <script>
   // 导入分页组件
   // import PageNation from '../common/PageNation.vue'
+
   export default {
     name: "recipeClassList",
+    components:{
+
+    },
     data() {
       return {
         recipeClassOne: [],//所有的数据
@@ -149,6 +156,7 @@
   }
 </script>
 
+
 <style scoped>
   #recipeCList .el-header {
     background-color: #8cccc1;
@@ -188,4 +196,5 @@
     width: 100%;
     margin-bottom: 20px;
   }
+
 </style>

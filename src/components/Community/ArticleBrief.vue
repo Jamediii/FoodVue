@@ -26,7 +26,7 @@
               </span><span>……</span>
             </el-main>
             <el-footer>
-              <el-button style="background-color: #8cccc1;"><router-link tag="span" :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
+              <el-button style="background-color: #8cccc1;color: white"><router-link tag="span" :to="{path:'/article_detail/' + item.articleId}">继续阅读</router-link></el-button>
             </el-footer>
           </el-container>
         </el-container>
@@ -157,13 +157,13 @@
     border-right: 6px solid white;
     border-bottom: 6px solid white;
     border-top: 6px solid white;
-    border-left: 6px solid red;
+    border-left: 6px solid #8cccc1;
     display: inline-block;
   }
   .rectangle{
     height: 12px;
     width: 5px;
-    background: red;
+    background: #8cccc1;
     display: inline-block;
   }
 

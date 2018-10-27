@@ -24,7 +24,7 @@
             <span>{{item.dietIntroduce}}</span>
           </el-main>
           <el-footer>
-            <el-button style="background-color: #8cccc1;"><router-link tag="span" :to="{path:'/user_recipe/' + item.dietId}">继续阅读</router-link></el-button>
+            <el-button style="background-color: #8cccc1;color: white"><router-link tag="span" :to="{path:'/user_recipe/' + item.dietId}">继续阅读</router-link></el-button>
           </el-footer>
         </el-container>
       </el-container>
@@ -76,6 +76,7 @@
     text-align: left;
     line-height: 60px;
     font-size: 18px;
+
   }
   .el-footer{
     background-color: white;
@@ -106,13 +107,13 @@
     border-right: 6px solid white;
     border-bottom: 6px solid white;
     border-top: 6px solid white;
-    border-left: 6px solid red;
+    border-left: 6px solid #8cccc1;
     display: inline-block;
   }
   .rectangle{
     height: 12px;
     width: 5px;
-    background: red;
+    background: #8cccc1;
     display: inline-block;
   }
 

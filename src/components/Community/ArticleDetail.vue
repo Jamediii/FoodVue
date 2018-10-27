@@ -2,45 +2,39 @@
     <div class="w">
       <p style="color: transparent">111</p>
       <el-row :gutter="20">
-        <el-col :span="17" >
+        <el-col :span="16" >
           <el-header class="title">享食社区&nbsp;&nbsp;>>&nbsp;文章详情</el-header>
-          <el-container>
-            <el-header>
-              <div class="triangle"></div>
-              {{articleName}}
-              <el-button v-bind:type="typeName" @click="praise">{{btnValue}}</el-button>
+          <el-main>
+              <el-col span="24" tag="h2">
+                <div class="triangle"></div>{{articleName}}
+                <el-button v-bind:type="typeName" @click="praise">{{btnValue}}</el-button>
+              </el-col>
               <hr/>
-            </el-header>
-            <el-main>
               <span>
                 <div class="rectangle"></div>
-                <router-link to="/community_author">&nbsp;
-                  爱料理 编辑部
-                  发表于
-                  2018/10/13
-                </router-link>
+                <router-link to="/community_author">&nbsp;爱料理 编辑部 发表于 2018/10/13</router-link>
               </span><br/>
               <img :src=articlePic><br/>
               <p v-html="articleContent">{{articleContent}}</p>
-            </el-main>
-          </el-container>
+          </el-main>
         </el-col>
-        <el-col :span="7">
-          <article-search></article-search><br/>
-          <author-list></author-list>
+        <el-col :span="8">
+          <!--<article-search></article-search><br/>-->
+          <recommend></recommend>
         </el-col>
       </el-row>
     </div>
 </template>
 <script>
   import ArticleSearch from './ArticleSearch.vue'
-  import AuthorList from './AuthorList.vue'
+  import Recommend from "./Recommend";
+
 
   export default {
       name: "ArticleDetail",
       components:{
           'article-search':ArticleSearch,
-          'author-list':AuthorList,
+          'recommend':Recommend
         },
       data(){
         return{
@@ -55,7 +49,7 @@
           //点赞按钮的状态,初始状态为false，未点击
           isClick:'false',
           typeName:'danger',
-          btnValue:'赞'
+          btnValue:'点赞'
         }
       },
       methods:{
@@ -78,7 +72,7 @@
           }
           else if (this.isClick == 'true') {
             this.typeName = 'danger';
-            this.btnValue = '赞';
+            this.btnValue = '点赞';
             this.isClick = 'false';
           }
         }
@@ -113,13 +107,13 @@
     width: 500px;
   }
 
-  .el-header {
-    background-color: white;
+  .el-header{
+    background-color: #8cccc1;
     color: #333;
     text-align: left;
     line-height: 60px;
-    font-size: 20px;
-    border-bottom:1px solid gainsboro;
+    font-size: 18px;
+    color: white;
   }
 
   .el-main {
@@ -127,6 +121,7 @@
     color: #333;
     text-align: left;
     line-height: 30px;
+    border: 1px solid gainsboro;
   }
 
   .triangle {
@@ -135,7 +130,7 @@
     border-right: 6px solid white;
     border-bottom: 6px solid white;
     border-top: 6px solid white;
-    border-left: 6px solid red;
+    border-left: 6px solid #8cccc1;
     /*border: 6px solid red;*/
     display: inline-block;
   }
@@ -143,7 +138,7 @@
   .rectangle{
     height: 12px;
     width: 5px;
-    background: red;
+    background: #8cccc1;
     display: inline-block;
   }
 </style>

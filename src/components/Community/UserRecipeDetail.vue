@@ -1,34 +1,42 @@
 <template>
   <div id="container" class="w">
     <p style="color: transparent">111</p>
-    <el-row :gutter="20">
-      <el-col :span="18" :offset="3">
-        <el-container>
-          <el-header>
-              <span style="font-weight: bold;font-size: 25px">
-                {{dietTitle}}
-                <span>--by{{accountName}}</span>
-              </span>
-          </el-header>
-          <el-main>
-            <img :src=dietPhoto>
-          </el-main>
-          <el-footer>
-            <el-col :span="20">
-                  <span style="-ms-text-overflow: ellipsis">
-                    {{dietIntroduce}}
-                  </span>
+    <el-row :gutter="30">
+      <el-col :span="16">
+        <el-main>
+          <img :src="dietPhoto">
+          <h2 style="font-weight: bold">{{dietTitle}}</h2><br/>
+          <el-row style="height: 30px;line-height: 30px">
+            <el-col :span="6">
+              <i class="el-icon-star-on" style="color: #8cccc1;"></i> 收藏221人
+              <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
             </el-col>
-            <el-col :span="2">
-              <el-button id="addColBtn" @click="addCollection"  type="danger">收藏</el-button>
+            <el-col span="6" :offset="12">
+              <button>收藏</button>
+              <button>点赞</button>
             </el-col>
-          </el-footer>
-        </el-container>
-        <user-recipe-food-table></user-recipe-food-table>
-        <user-recipe-step></user-recipe-step>
+          </el-row>
+          <div>
+          </div><br/>
+
+          <div class="author">
+            <img :src=dietPhoto class="headPhoto">
+            <span style="color: #8cccc1">{{accountName}}</span>
+            <button>关注</button>
+            <p style="font-size: 13px;color: #666;"><br/>{{dietIntroduce}}</p>
+          </div>
+          <user-recipe-food-table></user-recipe-food-table>
+          <user-recipe-step></user-recipe-step>
+        </el-main>
+      </el-col>
+
+
+      <el-col :span="8">
+        <recommend></recommend>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+
+    <el-row>
       <!--评论部分-->
       <el-col class="comment" :span="18" :offset="3">
         <p>评论专区</p>
@@ -48,6 +56,7 @@
         </el-col>
       </el-col>
     </el-row>
+
     <br/>
   </div>
 </template>
@@ -56,11 +65,13 @@
   import UserRecipeFoodTable from './UserRecipeFoodTable'
   import UserRecipeStep from './UserRecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
+  import Recommend from './Recommend.vue'
   export default {
     name: "UserRecipeDetail",
     components:{
       'user-recipe-food-table':UserRecipeFoodTable,
-      'user-recipe-step':UserRecipeStep
+      'user-recipe-step':UserRecipeStep,
+      'recommend':Recommend
     },
     data(){
       return{
@@ -154,46 +165,74 @@
 </script>
 
 <style scoped>
-  img{
-    /*width: 500px;*/
-    height: 400px;
+  button{
+    width: 80px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #8cccc1;
+    color: white;
+    text-align: center;
+    border: none;
+    text-decoration: none;
   }
-  #container{
-    background-color: #fdf6dc;
+  .author{
+    width:100%;
+    height: 120px;
+    background-color: #f7f7f7;
+    border: 1px solid #f7f7f7;
+    border-radius: 5px;
+    padding: 10px;
   }
-  span{
+  img {
+    width:100%;
+    /*height: 400px;*/
+  }
+  .headPhoto{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+  }
+
+  #container {
+    background-color: white;
+  }
+
+  span {
     font-size: 16px;
   }
 
-  .el-header, .el-footer {
-    background-color: white;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-  }
 
   .el-main {
-    background-color: white;
+    /*background-color: white;*/
     color: #333;
-    text-align: center;
+    text-align: left;
+    border: 1px solid gainsboro;
+    /*padding: 0px;*/
   }
-
 
   .el-row {
     margin-bottom: 20px;
   }
+
   .el-col {
     border-radius: 4px;
   }
+
   .row-bg {
-    background-color: #f9fafc;
+    /*background-color: #f9fafc;*/
   }
 
   .el-row {
     margin-bottom: 20px;
   }
+
   .el-col {
     border-radius: 4px;
+  }
+  .commentTxt{
+    line-height: 16px;
+    text-align: left;
+    margin-bottom: 20px;
   }
 
 </style>

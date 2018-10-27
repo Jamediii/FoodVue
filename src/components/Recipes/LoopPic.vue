@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <el-carousel :interval="4000" type="card" height="450px">
+    <el-carousel :interval="4000" type="card" height="420px">
         <el-carousel-item v-for="item in imgList" :key="item.id">
           <router-link :to="{path:'/recipe_detail/' + item.recipeId}">
             <img :src=item.idView>
@@ -40,10 +40,9 @@
 </script>
 
 <style scoped>
-  img{
+  img {
     width: 100%;
   }
-
   .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;

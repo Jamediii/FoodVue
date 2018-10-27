@@ -4,10 +4,11 @@
       <el-table-column prop="foodName" label="食材表 " width="180"></el-table-column>
       <el-table-column prop="foodNum" label=" " width=""></el-table-column>
     </el-table>
-    <el-table :data="accessoriesList" style="width: 100%">
-      <el-table-column prop="accessoriesName" label="调料表 " width="180"></el-table-column>
-      <el-table-column prop="accessoriesNum" label=" " width=""></el-table-column>
-    </el-table>
+    <!--<el-table :data="accessoriesList" style="width: 100%">-->
+      <!--<el-table-column prop="accessoriesName" label="调料表 " width="180"></el-table-column>-->
+      <!--<el-table-column prop="accessoriesNum" label=" " width=""></el-table-column>-->
+    <!--</el-table>-->
+
   </div>
 </template>
 
@@ -17,7 +18,7 @@
       data() {
         return {
           recipeFoodList:[],
-          accessoriesList:[],
+          // accessoriesList:[],
           //路由传参获取的id
           p_recipeId:this.$route.params.detailsId
         }
@@ -28,7 +29,7 @@
           .then((res) =>{
             var allData = res.data.data;
             this.recipeFoodList = allData[1];
-            this.accessoriesList = allData[2];
+            // this.accessoriesList = allData[2];
           })
           .catch(function (err) {
             console.log(err)

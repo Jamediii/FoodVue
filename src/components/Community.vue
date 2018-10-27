@@ -1,43 +1,38 @@
 <template>
   <div class="w">
-    <p></p>
+    <p style="color: transparent">111</p>
     <el-row :gutter="20">
-      <el-col :span="18" >
-        <el-header>享食社区&nbsp;&nbsp;>>&nbsp;所有文章</el-header>
-        <el-main>
-        <article-brief></article-brief>
+      <el-col :span="16">
+        <el-header >享食社区&nbsp;&nbsp;>>&nbsp;所有文章</el-header>
+        <el-main >
+          <article-brief></article-brief>
         </el-main>
       </el-col>
-      <el-col :span="6">
-      <article-search></article-search><br/>
-      <author-list></author-list>
+      <el-col :span="8">
+      <!--<article-search></article-search><br/>-->
+        <recommend></recommend>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-  import ArticleNav from './Community/ArticleNav.vue'
   import ArticleBrief from './Community/ArticleBrief.vue'
   import ArticleSearch from './Community/ArticleSearch.vue'
-  import AuthorList from './Community/AuthorList.vue'
+  import Recommend from './Community/Recommend.vue'
 
   export default {
     name: "Community",
     components:{
-      'article-nav':ArticleNav,
       'article-brief':ArticleBrief,
       'article-search':ArticleSearch,
-      'author-list':AuthorList
+      'recommend':Recommend
     }
 
   }
 </script>
 
 <style scoped>
-  div{
-    background-color: #fff;
-  }
   p{
     height: 20px;
   }
@@ -46,12 +41,14 @@
     color: #333;
     text-align: left;
     line-height: 60px;
-    font-size: 16px;
+    font-size: 18px;
+    color: white;
   }
   .el-main {
     background-color: white;
     color: #333;
     text-align: left;
+    border: 1px solid gainsboro;
   }
 
 </style>
