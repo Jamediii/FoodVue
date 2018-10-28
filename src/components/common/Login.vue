@@ -24,7 +24,9 @@
                   <el-input type="password" v-model="ruleForm2.checkPass" placeHolder="请输入密码"
                             autocomplete="off"></el-input>
                 </el-form-item>
-                <p style="font-size:14px;" class="left"><a href="javascript:void(0)">忘记密码?</a></p>
+                <router-link to="/forgetpwd">
+                  <p style="font-size:14px;margin-bottom:20px;" class="left"><a href="javascript:void(0)">忘记密码?</a></p>
+                </router-link>
                 <br/>
                 <el-form-item>
                   <el-button class="left" type="primary" @click="submitForm('ruleForm2')">登录</el-button>
@@ -155,7 +157,6 @@
 
   }
   #login .box-card .el-button {
-
     background-color: #87d6c8;
     border:0;
     width: 45%;

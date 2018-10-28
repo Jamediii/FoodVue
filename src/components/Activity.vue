@@ -28,7 +28,7 @@
                     <img :src="o.recipeCoverImg" class="image">
                     <div style="padding: 14px;">
                       <router-link :to="`../recipe_detail/${o.detailsId}`">
-                        <span>{{o.recipeName}}
+                        <span style="white-space: nowrap;overflow: hidden;text-overflow:ellipsis">{{o.recipeName}}
                         <i style="color:#FF7979" class="glyphicon glyphicon glyphicon-heart"></i>{{o.recipePraiseNum}}
                       </span>
                       </router-link>

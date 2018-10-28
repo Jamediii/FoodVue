@@ -204,8 +204,8 @@
                     menu_Id: this.p_recipeId
                   })
                     .then((res) => {
+                      console.log(res);
                       this.commentText = res.data.data;
-                      console.log(this.commentText);
                     })
                     .catch(function (err) {
                       console.log(err)
