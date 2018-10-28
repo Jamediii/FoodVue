@@ -17,8 +17,9 @@
             <el-main>
               <span>
                 <div class="rectangle"></div>
+                <!--<span style="font-size: 10px;color: #999;margin-left: 10px">by</span>-->
                 <router-link to="/community_author">&nbsp;
-                  {{item.authorName}} 发表于 2018/10/13
+                  {{item.authorName}}
                 </router-link>
               </span><br/>
               <span v-html="item.articleContent">
