@@ -9,12 +9,13 @@
     <!-- 有收藏情况下 -->
     <div v-else>
       <el-row :gutter="12" v-for="(o,index) in recipesY">
-        <el-col style="margin-top:10px; position: relative" :span="8" @click.native="toDetailed(o.detailsId)">
-            <el-card shadow="always">
+        <el-col style="margin-top:10px; position: relative; cursor: pointer" :span="8"
+                @click.native.stop="toDetailed(o.detailsId)">
+          <el-card shadow="always">
             <el-col :span="8">
               <img :src="o.recipeCoverImg" alt="">
             </el-col>
-            <el-col :span="16">
+            <el-col :span="14" :push="2">
               <h5>{{o.recipeName}}</h5>
               <p style="
               display: -webkit-box;
@@ -24,7 +25,29 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">{{o.recipeBrief}}</p>
-              <span class="cancelColl" @click="collection(o.detailsId)">×</span>
+              <span class="cancelColl" @click.stop="collection(o.detailsId)">×</span>
+            </el-col>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row :gutter="12" v-for="(o,index) in recipesY">
+        <el-col style="margin-top:10px; position: relative; cursor: pointer" :span="8"
+                @click.native.stop="toDetailed(o.detailsId)">
+          <el-card shadow="always">
+            <el-col :span="8">
+              <img :src="o.recipeCoverImg" alt="">
+            </el-col>
+            <el-col :span="14" :push="2">
+              <h5>{{o.recipeName}}</h5>
+              <p style="
+              display: -webkit-box;
+              white-space: pre-wrap;
+              word-wrap: break-word;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp:2;margin-top:20px;">{{o.recipeBrief}}</p>
+              <span class="cancelColl" @click.stop="collection(o.detailsId)">×</span>
             </el-col>
           </el-card>
         </el-col>
@@ -42,7 +65,10 @@
         // 用户Id
         userId: localStorage.getItem('userId'),
         // 收藏信息
-        recipesY: [],
+        recipesY: {
+          collect: [],
+          collectUser: []
+        },
         // 判断类型
         isArray: true
       }
@@ -55,16 +81,28 @@
       let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
       for (let i = 0; i < detailsIdsArray.length; i++) {
         if (detailsIdsArray[i].userId === userId) {
-          for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
-            this.$axios.get(`${$LH.url}/recipes/brief/${detailsIdsArray[i].collect[j]}`)
+          if (detailsIdsArray[i].collect) {
+            console.log(detailsIdsArray[i].collect);
+            this.$axios.get(`${$LH.url}/recipes/brief/${JSON.stringify(detailsIdsArray[i].collect)}`)
               .then(async (result) => {
-                await this.recipesY.push(result.data.data[0]);
+                await this.recipesY.collect.push(result.data.data[0]);
+                this.isArray = false;
+              }).catch((err) => {
+              console.log(err.message);
+            })
+          }
+          if (detailsIdsArray[i].collectUser) {
+            console.log(detailsIdsArray[i].collectUser);
+            this.$axios.get(`${$LH.url}/operat/getCollection/${JSON.stringify(detailsIdsArray[i].collectUser)}`)
+              .then(async (result) => {
+                await this.recipesY.collectUser.push(result.data.data[0]);
                 this.isArray = false;
               }).catch((err) => {
               console.log(err.message);
             })
           }
         }
+        console.log(this.recipesY);
       }
     },
     methods: {
@@ -77,7 +115,7 @@
         // 取消收藏 ---- 收藏过的情况下 detailsIdsArray存在的情况下
         for (let i = 0; i < detailsIdsArray.length; i++) {
           if (detailsIdsArray[i].userId === userId) {
-            for(let j = 0; j < detailsIdsArray[i].collect.length; j++) {
+            for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
               if (detailsIdsArray[i].collect[j] === detailsId.toString()) {
                 this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
                   confirmButtonText: '确定',
@@ -89,9 +127,9 @@
                     message: '取消收藏成功!(っ °Д °;)っ',
                     type: 'success'
                   });
-                  detailsIdsArray[i].collect.splice(j,1);
-                  localStorage.setItem("detailsIds",JSON.stringify(detailsIdsArray));
-                  this.recipesY.splice(j,1);
+                  detailsIdsArray[i].collect.splice(j, 1);
+                  localStorage.setItem("detailsIds", JSON.stringify(detailsIdsArray));
+                  this.recipesY.splice(j, 1);
                 }).catch(() => {
                   this.$message({
                     type: 'info',
@@ -142,10 +180,12 @@
 
   .cancelColl {
     position: absolute;
-    right: 10px;
-    top: -5px;
+    right: -10px;
+    top: -20px;
     cursor: pointer;
+    z-index: 1000;
   }
+
   .cancelColl:hover {
     color: red;
     font-size: 25px;

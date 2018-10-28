@@ -11,18 +11,17 @@
               <i class="el-icon-star-on" style="color: #8cccc1;"></i> 收藏221人
               <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
             </el-col>
-            <el-col span="6" :offset="12">
-              <button>收藏</button>
+            <el-col :span="6" :offset="12">
+              <button @click="addCollection" class="collection">收藏</button>
               <button>点赞</button>
             </el-col>
           </el-row>
-          <div>
-          </div><br/>
+          <br/>
 
           <div class="author">
             <img :src=dietPhoto class="headPhoto">
             <span style="color: #8cccc1">{{accountName}}</span>
-            <button>关注</button>
+            <button @click="followUser" class="followUser">关注</button>
             <p style="font-size: 13px;color: #666;"><br/>{{dietIntroduce}}</p>
           </div>
           <user-recipe-food-table></user-recipe-food-table>
@@ -66,52 +65,89 @@
   import UserRecipeStep from './UserRecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
   import Recommend from './Recommend.vue'
+
   export default {
     name: "UserRecipeDetail",
-    components:{
-      'user-recipe-food-table':UserRecipeFoodTable,
-      'user-recipe-step':UserRecipeStep,
-      'recommend':Recommend
+    components: {
+      'user-recipe-food-table': UserRecipeFoodTable,
+      'user-recipe-step': UserRecipeStep,
+      'recommend': Recommend
     },
-    data(){
-      return{
+    data() {
+      return {
         //菜谱详情表内数据
-        dietId:'',
-        dietTitle:'',
-        dietIntroduce:'',
-        accountName:'',
-        dietPhoto:'',
+        userId: '',
+        dietId: '',
+        headPhoto: '',
+        dietTitle: '',
+        dietIntroduce: '',
+        accountName: '',
+        dietPhoto: '',
         //路由传参获取的id
-        p_dietId:this.$route.params.dietId,
+        p_dietId: this.$route.params.dietId,
         //输入评论部分
         userComm: "",
         //显示评论内容
         commentText: [],
       }
     },
-    created(){
+    created() {
       //根据id获取的菜谱
       this.$axios.get(`${$LH.url}/recipes/users/details/` + this.p_dietId)
-        .then((res) =>{
+        .then((res) => {
           var allData = res.data.data;
           var dietDetail = allData[0];
+          console.log(dietDetail);
+          // 用户的Id
+          this.userId = dietDetail[0].userId;
           this.dietId = dietDetail[0].dietId;
+          if (!/^http/.test(allData[0][0].headPhoto)) {
+            this.headPhoto = `${$LH.url}/images/userPhoto/${allData[0][0].headPhoto}`;
+          } else {
+            this.headPhoto = allData[0][0].headPhoto;
+          }
           this.dietTitle = dietDetail[0].dietTitle;
           this.dietIntroduce = dietDetail[0].dietIntroduce;
           this.accountName = dietDetail[0].accountName;
           this.dietPhoto = dietDetail[0].dietPhoto;
 
-          console.log(this.p_dietId)
+          // 获取存储 是否收藏过该菜谱
+          let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
+          let userId = localStorage.getItem('userId');
+          // detailsIdsArray存在的情况下
+          if (detailsIdsArray) {
+            for (let i = 0; i < detailsIdsArray.length; i++) {
+              if (detailsIdsArray[i].userId === userId) {
+                for (let j = 0; j < detailsIdsArray[i].collectUser.length; j++) {
+                  if (detailsIdsArray[i].collectUser[j] === this.dietId) {
+                    $(".collection").text("已收藏");
+                  }
+                }
+              }
+            }
+          }
+
+          // 用户是否关注过他
+          this.$axios.get(`${$LH.url}/users/queryFans/${userId}/${this.userId}`)
+            .then(isFans => {
+              console.log(isFans.data.data);
+              if (isFans.data.data.length > 0) {
+                $('.followUser').text('已关注')
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
 
         })
         .catch(function (err) {
           console.log(err)
         });
     },
-    mounted(){
+    mounted() {
       //根据id获取评论内容
       this.$axios.post(`${$LH.url}/comment/showConmment`, {
-        menu_Id: this.p_recipeId
+        menu_Id: this.dietId
       })
         .then((res) => {
           this.commentText = res.data.data;
@@ -120,19 +156,19 @@
           console.log(err)
         });
     },
-    methods:{
+    methods: {
       //添加评论
       addComment() {
-        if(this.$store.state.user.state){
+        if (this.$store.state.user.state) {
           this.$axios.post(`${$LH.url}/comment/addComment`, {
-            userId: this.$store.state.user.userId,
+            userId: this.userId,
             userComment: this.userComm,
-            detailsId: this.p_recipeId
+            detailsId: this.dietId
           })
             .then((res) => {
-              if(res.data.data){
+              if (res.data.data) {
                 this.$axios.post(`${$LH.url}/comment/showConmment`, {
-                  menu_Id: this.p_recipeId
+                  menu_Id: this.dietId
                 })
                   .then((res) => {
                     this.commentText = res.data.data;
@@ -145,18 +181,148 @@
             .catch(function (err) {
               console.log(err)
             });
-        }else{
+        } else {
           this.$router.push('/login');
         }
 
       },
-      //加入收藏
-      addCollection(){
-        if(this.$store.state.user.state){
-          $("#addColBtn span").text("已收藏");
-          collectionLS.collection(this.p_recipeId);
-        }else{
-          this.$router.push('/login');
+      //加入收藏 / 取消收藏
+      addCollection() {
+        // 登录状态
+        if (localStorage.getItem("Flag") === 'isLogin') {
+          // 获取Id
+          let userId = localStorage.getItem('userId');
+          // 获取存储 -- 存在 / 不存在
+          let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
+          // 加入收藏
+          if ($(".collection").text() === '收藏') {
+            // 一开始就有保存其他人的 === 存在
+            if (detailsIdsArray != null) {
+              for (let i = 0; i < detailsIdsArray.length; i++) {
+                if (detailsIdsArray[i].userId === userId) {
+                  if (detailsIdsArray[i].collectUser != null) {
+                    detailsIdsArray[i].collectUser.push(this.dietId);
+                    localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                  } else {
+                    detailsIdsArray[i].collectUser = [];
+                    detailsIdsArray[i].collectUser.push(this.dietId);
+                    localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                  }
+                } else {
+                  detailsIdsArray.push({userId, collectUser: [this.dietId]});
+                  localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                }
+              }
+              $(".collection").text("已收藏");
+              this.$notify({
+                title: '成功',
+                message: '收藏宝典成功!d=====(￣▽￣*)b',
+                type: 'success'
+              });
+            } else {
+              //  ==== 不存在
+              let newArray = [];
+              newArray.push({userId, collectUser: [this.dietId]});
+              $(".collection").text("已收藏");
+              this.$notify({
+                title: '成功',
+                message: '收藏宝典成功!d=====(￣▽￣*)b',
+                type: 'success'
+              });
+              localStorage.setItem('detailsIds', JSON.stringify(newArray));
+              return;
+            }
+          } else {
+            //  取消收藏 ---- 收藏过的情况下 detailsIdsArray存在的情况下
+            for (let i = 0; i < detailsIdsArray.length; i++) {
+              if (detailsIdsArray[i].userId === userId) {
+                for (let j = 0; j < detailsIdsArray[i].collectUser.length; j++) {
+                  console.log(detailsIdsArray[i].collectUser[j] === this.dietId);
+                  if (detailsIdsArray[i].collectUser[j] === this.dietId) {
+                    this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+                      confirmButtonText: '确定',
+                      cancelButtonText: '取消',
+                      type: 'warning'
+                    }).then(() => {
+                      this.$notify({
+                        title: '成功',
+                        message: '取消收藏成功!(っ °Д °;)っ',
+                        type: 'success'
+                      });
+                      detailsIdsArray[i].collectUser.splice(j, 1);
+                      $(".collection").text('收藏');
+                      localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                      return;
+                    }).catch(() => {
+                      this.$message({
+                        type: 'info',
+                        message: '取消操作'
+                      });
+                    });
+                  }
+                }
+              }
+            }
+          }
+          localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+        } else {
+          // 未登录状态
+          this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push('/login');
+            }
+          });
+        }
+      },
+
+      // 加关注 / 取关
+      // 关注 + 取关
+      followUser() {
+        if (localStorage.getItem("Flag") === 'isLogin') {
+          if ($('.followUser').text() === '关注') {
+            this.$axios.get(`${$LH.url}/users/joinFans/${localStorage.getItem('userId')}/${this.userId}`)
+              .then(() => {
+                this.$message({
+                  message: '感谢您的关注!',
+                  type: 'success'
+                });
+                $('.followUser').text('已关注');
+              }).catch(err => {
+              console.log(err);
+            });
+          } else {
+            // 取消关注
+            this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$axios.get(`${$LH.url}/users/abolishFans/${localStorage.getItem('userId')}/${this.userId}`)
+                .then(() => {
+                  this.$message({
+                    message: '感谢您之前一直以来的陪伴!',
+                    type: 'success'
+                  });
+                  $(".followUser").text('关注');
+                }).catch(err => {
+                console.log(err);
+              })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消操作'
+              });
+            });
+          }
+        } else {
+          // 未登录状态
+          this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push('/login');
+            }
+          })
         }
       }
     }
@@ -165,7 +331,7 @@
 </script>
 
 <style scoped>
-  button{
+  button {
     width: 80px;
     height: 30px;
     border-radius: 4px;
@@ -175,19 +341,22 @@
     border: none;
     text-decoration: none;
   }
-  .author{
-    width:100%;
+
+  .author {
+    width: 100%;
     height: 120px;
     background-color: #f7f7f7;
     border: 1px solid #f7f7f7;
     border-radius: 5px;
     padding: 10px;
   }
+
   img {
-    width:100%;
+    width: 100%;
     /*height: 400px;*/
   }
-  .headPhoto{
+
+  .headPhoto {
     width: 40px;
     height: 40px;
     border-radius: 20px;
@@ -200,7 +369,6 @@
   span {
     font-size: 16px;
   }
-
 
   .el-main {
     /*background-color: white;*/
@@ -229,13 +397,12 @@
   .el-col {
     border-radius: 4px;
   }
-  .commentTxt{
+
+  .commentTxt {
     line-height: 16px;
     text-align: left;
     margin-bottom: 20px;
   }
 
 </style>
-
-
 
