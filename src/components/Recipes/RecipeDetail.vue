@@ -115,7 +115,7 @@
         recipeStepBrief: [],
         recipeStepImg: [],
         //路由传参获取的id
-        p_recipeId: this.$route.params.detailsId,
+        p_recipeId: parseInt(this.$route.params.detailsId),
         //输入评论部分
         userComm: "",
         //显示评论内容
