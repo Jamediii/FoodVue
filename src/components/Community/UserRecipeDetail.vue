@@ -344,7 +344,7 @@
 
   .author {
     width: 100%;
-    height: 120px;
+    height:auto;
     background-color: #f7f7f7;
     border: 1px solid #f7f7f7;
     border-radius: 5px;

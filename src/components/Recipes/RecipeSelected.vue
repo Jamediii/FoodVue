@@ -15,7 +15,7 @@
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">{{item.recipePraiseNum}}点赞 · 120收藏</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · 120留言</time>
             </div>
           </div>
         </el-card><br/>
@@ -35,7 +35,7 @@
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">{{item.recipePraiseNum}}点赞 · 120收藏</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · 120留言</time>
             </div>
           </div>
         </el-card><br/>
@@ -55,7 +55,7 @@
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">{{item.recipePraiseNum}}点赞 · 120收藏</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · {{commentNum}}留言</time>
             </div>
           </div>
         </el-card><br/>
@@ -72,6 +72,7 @@
     data(){
       return{
         recipeBriefList:[],
+        commentNum:''
       }
     },
     created(){
@@ -85,6 +86,19 @@
         .catch(function (err) {
           console.log(err)
         });
+      this.$axios.post(`${$LH.url}/comment`,{
+        detailsId: this.recipeBriefList.detailsId
+      })
+        .then((res) =>{
+          var allData = res.data.data;
+          // allData = allData.replace(/count(1)/g, '')
+          this.commentNum = allData[0]
+          // console.log(this.commentNum.count(1))
+        })
+        .catch(function (err) {
+          console.log(err)
+        });
+
     }
   }
 </script>
@@ -98,7 +112,6 @@
     /*text-overflow: ellipsis;*/
     overflow: hidden;
     word-space:nowrap;
-    /*border: 1px solid pink;*/
   }
   .info{
     position: relative;

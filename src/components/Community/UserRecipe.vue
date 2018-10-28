@@ -14,6 +14,14 @@
       </el-col>
     </el-row>
 
+    <!--<el-row :gutter="30">-->
+      <!--<el-col :span="24">-->
+        <!--<user-recipe-brief></user-recipe-brief>-->
+
+      <!--</el-col>-->
+
+    <!--</el-row>-->
+
     <br/>
   </div>
 </template>

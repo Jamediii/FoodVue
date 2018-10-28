@@ -9,12 +9,12 @@
           <h2 style="font-weight: bold">{{recipeName}}</h2><br/>
           <el-row style="height: 30px;line-height: 30px">
             <el-col :span="6">
-              <i class="el-icon-star-on" style="color: #8cccc1;"></i> 收藏221人
+              <i class="el-icon-star-on" style="color: #8cccc1;"></i> 点赞{{recipePraiseNum}}人
               <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
             </el-col>
             <el-col :span="6" :offset="12">
               <button class="collection" @click="addCollection">收藏</button>
-              <button class="thumbsUp" @click="addThumbsUp">点赞{{thumbsUp}}</button>
+              <button class="thumbsUp" @click="addThumbsUp">点赞</button>
             </el-col>
           </el-row>
           <div>
@@ -363,17 +363,55 @@
 
       // 点赞 + 取消点赞
       addThumbsUp() {
-        this.$message({
-          message: '感谢您的使用,该功能我们已经在紧急加入了',
-          type: 'success'
-        });
-        // this.$axios({
-        //   methods: 'post',
-        //   url: `${$LH.url}/praiseNum`,
-        //   data: {
-        //     detailsId: this.detailsId
-        //   }
-        // });
+        if (localStorage.getItem("Flag") === 'isLogin') {
+          if ($('.thumbsUp').text() === '点赞') {
+            this.$axios.post(`${$LH.url}/praiseNum`,{
+              detailsId:this.p_recipeId
+            })
+              .then(() => {
+                this.$message({
+                  message: '感谢您的喜欢!',
+                  type: 'success'
+                });
+                $('.thumbsUp').text('已点赞');
+              }).catch(err => {
+              console.log(err);
+            });
+          } else {
+            // 取消点赞
+            this.$confirm('您老确定要这样子做吗?(。_。)', '取消点赞', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$axios.get(`${$LH.url}/praiseNum/cancel`,{
+                detailsId:this.p_recipeId
+              })
+                .then(() => {
+                  this.$message({
+                    message: '感谢您之前一直以来的陪伴!',
+                    type: 'success'
+                  });
+                  $(".thumbsUp").text('点赞');
+                }).catch(err => {
+                console.log(err);
+              })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消操作'
+              });
+            });
+          }
+        } else {
+          // 未登录状态
+          this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push('/login');
+            }
+          })
+        }
       }
     }
   }
@@ -395,7 +433,7 @@
 
   .author {
     width: 100%;
-    height: 100px;
+    height: auto;
     background-color: #f7f7f7;
     border: 1px solid #f7f7f7;
     border-radius: 5px;
