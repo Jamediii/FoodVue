@@ -36,27 +36,34 @@
       </el-col>
     </el-row>
 
+    <!--评论部分-->
     <el-row :gutter="20">
-      <!--评论部分-->
-      <el-col class="comment" :span="18" :offset="3">
+      <el-col class="comment" :span="16">
         <p>评论专区</p>
         <el-input
           type="textarea"
-          style="auto-size:none"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入内容"
+          style="margin-bottom:20px;"
+          rows="3"
+          resize="none"
+          placeholder="请输留下你的评论哟d=====(￣▽￣*)b"
           v-model="userComm">
         </el-input>
-        <el-button @click="addComment">添加评论</el-button>
+        <button @click="addComment">添加评论</button>
         <el-col class="commentTxt" v-for="o in commentText">
-          <el-card shadow="never">
-            <h4>{{o.accountName}}</h4>
-            <p>{{o.userComment}}</p>
-          </el-card>
+          <!--<el-card shadow="never">-->
+          <div class="commentInner">
+            <el-col :span="2">
+              <img :src="o.headPhoto" alt="">
+            </el-col>
+            <el-col :span="20">
+              <span>{{o.accountName}}   {{o.commentTime}} </span>
+              <p>{{o.userComment}}</p>
+            </el-col>
+          </div>
+          <!--</el-card>-->
         </el-col>
       </el-col>
     </el-row>
-
     <br/>
   </div>
 </template>
@@ -69,7 +76,7 @@
 
   export default {
     //注入
-    inject:['reload'],
+    inject: ['reload'],
     name: "RecipeDetail",
     components: {
       'recipe-food-table': RecipeFoodTable,
@@ -113,6 +120,7 @@
         userComm: "",
         //显示评论内容
         commentText: [],
+        commentTime:null,
       }
     },
     mounted() {
@@ -141,38 +149,38 @@
           this.recipeCoverImg = recipeDetail[0].recipeCoverImg;
           this.headPhoto = recipeDetail[0].headPhoto;
 
-            // 获取存储 是否收藏过该菜谱
-            let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
-            let userId = this.userId;
-            // detailsIdsArray存在的情况下
-            if (detailsIdsArray) {
-              for (let i = 0; i < detailsIdsArray.length; i++) {
-                if (detailsIdsArray[i].userId === userId) {
-                  for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
-                    if (detailsIdsArray[i].collect[j] === this.p_recipeId) {
-                      $(".collection").text("已收藏");
-                    }
+          // 获取存储 是否收藏过该菜谱
+          let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
+          let userId = this.userId;
+          // detailsIdsArray存在的情况下
+          if (detailsIdsArray) {
+            for (let i = 0; i < detailsIdsArray.length; i++) {
+              if (detailsIdsArray[i].userId === userId) {
+                for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
+                  if (detailsIdsArray[i].collect[j] === this.p_recipeId) {
+                    $(".collection").text("已收藏");
                   }
                 }
               }
             }
+          }
 
-            // 用户是否关注过他
-            this.$axios.get(`${$LH.url}/users/queryFans/${this.userId}/${this.fansId}`)
-              .then(isFans => {
-                console.log(isFans.data.data);
-                if (isFans.data.data.length > 0) {
-                  $('.followUser').text('已关注')
-                }
-              })
-              .catch(err => {
-                console.log(err);
-              });
+          // 用户是否关注过他
+          this.$axios.get(`${$LH.url}/users/queryFans/${this.userId}/${this.fansId}`)
+            .then(isFans => {
+              console.log(isFans.data.data);
+              if (isFans.data.data.length > 0) {
+                $('.followUser').text('已关注')
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
 
         });
     },
     watch: {
-      '$route':function(to, from) {
+      '$route': function (to, from) {
         this.reload();
       },
     },
@@ -180,31 +188,40 @@
 
       //添加评论
       addComment() {
-        if (this.$store.state.user.state) {
-          this.$axios.post(`${$LH.url}/comment/addComment`, {
-            userId: this.$store.state.user.userId,
-            userComment: this.userComm,
-            detailsId: this.p_recipeId
-          })
-            .then((res) => {
-              if (res.data.data) {
-                this.$axios.post(`${$LH.url}/comment/showConmment`, {
-                  menu_Id: this.p_recipeId
-                })
-                  .then((res) => {
-                    this.commentText = res.data.data;
-                  })
-                  .catch(function (err) {
-                    console.log(err)
-                  });
-              }
+        this.commentTime = new Date().toLocaleString();
+        if (this.userComm.length) {
+          if (localStorage.getItem("Flag") === "isLogin") {
+            this.$axios.post(`${$LH.url}/comment/addComment`, {
+              userId: localStorage.getItem("userId"),
+              userComment: this.userComm,
+              detailsId: this.p_recipeId,
+              commentTime: this.commentTime,
             })
-            .catch(function (err) {
-              console.log(err)
-            });
+              .then((res) => {
+                this.userComm="";
+                if (res.data.data) {
+                  this.$axios.post(`${$LH.url}/comment/showConmment`, {
+                    menu_Id: this.p_recipeId
+                  })
+                    .then((res) => {
+                      this.commentText = res.data.data;
+                      console.log(this.commentText);
+                    })
+                    .catch(function (err) {
+                      console.log(err)
+                    });
+                }
+              })
+              .catch(function (err) {
+                console.log(err)
+              });
+          } else {
+            this.$router.push('/login');
+          }
         } else {
-          this.$router.push('/login');
+          this.$message('评论不能为空哟d=====(￣▽￣*)b');
         }
+
       },
       //加入收藏 + 取消收藏
       addCollection() {
@@ -435,7 +452,29 @@
   .commentTxt {
     line-height: 16px;
     text-align: left;
-    margin-bottom: 20px;
+    border-bottom: 1px dashed #8cccc1;
+  }
+
+  .commentTxt img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  .commentTxt .commentInner{
+    margin-top:16px;
+
+  }
+  .commentTxt .commentInner .el-col{
+    box-sizing: border-box;
+    /*padding-top: 10px;*/
+  }
+  .commentTxt .commentInner .el-col span{
+    margin-top: 10px;
+  }
+  .commentTxt .commentInner p{
+    margin-top: 16px;
   }
 
 </style>
