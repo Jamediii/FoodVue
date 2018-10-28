@@ -8,18 +8,17 @@
               <el-col span="24" tag="h2" class="title">
                 <div class="triangle"></div>{{articleName}}
                 <button>点赞</button>
+                <hr/>
               </el-col>
-              <hr/>
               <span>
                 <div class="rectangle"></div>
-                <router-link to="/community_author">&nbsp;爱料理 编辑部 发表于 2018/10/13</router-link>
-              </span><br/>
+                <router-link to="/community_author">&nbsp;{{authorName}}</router-link>
+              </span><br/><br/>
               <img :src=articlePic><br/>
               <p v-html="articleContent">{{articleContent}}</p>
           </el-main>
         </el-col>
         <el-col :span="8">
-          <!--<article-search></article-search><br/>-->
           <recommend></recommend>
         </el-col>
       </el-row>
@@ -44,6 +43,7 @@
           articleContent:'',
           articlePraiseNum:'',
           articlePic:'',
+          authorName:'',
           //路由传参获取的id
           p_articleId:this.$route.params.articleId,
           //点赞按钮的状态,初始状态为false，未点击
@@ -82,7 +82,6 @@
         this.$axios.get(`${$LH.url}/community/article/details/` + this.p_articleId)
           .then((res) =>{
             var articleDetail = res.data.data;
-            // console.log(articleDetail[0]);
             this.articleId = articleDetail[0].articleId;
             this.articleName = articleDetail[0].articleName;
             this.articleTime = articleDetail[0].articleTime;
@@ -95,6 +94,14 @@
           .catch(function (err) {
             console.log(err)
         });
+        this.$axios.get(`${$LH.url}/community/article/all`)
+          .then((res) => {
+            var articleList = res.data.data;
+            this.authorName = articleList[0].authorName;
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     }
 </script>
@@ -102,7 +109,6 @@
 <style scoped>
   .title{
     position: relative;
-    border-bottom: 1px solid #999;
   }
   button{
     width: 80px;
@@ -122,6 +128,7 @@
   }
   img{
     width: 500px;
+    display: block;
   }
 
   .el-header{

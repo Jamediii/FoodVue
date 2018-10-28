@@ -6,12 +6,16 @@
           <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
             <img :src=item.recipeCoverImg class="image">
           </router-link>
-          <div style="padding: 14px;">
+          <div class="info" style="padding: 14px;">
             <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
-              <span style="font-size: 16px">{{ item.recipeName }}</span>
+              <p class="title">{{ item.recipeName }}</p>
             </router-link>
+            <div class="author">
+              <img class="headPhoto" :src=item.headPhoto>
+              <p>{{item.accountName}}</p>
+            </div>
             <div class="bottom clearfix">
-              <!--<time class="time">{{item.recipeBrief}}</time>-->
+              <time class="time">{{item.recipePraiseNum}}点赞 · 120收藏</time>
             </div>
           </div>
         </el-card><br/>
@@ -22,12 +26,16 @@
           <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
             <img :src=item.recipeCoverImg class="image">
           </router-link>
-          <div style="padding: 14px;">
+          <div class="info" style="padding: 14px;">
             <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
-              <span style="font-size: 16px">{{ item.recipeName }}</span>
+              <p class="title">{{ item.recipeName }}</p>
             </router-link>
+            <div class="author">
+              <img class="headPhoto" :src=item.headPhoto>
+              <p>{{item.accountName}}</p>
+            </div>
             <div class="bottom clearfix">
-              <!--<time class="time">{{item.recipeBrief}}</time>-->
+              <time class="time">{{item.recipePraiseNum}}点赞 · 120收藏</time>
             </div>
           </div>
         </el-card><br/>
@@ -40,14 +48,14 @@
           </router-link>
           <div class="info" style="padding: 14px;">
             <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
-              <span style="font-size: 14px">{{ item.recipeName }}</span>
+              <p class="title">{{ item.recipeName }}</p>
             </router-link>
             <div class="author">
               <img class="headPhoto" :src=item.headPhoto>
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">251点赞 · 120收藏</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · 120收藏</time>
             </div>
           </div>
         </el-card><br/>
@@ -82,6 +90,16 @@
 </script>
 
 <style scoped>
+  .title{
+    font-size: 14px;
+    width: 70%;
+    height: 35px;
+    line-height: 35px;
+    /*text-overflow: ellipsis;*/
+    overflow: hidden;
+    word-space:nowrap;
+    /*border: 1px solid pink;*/
+  }
   .info{
     position: relative;
     text-overflow: ellipsis;

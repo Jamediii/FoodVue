@@ -18,7 +18,7 @@
               <span>
                 <div class="rectangle"></div>
                 <router-link to="/community_author">&nbsp;
-                  {{item.accountName}} 发表于 {{item.releaseTime}}
+                  {{item.accountName}}
                 </router-link>
               </span><br/>
             <span>{{item.dietIntroduce}}</span>
