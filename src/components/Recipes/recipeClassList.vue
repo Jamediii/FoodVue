@@ -78,9 +78,10 @@
 
       //瀑布流的方法
       get() {
-        this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.id}`)
+        this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
           .then((res) => {
-              this.recipeClassName = res.data.data[0].recipeClassifyName;
+            // console.log(res);
+            this.recipeClassName = res.data.data[0].recipeClassifyName;
               if (this.page == 1) {
                 for (var i = 0; i < this.limit * this.page; i++) {
                   if (res.data.data[i]) {
