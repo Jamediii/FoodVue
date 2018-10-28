@@ -8,16 +8,17 @@
 
     <!-- 有收藏情况下 -->
     <div v-else>
-      <el-row :gutter="12" v-for="(o,index) in recipesY">
+      <el-row :gutter="12" v-for="(o,index) in recipesY.collect">
         <el-col style="margin-top:10px; position: relative; cursor: pointer" :span="8"
-                @click.native.stop="toDetailed(o.detailsId)">
+                @click.native.stop="toDetailed(o)">
           <el-card shadow="always">
             <el-col :span="8">
               <img :src="o.recipeCoverImg" alt="">
             </el-col>
             <el-col :span="14" :push="2">
               <h5>{{o.recipeName}}</h5>
-              <p style="
+              <p v-if="o.recipeBrief"
+                 style="
               display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -25,20 +26,29 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">{{o.recipeBrief}}</p>
-              <span class="cancelColl" @click.stop="collection(o.detailsId)">×</span>
+              <p v-else
+                 style="
+              display: -webkit-box;
+              white-space: pre-wrap;
+              word-wrap: break-word;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp:2;margin-top:20px;">该作品还未有详细的介绍</p>
+              <span class="cancelColl" @click.stop="collection(o)">×</span>
             </el-col>
           </el-card>
         </el-col>
       </el-row>
-      <el-row :gutter="12" v-for="(o,index) in recipesY">
+      <el-row :gutter="12" v-for="(o,index) in recipesY.collectUser">
         <el-col style="margin-top:10px; position: relative; cursor: pointer" :span="8"
-                @click.native.stop="toDetailed(o.detailsId)">
+                @click.native.stop="toDetailed(o)">
           <el-card shadow="always">
             <el-col :span="8">
-              <img :src="o.recipeCoverImg" alt="">
+              <img :src="o.dietPhoto" alt="">
             </el-col>
             <el-col :span="14" :push="2">
-              <h5>{{o.recipeName}}</h5>
+              <h5>{{o.dietTitle}}</h5>
               <p style="
               display: -webkit-box;
               white-space: pre-wrap;
@@ -46,8 +56,8 @@
               overflow: hidden;
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
-              -webkit-line-clamp:2;margin-top:20px;">{{o.recipeBrief}}</p>
-              <span class="cancelColl" @click.stop="collection(o.detailsId)">×</span>
+              -webkit-line-clamp:2;margin-top:20px;">{{o.dietIntroduce}}</p>
+              <span class="cancelColl" @click.stop="collection(o)">×</span>
             </el-col>
           </el-card>
         </el-col>
@@ -85,7 +95,9 @@
             console.log(detailsIdsArray[i].collect);
             this.$axios.get(`${$LH.url}/recipes/brief/${JSON.stringify(detailsIdsArray[i].collect)}`)
               .then(async (result) => {
-                await this.recipesY.collect.push(result.data.data[0]);
+                for (let i = 0; i < result.data.data.length; i++) {
+                  await this.recipesY.collect.push(result.data.data[i][0]);
+                }
                 this.isArray = false;
               }).catch((err) => {
               console.log(err.message);
@@ -95,7 +107,9 @@
             console.log(detailsIdsArray[i].collectUser);
             this.$axios.get(`${$LH.url}/operat/getCollection/${JSON.stringify(detailsIdsArray[i].collectUser)}`)
               .then(async (result) => {
-                await this.recipesY.collectUser.push(result.data.data[0]);
+                for (let i = 0; i < result.data.data.length; i++) {
+                  await this.recipesY.collectUser.push(result.data.data[i][0]);
+                }
                 this.isArray = false;
               }).catch((err) => {
               console.log(err.message);
@@ -107,7 +121,7 @@
     },
     methods: {
       // 取消收藏
-      collection(detailsId) {
+      collection(detail) {
         // 获取Id
         let userId = this.userId;
         // 获取存储 -- 存在
@@ -115,35 +129,65 @@
         // 取消收藏 ---- 收藏过的情况下 detailsIdsArray存在的情况下
         for (let i = 0; i < detailsIdsArray.length; i++) {
           if (detailsIdsArray[i].userId === userId) {
-            for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
-              if (detailsIdsArray[i].collect[j] === detailsId.toString()) {
-                this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning'
-                }).then(() => {
-                  this.$notify({
-                    title: '成功',
-                    message: '取消收藏成功!(っ °Д °;)っ',
-                    type: 'success'
+            if (detail.detailsId) {
+              for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
+                if (detailsIdsArray[i].collect[j] === detail.detailsId) {
+                  this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    this.$notify({
+                      title: '成功',
+                      message: '取消收藏成功!(っ °Д °;)っ',
+                      type: 'success'
+                    });
+                    detailsIdsArray[i].collect.splice(j, 1);
+                    localStorage.setItem("detailsIds", JSON.stringify(detailsIdsArray));
+                    this.recipesY.collect.splice(j, 1);
+                  }).catch(() => {
+                    this.$message({
+                      type: 'info',
+                      message: '取消操作'
+                    });
                   });
-                  detailsIdsArray[i].collect.splice(j, 1);
-                  localStorage.setItem("detailsIds", JSON.stringify(detailsIdsArray));
-                  this.recipesY.splice(j, 1);
-                }).catch(() => {
-                  this.$message({
-                    type: 'info',
-                    message: '取消操作'
+                }
+              }
+            } else {
+              for (let j = 0; j < detailsIdsArray[i].collectUser.length; j++) {
+                if (detailsIdsArray[i].collectUser[j] === detail.dietId) {
+                  this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    this.$notify({
+                      title: '成功',
+                      message: '取消收藏成功!(っ °Д °;)っ',
+                      type: 'success'
+                    });
+                    detailsIdsArray[i].collectUser.splice(j, 1);
+                    localStorage.setItem("detailsIds", JSON.stringify(detailsIdsArray));
+                    this.recipesY.collectUser.splice(j, 1);
+                  }).catch(() => {
+                    this.$message({
+                      type: 'info',
+                      message: '取消操作'
+                    });
                   });
-                });
+                }
               }
             }
           }
         }
       },
       // 去收藏表的详细页面
-      toDetailed(detailsId) {
-        this.$router.push(`/recipe_detail/${detailsId}`);
+      toDetailed(detail) {
+        if (detail.detailsId) {
+          this.$router.push(`/recipe_detail/${detail.detailsId}`);
+        } else {
+          this.$router.push(`/user_recipe/${detail.dietId}`);
+        }
       }
     },
     watch: {
