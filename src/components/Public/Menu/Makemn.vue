@@ -397,6 +397,7 @@
             message: '恭喜你,上传成功,静侯热评！',
             type: 'success'
           });
+          this.$router.push('/user/recipe');
         }).catch(() => {
           this.$message.error('上传失败,赶快看看是哪里出错了');
         });

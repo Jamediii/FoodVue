@@ -9,7 +9,7 @@
     <!-- 有收藏情况下 -->
     <div v-else>
       <el-row :gutter="12" v-for="(o,index) in recipesY">
-        <el-col style="margin-top:10px; position: relative" :span="8">
+        <el-col style="margin-top:10px; position: relative" :span="8" @click.native="toDetailed(o.detailsId)">
             <el-card shadow="always">
             <el-col :span="8">
               <img :src="o.recipeCoverImg" alt="">
@@ -68,6 +68,7 @@
       }
     },
     methods: {
+      // 取消收藏
       collection(detailsId) {
         // 获取Id
         let userId = this.userId;
@@ -101,6 +102,10 @@
             }
           }
         }
+      },
+      // 去收藏表的详细页面
+      toDetailed(detailsId) {
+        this.$router.push(`/recipe_detail/${detailsId}`);
       }
     },
     watch: {
