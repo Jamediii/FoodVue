@@ -16,7 +16,7 @@
           </el-col>
         </el-row>
       </el-main>
-
+      <router-view></router-view>
     </div>
 </template>
 
@@ -42,7 +42,20 @@
           .catch(function (err) {
             console.log(err)
           });
-      }
+      },
+      // watch(){
+      //   $route:{
+      //     this.$axios.get(`${$LH.url}/recipes/order`)
+      //       .then((res) =>{
+      //         var allData = res.data.data;
+      //         this.recommendList=allData;
+      //         for (var i=0;i<this.recommendList.length;i++) {
+      //           this.recommendList[i].recipeName = this.recommendList[i].recipeName.substr(0,12);
+      //           this.recommendList[i].recipeBrief = this.recommendList[i].recipeBrief.substr(0,23);
+      //         }
+      //       })
+      //   }
+      // }
     }
 </script>
 

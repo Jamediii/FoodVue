@@ -5,9 +5,9 @@
         <el-col :span="16" >
           <el-header class="title">享食社区&nbsp;&nbsp;>>&nbsp;文章详情</el-header>
           <el-main>
-              <el-col span="24" tag="h2">
+              <el-col span="24" tag="h2" class="title">
                 <div class="triangle"></div>{{articleName}}
-                <el-button v-bind:type="typeName" @click="praise">{{btnValue}}</el-button>
+                <button>点赞</button>
               </el-col>
               <hr/>
               <span>
@@ -47,36 +47,36 @@
           //路由传参获取的id
           p_articleId:this.$route.params.articleId,
           //点赞按钮的状态,初始状态为false，未点击
-          isClick:'false',
-          typeName:'danger',
-          btnValue:'点赞'
+          // isClick:'false',
+          // className:'danger',
+          // btnValue:'点赞'
         }
       },
-      methods:{
-        praise(){
-          // 判断是否登录
-          // if ()
-          if (this.isClick == 'false') {
-            this.typeName = 'info';
-            this.btnValue = '已赞';
-            this.isClick = 'true';
-            // this.$axios.post('http://localhost:3000/praiseNum/addArtPraNum',{
-            //   p_articleId:this.p_articleId
-            // })
-            //   .then(function (response) {
-            //     console.log(response)
-            //   })
-            //   .catch(function (err) {
-            //     console.log(err)
-            //   });
-          }
-          else if (this.isClick == 'true') {
-            this.typeName = 'danger';
-            this.btnValue = '点赞';
-            this.isClick = 'false';
-          }
-        }
-      },
+      // methods:{
+      //   praise(){
+      //     // 判断是否登录
+      //     // if ()
+      //     if (this.isClick == 'false') {
+      //       // this.typeName = 'info';
+      //       this.btnValue = '已赞';
+      //       this.isClick = 'true';
+      //       // this.$axios.post('http://localhost:3000/praiseNum/addArtPraNum',{
+      //       //   p_articleId:this.p_articleId
+      //       // })
+      //       //   .then(function (response) {
+      //       //     console.log(response)
+      //       //   })
+      //       //   .catch(function (err) {
+      //       //     console.log(err)
+      //       //   });
+      //     }
+      //     else if (this.isClick == 'true') {
+      //       // this.typeName = 'danger';
+      //       this.btnValue = '点赞';
+      //       this.isClick = 'false';
+      //     }
+      //   }
+      // },
       created(){
         //根据id获取的文章
         this.$axios.get(`${$LH.url}/community/article/details/` + this.p_articleId)
@@ -100,6 +100,23 @@
 </script>
 
 <style scoped>
+  .title{
+    position: relative;
+    border-bottom: 1px solid #999;
+  }
+  button{
+    width: 80px;
+    height: 35px;
+    border-radius: 4px;
+    background-color: #8cccc1;
+    /*background-color: #999999;*/
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    position: absolute;
+    right: 10px;
+  }
   div{
     /*background-color: #fdf6dc;*/
   }

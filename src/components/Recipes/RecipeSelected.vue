@@ -40,13 +40,14 @@
           </router-link>
           <div class="info" style="padding: 14px;">
             <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
-              <span style="font-size: 16px">{{ item.recipeName }}</span>
+              <span style="font-size: 14px">{{ item.recipeName }}</span>
             </router-link>
             <div class="author">
               <img class="headPhoto" :src=item.headPhoto>
+              <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <!--<time class="time">{{item.recipeBrief}}</time>-->
+              <time class="time">251点赞 · 120收藏</time>
             </div>
           </div>
         </el-card><br/>
@@ -83,16 +84,23 @@
 <style scoped>
   .info{
     position: relative;
+    text-overflow: ellipsis;
   }
   .author{
     display: inline-block;
     position: absolute;
-    padding-left: 20px;
+    right: 10px;
+    top:-15px;
+    font-size: 9px;
+    text-align: center;
+    text-overflow: ellipsis;
+    color: #6a6a6a;
   }
   .headPhoto{
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid white;
   }
   .el-card{
     padding: 15px;
@@ -103,7 +111,7 @@
   }
 
   .time {
-    font-size: 13px;
+    font-size: 10px;
     color: #999;
   }
 
