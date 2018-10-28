@@ -38,11 +38,11 @@
                             autocomplete="off"></el-input>
                   <el-button type="primary" @click="checkVeriCode" style="width: 45%" class="right">获取验证码</el-button>
                 </el-form-item>
-               <p>
+               <div class="agreen">
                   <input type="checkbox" v-model="beSureReg">
                   我已经阅读并且同意，
                   <router-link style="color:#337ab7" to="/regagreement">乐享美食注册协议</router-link>
-                </p>
+                </div>
                 <br/>
                 <el-form-item>
                   <el-button class="left" type="primary" @click="submitRegister('registerInfo')">提交</el-button>
@@ -230,7 +230,7 @@
     height: 30px;
     line-height: 30px;
     font-size: 20px;
-    background-color: #ec5541;
+    /*background-color: #ec5541;*/
     margin: 0 auto;
     margin-bottom: 20px;
   }
@@ -242,6 +242,5 @@
 
   #register .el-col .el-form-item .agreen{
     font-size: 14px;
-    font-style: normal;
   }
 </style>

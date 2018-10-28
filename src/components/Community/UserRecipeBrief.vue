@@ -18,7 +18,7 @@
               <span>
                 <div class="rectangle"></div>
                 <router-link to="/community_author">&nbsp;
-                  {{item.accountName}} 发表于 2018/10/13
+                  {{item.accountName}} 发表于 {{item.releaseTime}}
                 </router-link>
               </span><br/>
             <span>{{item.dietIntroduce}}</span>
@@ -48,7 +48,7 @@
           .then((res) =>{
             var allData = res.data.data;
             this.userRecipeBriefList=allData;
-            console.log(this.userRecipeBriefList[0].dietId)
+            console.log(this.userRecipeBriefList)
           })
           .catch(function (err) {
             console.log(err)

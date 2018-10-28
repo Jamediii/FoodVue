@@ -4,6 +4,7 @@
     <el-row class="inner-RC" :gutter="20">
       <el-col class="irc-first" :span="24">
         <h2>总有一款适合你!</h2>
+
         <p>还拿不定主意吗？过来看看今日的菜谱推荐</p>
         <el-col @click.native="chg"><i id="changRe" class=" el-icon-refresh"></i></el-col>
       </el-col>
@@ -56,13 +57,13 @@
       return {
         isShowRC: true,
         recipesRImg: [
-          "http://site.meishij.net/r/241/19/8567491/s8567491_148292490436361.jpg",
-          "https://s1.st.meishij.net/r/245/13/2378495/s2378495_152583854223746.jpg",
-          "https://s1.st.meishij.net/r/216/197/6174466/s6174466_153562539934985.jpg"
+          "https://cp1.douguo.com/upload/caiku/7/b/1/600x400_7b2d67f13bed858168fd1e45e55bae41.png",
+          "https://cp1.douguo.com/upload/caiku/8/3/5/600x400_839382bc61546f87178f38c6432942b5.jpeg",
+          "https://cp1.douguo.com/upload/caiku/6/6/6/600x400_662a97b83d14e55ecb2ac3be3bd56396.jpg"
         ],
-        recipeRcomId: [145, 215, 8],
-        recipesRName: ["培根卷虾仁披萨", "小玛琳蛋糕", "辣炒相顾根"],
-        recipesRAuthor: ["秋分0923", "搬个凳子看戏08", "心随彧动"],
+        recipeRcomId: [50, 59, 21],
+        recipesRName: ["胡萝卜鸡蛋饼", "椰汁红豆糕#雀巢营养早餐#", "紫菜包饭"],
+        recipesRAuthor: ["Mi_manchi", "揪揪耳朵", "Queen_Chow"],
 
       }
     },
@@ -87,10 +88,10 @@
             this.recipeRcomId.push(rcData[i].detailsId);
           } else {
             console.log(rcData[i]);
-            this.recipesRImg.push("https://cp1.douguo.com/upload/caiku/5/6/9/yuan_5698cb4e6331389fd3de25f746f88299.jpg");
-            this.recipesRName.push("草莓蛋糕卷");
-            this.recipesRAuthor.push("NB轮回");
-            this.recipeRcomId.push(272);
+            this.recipesRImg.push("https://cp1.douguo.com/upload/caiku/4/2/0/600x400_4241833e7dd7e4b041964353faadc300.jpg");
+            this.recipesRName.push("史上最全寿司教程，学会交作业哟");
+            this.recipesRAuthor.push("小菁同学");
+            this.recipeRcomId.push(26);
           }
         }
       }
@@ -123,7 +124,7 @@
   }
 
   #recipesComm .inner-RC .showrc img {
-    height: 200px;
+    height: 240px;
     width: 100%;
   }
 
@@ -145,4 +146,6 @@
   /*#recipesComm .showrc .el-card img:hover {*/
   /*background-color: rgba(255,255,255,0.4);*/
   /*}*/
+
+
 </style>

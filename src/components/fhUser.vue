@@ -80,9 +80,10 @@
       // 加载基本图片
       this.$axios.get(`${$LH.url}/recipes/basicPhoto`)
         .then(async result => {
-          console.log(result.data.data);
+          console.log(this.basicHead);
           this.basicHead = await result.data.data.userHeadPhoto;
           this.basicWall = await result.data.data.userSettingWall;
+          console.log(this.basicHead);
           if (!this.userInfo.headPhoto) {
             this.userInfo.headPhoto = this.basicHead.replace(':', ':/');
           }
@@ -96,50 +97,21 @@
       // 看是否有关注
       this.$axios.get(`${$LH.url}/users/queryFans/${localStorage.getItem('userId')}/${this.userId}`)
         .then(result => {
-          console.log(result.data.data[0]);
           if (!result.data.data[0]) {
             this.concern = '关注'
           }else {
             this.concern = '已关注'
           }
         })
-        .catch()
+        .catch(err=> {
+          console.log(err);
+        })
     },
     components: {
       'app-userth': UserTh,
     },
     methods: {
-      // 预览
-      changeBg(inputName, fileSrc) {
-        if (typeof FileReader == 'undefined') {
-          this.$notify.error({
-            title: '错误',
-            message: "抱歉，你的浏览器不支持FileReader"
-          });
-          return false;
-        }
-        var simpleFile = this.$refs[inputName].files[0];
-        if (!/image\/\w+/.test(simpleFile.type)) {
-          this.$notify.error({
-            title: '错误',
-            message: "请确保文件类型为图像类型"
-          });
-          return false;
-        }
-        if (simpleFile.size / 1024 / 1024 > 3) {
-          this.$message.error('上传图片大小不能超过 3MB(￣▽￣)"!');
-          return false;
-        }
-        let reader = new FileReader();
-        let _this = this;
-        // 将文件以Data URL形式进行读入页面-- 转base64位
-        reader.readAsDataURL(simpleFile);
-        reader.onload = function (e) {
-          console.log(fileSrc);
-          _this.userInfo[fileSrc] = this.result;
-        };
-      },
-      // 关注
+
       joinFans() {
         //用户的Id
         let userId = localStorage.getItem('userId');
@@ -178,6 +150,48 @@
               });
             });
         }
+      }
+    },
+    watch: {
+      '$route'() {
+        this.userId = this.$route.params.userId;
+        this.$router.push(`/fhuser/${this.userId}/recipe`);
+        // 获取用户基本信息
+        this.$axios.get(`${$LH.url}/users/${this.userId}`)
+          .then((result) => {
+            this.userInfo = result.data.data[0];
+            console.log(this.userInfo);
+          }).catch(err => {
+          console.log(err);
+        });
+        // 加载基本图片
+        this.$axios.get(`${$LH.url}/recipes/basicPhoto`)
+          .then(async result => {
+            this.basicHead = await result.data.data.userHeadPhoto;
+            this.basicWall = await result.data.data.userSettingWall;
+            if (!this.userInfo.headPhoto) {
+              this.userInfo.headPhoto = this.basicHead.replace(':', ':/');
+            }
+            if (!this.userInfo.settingWall) {
+              this.userInfo.settingWall = this.basicWall.replace(':', ':/');
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        // 看是否有关注
+        this.$axios.get(`${$LH.url}/users/queryFans/${localStorage.getItem('userId')}/${this.userId}`)
+          .then(result => {
+            console.log(result.data.data[0]);
+            if (!result.data.data[0]) {
+              this.concern = '关注'
+            }else {
+              this.concern = '已关注'
+            }
+          })
+          .catch(err=> {
+            console.log(err);
+          })
       }
     }
   }

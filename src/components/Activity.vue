@@ -18,9 +18,7 @@
           <div v-for="i in activityContent">
             <p>{{i}}！！！</p>
           </div>
-
           <!--显示获奖作品部分-->
-
           <div class="showResult" v-show="showActivityResult">
             <h3>获奖作品如下</h3>
             <el-col >
@@ -29,8 +27,11 @@
                   <el-card :body-style="{ padding: '0px' }">
                     <img :src="o.recipeCoverImg" class="image">
                     <div style="padding: 14px;">
-                      <span>{{o.recipeName}}
-                        <i style="color:#FF7979" class="glyphicon glyphicon glyphicon-heart"></i>{{o.recipePraiseNum}}</span>
+                      <router-link :to="`../recipe_detail/${o.detailsId}`">
+                        <span>{{o.recipeName}}
+                        <i style="color:#FF7979" class="glyphicon glyphicon glyphicon-heart"></i>{{o.recipePraiseNum}}
+                      </span>
+                      </router-link>
                       <div class="bottom clearfix">
                         <p>{{o.accountName}}</p>
                       </div>
@@ -39,7 +40,6 @@
                 </el-col>
               </el-row>
             </el-col>
-
           </div>
 
           <div v-show="!showActivityResult">
@@ -100,6 +100,7 @@
       })
         .then((res) => {
           this.mydata = res.data.data;
+          console.log(this.mydata);
         }).catch((err) => {
         console.log(err);
       });

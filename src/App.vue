@@ -2,7 +2,7 @@
   <div style="position: relative; overflow: hidden">
     <canvas ref="canvas"></canvas>
     <div id="app">
-      <router-view/>
+      <router-view v-if="isRouterAlive"/>
     </div>
   </div>
 </template>
@@ -10,6 +10,11 @@
 <script>
   export default {
     name: 'App',
+    provide(){
+      return{
+        reload:this.reload
+      }
+    },
     props: {
       point: {
         type: Number,
@@ -31,6 +36,7 @@
         context: null, // canvasDom的执行上下文
         circleArr: [], // 圆点数组
         timer: null, // 定时器对象
+        isRouterAlive:true,
       }
     },
     mounted() {
@@ -58,6 +64,13 @@
       this.cycleDraw() // 循环绘制
     },
     methods: {
+      reload(){
+        this.isRouterAlive = false;
+        //在修改数据之后使用$nextTick，则可以在回调中获取更新后的DOM
+        this.$nextTick(()=>{
+          this.isRouterAlive=true
+        })
+      },
       /**
        * 生成min和max之间随机数
        */
@@ -163,6 +176,7 @@
           this.draw()
         }, 10)
       },
+
     },
     beforeDestory() {
       // 记得摧毁定时器

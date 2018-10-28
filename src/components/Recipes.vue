@@ -47,10 +47,6 @@
             }
       }
 
-
-  // window.onload = function () {
-  //   setIframeHeight(document.getElementById('external-frame'));
-  // };
     }
 </script>
 
@@ -59,7 +55,6 @@
     margin-bottom: 20px;
   }
   .bg-purple {
-    /*background: #d3dce6;*/
     background: white;
   }
 
