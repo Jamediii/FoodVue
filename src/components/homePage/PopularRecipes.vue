@@ -72,16 +72,9 @@
     position: relative;
   }
 
-  /*#popRecipes .icon-title {*/
-  /*width: 50px;*/
-  /*height: 50px;*/
-  /*background: url("../../assets/icon_sakura.png") center no-repeat;*/
-  /*margin: 10px auto;*/
-  /*}*/
-
   #popRecipes img {
     width: 100%;
-    height: 220px;
+    height: 240px;
   }
 
   #popRecipes div.icon-title {

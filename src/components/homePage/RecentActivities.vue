@@ -4,8 +4,9 @@
     <div class="w">
       <el-row class="inner-RA">
         <el-col :span="24">
-          <h2>近期活动</h2>
-          <p>这里可能有你意想不到的活动哦</p>
+          <!--<h2>近期活动</h2>-->
+          <el-header>>>&nbsp;&nbsp;近期活动</el-header>
+          <!--<p>这里可能有你意想不到的活动哦</p>-->
         </el-col>
       </el-row>
       <el-row class="activity" :gutter="20">
@@ -50,6 +51,7 @@
 
 <style scoped>
   #recentActivity {
+    padding-top: 20px;
     margin-top: 20px;
     position: relative;
     height: 460px;
@@ -67,8 +69,17 @@
   }
 
   #recentActivity .activity img {
-    height: 200px;
+    height: 240px;
     width: 100%;
+  }
+  #recentActivity .el-header {
+    background-color: #8cccc1;
+    color: #333;
+    text-align: left;
+    line-height: 60px;
+    font-size: 16px;
+    color:#fff;
+    margin-bottom: 20px;
   }
 
 </style>

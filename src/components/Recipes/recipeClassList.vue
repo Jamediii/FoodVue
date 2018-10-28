@@ -1,61 +1,37 @@
 <template>
-  <!--<link rel="stylesheet" type="text/css" href="../../../static/css/style.css" />-->
   <!--菜谱分类列表详情-->
-  <div id="recipeCList"  class="w">
+  <div id="recipeCList" class="w">
     <p style="height:20px;"></p>
-    <div>
     <el-row :gutter="20">
       <!--右侧菜谱部分-->
       <el-col :span="18">
         <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
         <el-main style="padding:0">
-          <el-row class="innerRCL" >
-            <el-col class="rclLeft" >
-              <el-card style="border:1px solid transparent;border-bottom-color:#ccc;padding:0; " shadow="never"  v-for="(o,index) in articleInfoList" :key="index">
-                <router-link :to="`/recipe_detail/${o.detailsId}`">
-                  <el-col :span="8">
-                    <img :src="o.recipeCoverImg" alt="">
-                  </el-col>
-                  <el-col :span="15" :offset="1">
-                    <h3>{{o.recipeName}}</h3>
-                    <p style="
-                     display: -webkit-box;
-                      white-space: pre-wrap;
-                      word-wrap: break-word;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                        -webkit-box-orient: vertical;
-                        -webkit-line-clamp:4;margin-top:20px;"
-                       class="rclBrief">{{o.recipeBrief}}</p>
-                    <p>
-                      <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
-                      <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
-                    </p>
-                  </el-col>
-                </router-link>
-              </el-card>
-            </el-col>
-          </el-row>
-          <!--分页功能-->
-          <el-row :gutter="20">
-            <el-col :span="12" :offset="5">
-              <!--分页-->
-              <div class="block">
-                <el-pagination
-                  @current-change="currentPageNum" :current-page="currentPage"
-                  :page-size="pageSize" layout="prev, pager, next" :total="len">
-                </el-pagination>
+          <div id="wrap">
+            <div style="display: inline-block" class="box" v-for="o in list">
+              <div class="info">
+                <div class="pic"><img :src="o.recipeCoverImg" alt=""></div>
+                <div class="title">
+                  <router-link :to="`/recipe_detail/${o.detailsId}`">
+                    <p>{{o.recipeName}}</p>
+                  </router-link>
+                </div>
+                <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
+                <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
               </div>
-              <!--current-change当前页变动时候触发的事件-->
-            </el-col>
-          </el-row>
+            </div>
+          </div>
+          <el-alert v-if="isButtomShow"
+            title="不好意思已经到底咯"
+            type="warning">
+          </el-alert>
         </el-main>
       </el-col>
       <!--右侧文章作者推荐-->
-      <el-col class="rclRight" :span="6"  >
+      <el-col class="rclRight" :span="6">
         <div class="grid-content">
           <h3>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}作者推荐</h3>
-          <el-card shadow="never" class="box-card" v-for="(o,index) in articleInfoList" :key="index" v-if="index <5">
+          <el-card shadow="never" class="box-card" v-for="(o,index) in list" :key="index" v-if="index <5">
             <div class="text item">
               <el-col :span="10">
                 <img :src="o.headPhoto" alt="">
@@ -68,107 +44,105 @@
         </div>
       </el-col>
     </el-row>
-    </div>
   </div>
 </template>
 
 <script>
-  // 导入分页组件
-  // import PageNation from '../common/PageNation.vue'
-
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        this.get();
+        this.page++;
+      }
+    });
+  });
   export default {
-    name: "recipeClassList",
-    components:{
 
-    },
+    inject: ['reload'],
+    name: "recipeClassList",
     data() {
       return {
         recipeClassOne: [],//所有的数据
-        fData: [],
-        articleInfoList: [],//每页显示的数据
-        currentPage: 1,//当前页
-        len: 0,//默认总的数据长度
-        pageSize: 5,//默认每页显示的数量
-        recipeClassName:"",//菜谱分类对应的名称
+        recipeClassName: "",//菜谱分类对应的名称
+        id: this.$route.params.recipeClassifyId,
+        isButtomShow:false,
+        //瀑布流
+        list: [],
+        limit: 9,
+        page: 1,
       }
     },
-
     mounted() {
-      //根据id获取分类下的菜谱
-      this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
-        .then((res) => {
-          this.recipeClassOne = res.data.data;
-          this.recipeClassName=this.recipeClassOne[0].recipeClassifyName;
-          this.fData = res.data.data;
-          // console.log(this.recipeClassOne);
-          this.len = res.data.data.length;
-          this.handleInfo();
-        }).catch((err) => {
-        console.log(err);
-      })
-
+      //监听滚动事件
+      window.addEventListener("scroll", this.loadMore, true);
+      this.get();
     },
     watch: {
-      $route() {
-        //根据id获取分类下的菜谱
-        this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
-          .then((res) => {
-            this.recipeClassOne = res.data.data;
-            this.recipeClassName=this.recipeClassOne[0].recipeClassifyName;
-            // console.log(this.recipeClassOne);
-            this.len = res.data.data.length;
-            this.handleInfo();
-          }).catch((err) => {
-          console.log(err);
-        })
-      }
+      '$route': function (to, from) {
+        this.reload();
+      },
     },
     methods: {
-      handleInfo() {
-        // 页数，如果有小数，只取整数部分
-        let pageNum = Number(String(this.len / this.pageSize).split(".")[0]);
-        // 定义一个空数组
-        let newArr = [];
-        // 遍历获取的数据，每次遍历都从数组的0位置开始截取，截取数量为每页显示的数量
-        for (let i = 0; i < pageNum; i++) {
-          newArr.push(this.recipeClassOne.splice(0, this.pageSize));
-        }
-        // 判断剩余的数据有没有小于每一页的数量，如果小于，就把剩余的数据放进newArr数组
-        if (this.recipeClassOne.length < this.pageSize) {
-          newArr.push(this.recipeClassOne.splice(0, this.recipeClassOne.length));
-        }
-        // 将新的数组赋给articleList[],用来渲染页面
-        this.recipeClassOne = newArr;
-        // 第一次进入页面显示this.articleList[]数组的第一个元素
-        this.articleInfoList = this.recipeClassOne[0]
-        console.log(this.recipeClassOne[0])
-      },
-      currentPageNum(currentPage) {
-        // currentPage为当前的页数
-        // 显示当前页数对应的数据
-        this.articleInfoList = this.recipeClassOne[currentPage - 1];
-      },
-    },
 
-    components: {
-      // 'app-pagenation':PageNation
-    }
+      //瀑布流的方法
+      get() {
+        this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
+          .then((res) => {
+              this.recipeClassName = res.data.data[0].recipeClassifyName;
+              if (this.page == 1) {
+                for (var i = 0; i < this.limit * this.page; i++) {
+                  if (res.data.data[i]) {
+                    this.list.push(res.data.data[i]);
+                  } else {
+                   this.isButtomShow=true;
+                  }
+
+                }
+              } else {
+                for (var i = this.limit * (this.page - 1); i < this.limit * this.page; i++) {
+                  if (res.data.data[i]) {
+                    this.list = this.list.concat(res.data.data[i])
+                  }
+                  else {
+                    this.isButtomShow=true;
+                  }
+                }
+              }
+            }
+          ).catch((err) => {
+          console.log(err);
+        })
+      },
+
+      loadMore() {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          var clientHeight = document.documentElement.clientHeight; //document.documentElement获取数据
+          var scrollTop = document.documentElement.scrollTop; //document.documentElement获取数据
+          var scrollHeight = document.documentElement.scrollHeight;//document.documentElement获取数据
+          if (clientHeight + scrollTop + 20 >= scrollHeight) {
+            this.page++;
+            this.get();
+          }
+        }, 13);
+      }
+
+
+    },
   }
 </script>
-
 
 <style scoped>
   #recipeCList .el-header {
     background-color: #8cccc1;
-    color: #333;
     text-align: left;
     line-height: 60px;
     font-size: 16px;
-    color:#fff;
+    color: #fff;
   }
 
   #recipeCList .rclLeft img {
-    height: 200px;
+    height: 260px;
     width: 100%;
     margin-bottom: 20px;
   }
@@ -184,9 +158,9 @@
     display: block;
     font-size: 16px;
     font-weight: normal;
-    padding:0 20px;
+    padding: 0 20px;
     background-color: #8cccc1;
-    color:#fff;
+    color: #fff;
     margin-top: 0;
     margin-bottom: 20px;
   }
@@ -195,6 +169,144 @@
     height: 80px;
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  /*瀑布流开始*/
+  img {
+    border: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: #444;
+  }
+
+  a:hover {
+    color: #999;
+  }
+
+  #title {
+    width: 600px;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  /* 定义关键帧 */
+  @-webkit-keyframes shade {
+    from {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @-moz-keyframes shade {
+    from {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @-ms-keyframes shade {
+    from {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @-o-keyframes shade {
+    from {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes shade {
+    from {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* wrap */
+  #wrap {
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  #wrap .box {
+    width: 307px;
+    height: auto;
+    padding: 10px;
+    border: none;
+    float: left;
+    margin-right: 28px;
+  }
+
+  #wrap .box .info {
+    width: 307px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 11px #666;
+    background: #fff;
+  }
+
+  #wrap .box .info .pic {
+    width: 280px;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 10px;
+  }
+
+  #wrap .box .info .pic:hover {
+    -webkit-animation: shade 3s ease-in-out 1;
+    -moz-animation: shade 3s ease-in-out 1;
+    -ms-animation: shade 3s ease-in-out 1;
+    -o-animation: shade 3s ease-in-out 1;
+    animation: shade 3s ease-in-out 1;
+  }
+
+  #wrap .box .info .pic img {
+    width: 280px;
+    border-radius: 3px;
+  }
+
+  #wrap .box .info .title {
+    width: 280px;
+    height: 40px;
+    margin: 0 auto;
+    line-height: 40px;
+    /*text-align: center;*/
+    color: #666;
+    font-size: 18px;
+    font-weight: bold;
+    overflow: hidden;
   }
 
 </style>

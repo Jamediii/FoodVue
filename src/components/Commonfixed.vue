@@ -31,10 +31,13 @@
               <router-link to="/recipecl/1">家常菜</router-link>
             </li>
             <li>
-              <router-link to="/recipecl/2">西餐</router-link>
+              <router-link to="/recipecl/2">煲汤</router-link>
             </li>
             <li>
-              <router-link to="/recipecl/3">烘焙</router-link>
+              <router-link to="/recipecl/7">主食</router-link>
+            </li>
+            <li>
+              <router-link to="/recipecl/8">精选</router-link>
             </li>
             <li>
               <router-link to="/community">享食社区</router-link>
@@ -80,13 +83,14 @@
         </el-col>
         <el-col class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3" :offset="2">
           <select style="height:40px;width: 80%;border-radius: 4px;border-color:#dcdfe6;color:#606266;outline:none;"
-                  name="" id="" >
+                  name="" id="">
             <option value="按食谱名称">按食谱名称</option>
             <option value="按食谱作者">按食谱作者</option>
           </select>
         </el-col>
         <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
-          <el-input style="height: 40px;width: 100%;" v-model="inputsel" @keyup.native="searchMathing" placeholder="请输入内容"/>
+          <el-input style="height: 40px;width: 100%;" v-model="inputsel" @keyup.native="searchMathing"
+                    placeholder="请输入内容"/>
           <div v-if="showlist" class="searchList">
             <ul>
               <li @click="upText(o.name,o.id)" v-for="(o,index) in showMathing" v-if="index < showMathing.length">
@@ -129,10 +133,6 @@
         showMathing: [],
         showlist: false,
         recipeSearchId: 0,
-        // //判断是否登录，是否显示
-        // isShow: false,
-        // // //登录隐藏
-        // isLoginHide: true,
       }
     },
     created() {
@@ -245,7 +245,7 @@
     /*background-color: #fff;*/
     margin-bottom: 0;
     color: #8cccc1;
-    background: linear-gradient(to top,#daeae8 0%,#daeae800);
+    background: linear-gradient(to top, #daeae8 0%, #daeae800);
   }
 
   .navbar {
@@ -256,7 +256,7 @@
   nav.navbar-default .navbar-nav > .active > a {
     /*color: #fff;*/
     /*background-color: #8cccc1;*/
-    background: linear-gradient(to top,#daeae800 0%,#daeae8);
+    background: linear-gradient(to top, #daeae800 0%, #daeae8);
   }
 
   nav .ulDown {

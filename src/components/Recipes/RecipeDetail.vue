@@ -68,6 +68,8 @@
   import Recommend from '../Community/Recommend.vue'
 
   export default {
+    //注入
+    inject:['reload'],
     name: "RecipeDetail",
     components: {
       'recipe-food-table': RecipeFoodTable,
@@ -178,7 +180,13 @@
           }
         });
     },
+    watch: {
+      '$route':function(to, from) {
+        this.reload();
+      },
+    },
     methods: {
+
       //添加评论
       addComment() {
         if (this.$store.state.user.state) {
