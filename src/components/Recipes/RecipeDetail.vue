@@ -140,7 +140,7 @@
           this.recipePraiseNum = recipeDetail[0].recipePraiseNum;
           this.recipeCoverImg = recipeDetail[0].recipeCoverImg;
           this.headPhoto = recipeDetail[0].headPhoto;
-          if (localStorage.getItem("Flag") === 'isLogin') {
+
             // 获取存储 是否收藏过该菜谱
             let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
             let userId = this.userId;
@@ -169,15 +169,6 @@
                 console.log(err);
               });
 
-          } else {
-            // 未登录状态
-            this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.$router.push('/login');
-              }
-            });
-          }
         });
     },
     watch: {

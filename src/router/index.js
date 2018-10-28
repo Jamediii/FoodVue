@@ -101,7 +101,6 @@ export default new Router({
         {
           path:'recipe_detail/:detailsId',
           component:RecipeDetail,
-
         },
         //菜谱的作者
         {
