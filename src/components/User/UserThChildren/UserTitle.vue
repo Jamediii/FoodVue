@@ -24,6 +24,10 @@
 </template>
 
 <script>
+  $(function () {
+
+  });
+
   export default {
     name: "UserTitle",
     data() {
@@ -37,6 +41,18 @@
         let router = tab.$el.id.split('-')[1];
         console.log(router);
         this.$router.push(`/user/${router}`);
+      }
+    },
+    watch: {
+      '$route'() {
+        var body = $('html,body');
+        var recipeTitle = $('#recipeTitle');
+        // mainContainer.animate({
+        //   scrollTop: scrollToContainer.offset().top - mainContainer.offset().top + mainContainer.scrollTop()
+        // }, 2000);//2秒滑动到指定位置
+        body.animate({
+          scrollTop: recipeTitle.offset().top - body.offset().top + body.scrollTop()
+        }, 10);
       }
     }
   }

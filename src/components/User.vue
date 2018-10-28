@@ -98,6 +98,7 @@
         .then(async result => {
           this.basicHead = await result.data.data.userHeadPhoto;
           this.basicWall = await result.data.data.userSettingWall;
+          console.log(result.data.data);
           if (!this.userInfo.headPhoto) {
             this.userInfo.headPhoto = this.basicHead.replace(':', ':/');
           }

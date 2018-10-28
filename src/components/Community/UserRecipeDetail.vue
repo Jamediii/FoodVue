@@ -1,63 +1,88 @@
 <template>
   <div id="container" class="w">
     <p style="color: transparent">111</p>
-    <el-row :gutter="30">
-      <el-col :span="16">
-        <el-main>
-          <img :src="dietPhoto">
-          <h2 style="font-weight: bold">{{dietTitle}}</h2><br/>
-          <el-row style="height: 30px;line-height: 30px">
-            <el-col :span="6">
-              <i class="el-icon-star-on" style="color: #8cccc1;"></i> 收藏221人
-              <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
+    <el-row :gutter="20">
+      <el-col :span="18" :offset="3">
+        <el-container>
+          <el-header>
+              <span style="font-weight: bold;font-size: 25px">
+                {{dietTitle}}
+                <span>--by{{accountName}}</span>
+              </span>
+          </el-header>
+          <el-main>
+            <img :src=dietPhoto>
+          </el-main>
+          <el-footer>
+            <el-col :span="20">
+              <div class="userInfo">
+                <span>
+                <img :src="headPhoto" alt="">
+              </span>
+                <span style="-ms-text-overflow: ellipsis">
+                    {{dietIntroduce}}
+              </span>
+              </div>
+              <el-row :gutter="30">
+                <el-col :span="16">
+                  <el-main>
+                    <img :src="dietPhoto">
+                    <h2 style="font-weight: bold">{{dietTitle}}</h2><br/>
+                    <el-row style="height: 30px;line-height: 30px">
+                      <el-col :span="6">
+                        <i class="el-icon-star-on" style="color: #8cccc1;"></i> 收藏221人
+                        <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
+                      </el-col>
+                      <el-col :span="2">
+
+                      </el-col>
+                      <el-col span="6" :offset="12">
+                        <button @click="addCollection">收藏</button>
+                        <button>点赞</button>
+                      </el-col>
+                    </el-row>
+                    <div class="author">
+                      <img :src=dietPhoto class="headPhoto">
+                      <span style="color: #8cccc1">{{accountName}}</span>
+                      <button>关注</button>
+                      <p style="font-size: 13px;color: #666;"><br/>{{dietIntroduce}}</p>
+                    </div>
+                    <user-recipe-food-table></user-recipe-food-table>
+                    <user-recipe-step></user-recipe-step>
+                  </el-main>
+                </el-col>
+
+
+                <el-col :span="8">
+                  <recommend></recommend>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <!--评论部分-->
+                <el-col class="comment" :span="18" :offset="3">
+                  <p>评论专区</p>
+                  <el-input
+                    type="textarea"
+                    style="auto-size:none"
+                    :autosize="{ minRows: 2, maxRows: 4}"
+                    placeholder="请输入内容"
+                    v-model="userComm">
+                  </el-input>
+                  <el-button @click="addComment">添加评论</el-button>
+                  <el-col class="commentTxt" v-for="o in commentText">
+                    <el-card shadow="never">
+                      <h4>{{o.accountName}}</h4>
+                      <p>{{o.userComment}}</p>
+                    </el-card>
+                  </el-col>
+                </el-col>
+              </el-row>
             </el-col>
-            <el-col span="6" :offset="12">
-              <button>收藏</button>
-              <button>点赞</button>
-            </el-col>
-          </el-row>
-          <div>
-          </div><br/>
-
-          <div class="author">
-            <img :src=dietPhoto class="headPhoto">
-            <span style="color: #8cccc1">{{accountName}}</span>
-            <button>关注</button>
-            <p style="font-size: 13px;color: #666;"><br/>{{dietIntroduce}}</p>
-          </div>
-          <user-recipe-food-table></user-recipe-food-table>
-          <user-recipe-step></user-recipe-step>
-        </el-main>
-      </el-col>
-
-
-      <el-col :span="8">
-        <recommend></recommend>
+          </el-footer>
+        </el-container>
       </el-col>
     </el-row>
-
-    <el-row>
-      <!--评论部分-->
-      <el-col class="comment" :span="18" :offset="3">
-        <p>评论专区</p>
-        <el-input
-          type="textarea"
-          style="auto-size:none"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入内容"
-          v-model="userComm">
-        </el-input>
-        <el-button @click="addComment">添加评论</el-button>
-        <el-col class="commentTxt" v-for="o in commentText">
-          <el-card shadow="never">
-            <h4>{{o.accountName}}</h4>
-            <p>{{o.userComment}}</p>
-          </el-card>
-        </el-col>
-      </el-col>
-    </el-row>
-
-    <br/>
   </div>
 </template>
 
@@ -65,6 +90,7 @@
   import UserRecipeFoodTable from './UserRecipeFoodTable'
   import UserRecipeStep from './UserRecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
+
   import Recommend from './Recommend.vue'
   export default {
     name: "UserRecipeDetail",
@@ -73,29 +99,35 @@
       'user-recipe-step':UserRecipeStep,
       'recommend':Recommend
     },
-    data(){
-      return{
+    data() {
+      return {
         //菜谱详情表内数据
-        dietId:'',
-        dietTitle:'',
-        dietIntroduce:'',
-        accountName:'',
-        dietPhoto:'',
+        dietId: '',
+        headPhoto: '',
+        dietTitle: '',
+        dietIntroduce: '',
+        accountName: '',
+        dietPhoto: '',
         //路由传参获取的id
-        p_dietId:this.$route.params.dietId,
+        p_dietId: this.$route.params.dietId,
         //输入评论部分
         userComm: "",
         //显示评论内容
         commentText: [],
       }
     },
-    created(){
+    created() {
       //根据id获取的菜谱
       this.$axios.get(`${$LH.url}/recipes/users/details/` + this.p_dietId)
-        .then((res) =>{
+        .then((res) => {
           var allData = res.data.data;
           var dietDetail = allData[0];
           this.dietId = dietDetail[0].dietId;
+          if (!/^http/.test(allData[0][0].headPhoto)) {
+            this.headPhoto = `${$LH.url}/images/userPhoto/${allData[0][0].headPhoto}`;
+          } else {
+            this.headPhoto = allData[0][0].headPhoto;
+          }
           this.dietTitle = dietDetail[0].dietTitle;
           this.dietIntroduce = dietDetail[0].dietIntroduce;
           this.accountName = dietDetail[0].accountName;
@@ -108,7 +140,7 @@
           console.log(err)
         });
     },
-    mounted(){
+    mounted() {
       //根据id获取评论内容
       this.$axios.post(`${$LH.url}/comment/showConmment`, {
         menu_Id: this.p_recipeId
@@ -120,17 +152,17 @@
           console.log(err)
         });
     },
-    methods:{
+    methods: {
       //添加评论
       addComment() {
-        if(this.$store.state.user.state){
+        if (this.$store.state.user.state) {
           this.$axios.post(`${$LH.url}/comment/addComment`, {
             userId: this.$store.state.user.userId,
             userComment: this.userComm,
             detailsId: this.p_recipeId
           })
             .then((res) => {
-              if(res.data.data){
+              if (res.data.data) {
                 this.$axios.post(`${$LH.url}/comment/showConmment`, {
                   menu_Id: this.p_recipeId
                 })
@@ -145,17 +177,17 @@
             .catch(function (err) {
               console.log(err)
             });
-        }else{
+        } else {
           this.$router.push('/login');
         }
 
       },
       //加入收藏
-      addCollection(){
-        if(this.$store.state.user.state){
+      addCollection() {
+        if (this.$store.state.user.state) {
           $("#addColBtn span").text("已收藏");
           collectionLS.collection(this.p_recipeId);
-        }else{
+        } else {
           this.$router.push('/login');
         }
       }
@@ -165,6 +197,10 @@
 </script>
 
 <style scoped>
+  img {
+    /*width: 500px;*/
+    height: 400px;
+  }
   button{
     width: 80px;
     height: 30px;
@@ -187,6 +223,10 @@
     width:100%;
     /*height: 400px;*/
   }
+
+  #container {
+    background-color: #fdf6dc;
+  }
   .headPhoto{
     width: 40px;
     height: 40px;
@@ -198,9 +238,29 @@
   }
 
   span {
+    font-size: 14px;
+  }
+
+  .userInfo span:first-child {
+    float: left;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .userInfo img {
+    height: 100px;
+  }
+
+  span {
     font-size: 16px;
   }
 
+  .el-header, .el-footer {
+    background-color: white;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
 
   .el-main {
     /*background-color: white;*/

@@ -40,9 +40,9 @@
     // 页面挂载后 -- 执行
     mounted() {
       // 获取 我的Id
-      let userId = this.userid;
-      this.$axios.get(`${$LH.url}/users/fans/${userId}`)
+      this.$axios.get(`${$LH.url}/users/fans/${localStorage.getItem('userId')}`)
         .then((result) => {
+          console.log(result.data.data);
           this.recipesY = result.data.data;
           // 获取到每个粉丝的id
           let length = this.recipesY.length;

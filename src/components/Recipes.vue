@@ -27,7 +27,6 @@
   import LoopPic from './Recipes/LoopPic.vue'
   import RecipePopular from './Recipes/RecipePopular.vue'
   import RecipeSelected from './Recipes/RecipeSelected.vue'
-  import View from './Recipes/View.vue'
 
   export default {
         name: "Recipes",
@@ -36,7 +35,6 @@
         'loop-pic':LoopPic,
         'recipe-popular':RecipePopular,
         'recipe-selected':RecipeSelected,
-        'html-view':View
       },
       method:{
             setIframeHeight(iframe) {

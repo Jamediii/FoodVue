@@ -148,7 +148,6 @@
         //   this.raNameBefore.push(sdata[i].accountName);
         // }
         this.checkData = res.data.data;
-        console.log(this.checkData);
       }).catch((err) => {
         console.log(err);
       });
