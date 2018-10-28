@@ -6,9 +6,9 @@
       <!--右侧菜谱部分-->
       <el-col :span="18">
         <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
-        <el-main style="padding:0">
+        <el-main id="main" style="padding:0">
           <div id="wrap">
-            <div style="display: inline-block" class="box" v-for="o in list">
+            <div style="display: inline-block" class="box box-item" v-for="o in list">
               <div class="info">
                 <div class="pic"><img :src="o.recipeCoverImg" alt=""></div>
                 <div class="title">
@@ -22,8 +22,8 @@
             </div>
           </div>
           <el-alert v-if="isButtomShow"
-            title="不好意思已经到底咯"
-            type="warning">
+                    title="不好意思已经到底咯"
+                    type="warning">
           </el-alert>
         </el-main>
       </el-col>
@@ -57,7 +57,7 @@
         recipeClassOne: [],//所有的数据
         recipeClassName: "",//菜谱分类对应的名称
         id: this.$route.params.recipeClassifyId,
-        isButtomShow:false,
+        isButtomShow: false,
         //瀑布流
         list: [],
         limit: 9,
@@ -86,7 +86,7 @@
                   if (res.data.data[i]) {
                     this.list.push(res.data.data[i]);
                   } else {
-                   this.isButtomShow=true;
+                    this.isButtomShow = true;
                   }
 
                 }
@@ -96,7 +96,7 @@
                     this.list = this.list.concat(res.data.data[i])
                   }
                   else {
-                    this.isButtomShow=true;
+                    this.isButtomShow = true;
                   }
                 }
               }
@@ -108,17 +108,15 @@
       loadMore() {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-          var clientHeight = document.documentElement.clientHeight; //document.documentElement获取数据
-          var scrollTop = document.documentElement.scrollTop; //document.documentElement获取数据
-          var scrollHeight = document.documentElement.scrollHeight;//document.documentElement获取数据
-          if (clientHeight + scrollTop + 20 >= scrollHeight) {
-            this.page++;
-            this.get();
-          }
-        }, 13);
-      }
-
-
+            var clientHeight = document.documentElement.clientHeight; //document.documentElement获取数据
+            var scrollTop = document.documentElement.scrollTop; //document.documentElement获取数据
+            var scrollHeight = document.documentElement.scrollHeight;//document.documentElement获取数据
+            if (clientHeight + scrollTop + 20 >= scrollHeight) {
+              this.page++;
+              this.get();
+            }
+          }, 13);
+      },
     },
   }
 </script>
@@ -270,7 +268,7 @@
 
   #wrap .box .info .pic {
     width: 280px;
-    height: auto;
+    height: 200px;
     margin: 0 auto;
     padding-top: 10px;
   }
