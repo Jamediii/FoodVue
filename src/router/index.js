@@ -26,7 +26,7 @@ import ArticleDetail from '../components/Community/ArticleDetail.vue'
 //文章的作者
 import CommunityAuthor from '../components/Community/CommunityAuthor.vue'
 //显示某个菜谱的全部内容（菜谱详情）
-import RecipeDetail from'../components/Recipes/RecipeDetail.vue'
+import RecipeDetail from '../components/Recipes/RecipeDetail.vue'
 //菜谱的作者
 import RecipeAuthor from '../components/Recipes/RecipeAuthor.vue'
 //导入服务条款
@@ -50,7 +50,8 @@ import {browseUser} from './UserRouter/BrowseUser.js'
 import {fhBrowseUser} from './FhUserRouter/BrowseUser.js'
 //显示修改用户资料组件
 import ModifyUserInfo from '../components/User/UserInfoModify/ModifyUserInfo.vue'
-
+//忘记密码
+import ForgetPwd from '../components/common/ForgetPwd.vue'
 
 export default new Router({
   routes: [
@@ -87,38 +88,38 @@ export default new Router({
         },
         // 显示文章的全部内容
         {
-          path:'article_detail/:articleId',
-          component:ArticleDetail,
+          path: 'article_detail/:articleId',
+          component: ArticleDetail,
 
         },
         //文章的作者
         {
-          path:'community_author',
-          component:CommunityAuthor,
+          path: 'community_author',
+          component: CommunityAuthor,
 
         },
         //显示某个菜谱的全部内容
         {
-          path:'recipe_detail/:detailsId',
-          component:RecipeDetail,
+          path: 'recipe_detail/:detailsId',
+          component: RecipeDetail,
         },
         //菜谱的作者
         {
-          path:'recipe_author',
-          component:RecipeAuthor,
+          path: 'recipe_author',
+          component: RecipeAuthor,
 
         },
 
         //达人推荐。用户上传的菜谱展示页
         {
-          path:'user_recipe',
-          component:UserRecipe,
+          path: 'user_recipe',
+          component: UserRecipe,
 
         },
         //达人推荐。用户上传的菜谱详情页
         {
-          path:'user_recipe/:dietId',
-          component:UserRecipeDetail,
+          path: 'user_recipe/:dietId',
+          component: UserRecipeDetail,
 
         },
         // 根组件一定要带'/',子组件则不需要
@@ -128,8 +129,8 @@ export default new Router({
           name: 'User',
           component: User,
           children: browseUser,
-          meta:{
-            isLogin:true
+          meta: {
+            isLogin: true
           }
         },
         {
@@ -137,8 +138,8 @@ export default new Router({
           path: '/modifyinfo',
           name: 'ModifyUserInfo',
           component: ModifyUserInfo,
-          meta:{
-            isLogin:true
+          meta: {
+            isLogin: true
           }
         },
         {
@@ -156,8 +157,8 @@ export default new Router({
           path: '/menu',
           name: 'Menu',
           component: Menu,
-          meta:{
-            state:true
+          meta: {
+            state: true
           }
         },
         // 用户填写菜谱路由
@@ -165,8 +166,8 @@ export default new Router({
           path: '/makemn/:menuName',
           name: 'Makemn',
           component: Makemn,
-          meta:{
-            isLogin:true
+          meta: {
+            isLogin: true
           }
         },
         //分类后的菜谱路由
@@ -184,8 +185,8 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login,
-      meta:{
-        isLogin:false
+      meta: {
+        isLogin: false
       }
     },
     //注册
@@ -193,8 +194,8 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register,
-      meta:{
-        isLogin:false
+      meta: {
+        isLogin: false
       }
     },
 
@@ -203,8 +204,8 @@ export default new Router({
       path: '/sitem',
       name: 'ServerItem',
       component: ServerItem,
-      meta:{
-        isLogin:true
+      meta: {
+        isLogin: true
       }
     },
     //注册协议
@@ -212,7 +213,13 @@ export default new Router({
       path: '/regagreement',
       name: 'RegistrationAgreement',
       component: RegistrationAgreement,
+    },
+    //忘记密码
+    {
+      path: '/forgetpwd',
+      name: 'ForgetPwd',
+      component: ForgetPwd,
     }
   ],
-  mode:'history'
+  mode: 'history'
 })
