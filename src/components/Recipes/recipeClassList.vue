@@ -48,14 +48,6 @@
 </template>
 
 <script>
-  $(function () {
-    $(window).scroll(function () {
-      if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-        this.get();
-        this.page++;
-      }
-    });
-  });
   export default {
 
     inject: ['reload'],
@@ -113,7 +105,6 @@
           console.log(err);
         })
       },
-
       loadMore() {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
