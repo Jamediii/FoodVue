@@ -39,7 +39,6 @@
     methods: {
       handleClick(tab, event) {
         let router = tab.$el.id.split('-')[1];
-        console.log(router);
         this.$router.push(`/user/${router}`);
       }
     },

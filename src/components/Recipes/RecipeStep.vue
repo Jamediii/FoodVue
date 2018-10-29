@@ -32,7 +32,6 @@
           .then((res) =>{
             var allData = res.data.data;
             this.recipeStepList = allData[2];
-            console.log(this.recipeStepList);
           })
           .catch(function (err) {
             console.log(err)

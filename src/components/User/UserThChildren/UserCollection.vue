@@ -80,7 +80,9 @@
           collectUser: []
         },
         // 判断类型
-        isArray: true
+        isArray: true,
+        isCollect: false,
+        isCollectUser: false,
       }
     },
     // 页面挂载 -- 执行
@@ -91,8 +93,7 @@
       let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
       for (let i = 0; i < detailsIdsArray.length; i++) {
         if (detailsIdsArray[i].userId === userId) {
-          if (detailsIdsArray[i].collect) {
-            console.log(detailsIdsArray[i].collect);
+          if (detailsIdsArray[i].collect.length > 0) {
             this.$axios.get(`${$LH.url}/recipes/brief/${JSON.stringify(detailsIdsArray[i].collect)}`)
               .then(async (result) => {
                 for (let i = 0; i < result.data.data.length; i++) {
@@ -103,8 +104,7 @@
               console.log(err.message);
             })
           }
-          if (detailsIdsArray[i].collectUser) {
-            console.log(detailsIdsArray[i].collectUser);
+          if (detailsIdsArray[i].collectUser > 0) {
             this.$axios.get(`${$LH.url}/operat/getCollection/${JSON.stringify(detailsIdsArray[i].collectUser)}`)
               .then(async (result) => {
                 for (let i = 0; i < result.data.data.length; i++) {
@@ -116,7 +116,6 @@
             })
           }
         }
-        console.log(this.recipesY);
       }
     },
     methods: {
@@ -155,6 +154,8 @@
               }
             } else {
               for (let j = 0; j < detailsIdsArray[i].collectUser.length; j++) {
+                console.log(detailsIdsArray[i].collectUser[j]);
+                console.log(detail.dietId);
                 if (detailsIdsArray[i].collectUser[j] === detail.dietId) {
                   this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
                     confirmButtonText: '确定',
@@ -191,8 +192,13 @@
       }
     },
     watch: {
-      'recipesY.length'(newLength) {
-        if (newLength === 0) {
+      'recipesY.collectUser.length'(newLength) {
+        if (newLength === 0 && this.recipesY.collect.length === 0) {
+          this.isArray = true;
+        }
+      },
+      'recipesY.collect.length'(newLength) {
+        if (newLength === 0 && this.recipesY.collectUser.length === 0) {
           this.isArray = true;
         }
       }
