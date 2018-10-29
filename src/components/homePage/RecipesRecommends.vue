@@ -36,14 +36,13 @@
             <img :src="recipesRImg[index]" class="image">
             <div style="padding: 14px;" class="left">
               <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
-                <span>{{recipesRName[index]}}</span>
+                <span style="white-space: nowrap;over-flow:hidden;">{{recipesRName[index]}}</span>
               </router-link>
               <div class="bottom clearfix">
                 <p>by&nbsp;{{recipesRAuthor[index]}}</p>
               </div>
             </div>
           </el-card>
-
         </el-col>
       </el-col>
     </el-row>
@@ -124,7 +123,7 @@
   }
 
   #recipesComm .inner-RC .showrc img {
-    height: 240px;
+    height: 100%;
     width: 100%;
   }
 

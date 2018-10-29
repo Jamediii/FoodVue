@@ -5,7 +5,7 @@
       <!--轮播图部分-->
       <el-col :xs="24" :sm="24" :md="16" :lg="17" :xl="17">
         <div class="block">
-          <el-carousel height="400px">
+          <el-carousel height="440px">
             <el-carousel-item v-for="(item,index) in imgs" :key="index">
               <img :src="item.pic" alt="">
               <!--<router-link to="/recipe_detail"></router-link>-->
@@ -13,7 +13,7 @@
           </el-carousel>
         </div>
 
-        <p>開始感受到炎炎夏日的威力,最適合來道麻辣開胃的川味料理,溫順椒香拌著麵條及軟嫩的雞腿肉,爽脆的黃瓜,交織出豐富層次~另人純垂涎三尺的美味</p>
+        <p>在文人雅士眼里，生活处处是华章。在吃货眼中，万物都是美味佳肴。岁月就在这般月月年年好时光的期盼中，缓缓流淌。</p>
         <!--<ul>-->
         <!--<li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>-->
         <!--<li><span class="glyphicon glyphicon glyphicon-heart"></span>点赞数</li>-->
@@ -22,6 +22,7 @@
       </el-col>
       <!--右边文章推荐部分-->
       <el-col class="ArticleRemRight" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+        <el-header  >&nbsp;>>&nbsp;&nbsp;文章推荐</el-header>
         <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 4">
 
           <el-col :span="7">
@@ -83,6 +84,7 @@
   /*轮播图部分开始*/
   #Sowingmap {
     margin-top: 40px;
+    font-size: 14px;
   }
 
   #Sowingmap .block {
@@ -117,6 +119,13 @@
   /*轮播图部分结束*/
 
   /*右边文章推荐部分开始*/
+  #Sowingmap .ArticleRemRight .el-header {
+    background-color: #8cccc1;
+    text-align: left;
+    line-height: 60px;
+    font-size: 16px;
+    color: #fff;
+  }
   #Sowingmap .ArticleRemRight .el-card {
     /*padding: 10px;*/
     margin-bottom: 10px;

@@ -52,12 +52,15 @@
         <el-col class="commentTxt" v-for="o in commentText">
           <!--<el-card shadow="never">-->
           <div class="commentInner">
-            <el-col :span="2">
+            <el-col :span="2" style="margin-right: 10px;">
               <img :src="o.headPhoto" alt="">
             </el-col>
             <el-col :span="20">
-              <span>{{o.accountName}}   {{o.commentTime}} </span>
+              <span>{{o.accountName}}   {{o.commentTime}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="el-icon-delete"
+                                                                                    v-if="o.userId == userId"
+                                                                                    @click="delComm(o)"></i></span>
               <p>{{o.userComment}}</p>
+
             </el-col>
           </div>
           <!--</el-card>-->
@@ -121,6 +124,8 @@
         //显示评论内容
         commentText: [],
         commentTime: null,
+        commentId: [],
+        //显示删除
       }
     },
     mounted() {
@@ -177,6 +182,8 @@
             });
 
         });
+
+
     },
     watch: {
       '$route': function (to, from) {
@@ -184,7 +191,6 @@
       },
     },
     methods: {
-
       //添加评论
       addComment() {
         this.commentTime = new Date().toLocaleString();
@@ -203,8 +209,12 @@
                     menu_Id: this.p_recipeId
                   })
                     .then((res) => {
-                      console.log(res);
                       this.commentText = res.data.data;
+                      var len = res.data.data.length;
+                      for (let i = 0; i < len; i++) {
+                        //将评论ID放入数组
+                        this.commentId.push(res.data.data[i].commentId);
+                      }
                     })
                     .catch(function (err) {
                       console.log(err)
@@ -222,6 +232,35 @@
         }
 
       },
+
+      //删除评论
+      delComm(obj) {
+        if (obj.userId == localStorage.getItem("userId")) {
+          this.$confirm('你真的要删除这条评论吗?(。_。)', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$axios.post(`${$LH.url}/comment/delComment`, {
+              commentId: obj.commentId
+            }).then((res) => {
+              this.reload();
+            }).catch((err) => {
+              console.log(err);
+            });
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
+        }
+      },
+
       //加入收藏 + 取消收藏
       addCollection() {
         // 登录状态
@@ -319,6 +358,7 @@
           });
         }
       },
+
       // 关注 + 取关
       followUser() {
         if (localStorage.getItem("Flag") === 'isLogin') {
@@ -509,7 +549,6 @@
 
   .commentTxt .commentInner {
     margin-top: 16px;
-
   }
 
   .commentTxt .commentInner .el-col {
@@ -523,6 +562,10 @@
 
   .commentTxt .commentInner p {
     margin-top: 16px;
+  }
+
+  .commentTxt .commentInner .el-icon-delete:hover {
+    cursor: pointer;
   }
 
 </style>

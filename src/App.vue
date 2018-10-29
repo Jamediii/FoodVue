@@ -183,6 +183,7 @@
 
   body {
     /*background-color: #fff;*/
+    font-size:14px;
   }
 
   .w {

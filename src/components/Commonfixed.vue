@@ -15,7 +15,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <router-link class="navbar-brand" to="/">乐享食间</router-link>
+          <router-link  class="navbar-brand" to="/">乐享食间</router-link>
 
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +59,7 @@
             </li>
             <li style="margin-top: 15px;margin-left: 15px;" v-if="this.$store.state.isShow" class="navSetting">
               <el-dropdown>
-                  <span class="el-dropdown-link">
+                  <span class="el-dropdown-link" style="font-size:18px;">
                     <a href="javascript:void(0)"><i class="el-icon-setting"></i></a>
                   </span>
                 <el-dropdown-menu slot="dropdown">
@@ -257,6 +257,7 @@
   nav.navbar-default {
     /*background-color: #fff;*/
     margin-bottom: 0;
+    font-size:18px;
     color: #8cccc1;
     background: linear-gradient(to top, #daeae8 0%, #daeae800);
   }
@@ -264,6 +265,9 @@
   .navbar {
     border: 1px solid transparent;
     border-bottom-color: #daeae8;
+  }
+  .navbar-brand{
+    font-size: 22px;
   }
 
   nav.navbar-default .navbar-nav > .active > a {
@@ -302,6 +306,7 @@
     border: 1px solid #ccc;
     height: 80px;
     line-height: 80px;
+
     width: 130px;
     text-align: center;
     margin-top: 20px;
@@ -336,9 +341,7 @@
     background-color: #eee;
   }
 
-  /*搜索部分结束*/
 
-  /*与搜索栏替换的标题部分开始*/
   #search {
     padding: 10px 0;
     height: 144px;
@@ -350,6 +353,6 @@
     line-height: 144px;
   }
 
-  /*与搜索栏替换的标题部分结束*/
+  /*搜索部分结束*/
 
 </style>
