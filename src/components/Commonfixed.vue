@@ -110,7 +110,7 @@
       </div>
     </el-row>
 
-    <router-view></router-view>
+    <router-view v-if="isRouterAlive" ></router-view>
 
   </div>
 </template>
@@ -126,6 +126,11 @@
   });
   export default {
     name: "Commonfixed",
+    provide(){
+      return{
+        reload:this.reload
+      }
+    },
     data() {
       return {
         inputsel: '',
@@ -133,6 +138,7 @@
         showMathing: [],
         showlist: false,
         recipeSearchId: 0,
+        isRouterAlive:true,
       }
     },
     created() {
@@ -154,6 +160,13 @@
     },
 
     methods: {
+      reload(){
+        this.isRouterAlive = false;
+        //在修改数据之后使用$nextTick，则可以在回调中获取更新后的DOM
+        this.$nextTick(()=>{
+          this.isRouterAlive=true
+        })
+      },
       //退出登录
       exitEdit() {
         this.$store.state.user.state = false;

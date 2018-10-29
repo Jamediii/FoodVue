@@ -49,14 +49,12 @@
 
 <script>
   export default {
-
     inject: ['reload'],
     name: "recipeClassList",
     data() {
       return {
         recipeClassOne: [],//所有的数据
         recipeClassName: "",//菜谱分类对应的名称
-        id: this.$route.params.recipeClassifyId,
         isButtomShow: false,
         //瀑布流
         list: [],
@@ -75,12 +73,10 @@
       },
     },
     methods: {
-
       //瀑布流的方法
       get() {
         this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
           .then((res) => {
-            // console.log(res);
             this.recipeClassName = res.data.data[0].recipeClassifyName;
               if (this.page == 1) {
                 for (var i = 0; i < this.limit * this.page; i++) {
