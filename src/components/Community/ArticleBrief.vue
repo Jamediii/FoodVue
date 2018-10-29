@@ -18,9 +18,9 @@
               <span>
                 <div class="rectangle"></div>
                 <!--<span style="font-size: 10px;color: #999;margin-left: 10px">by</span>-->
-                <router-link to="/community_author">&nbsp;
+                <!--<router-link to="/community_author">&nbsp;-->
                   {{item.authorName}}
-                </router-link>
+                <!--</router-link>-->
               </span><br/>
               <span v-html="item.articleContent">
                 {{item.articleContent}}

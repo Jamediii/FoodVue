@@ -9,11 +9,11 @@
           <el-row style="height: 30px;line-height: 30px">
             <el-col :span="6">
               <i class="el-icon-star-on" style="color: #8cccc1;"></i> 收藏221人
-              <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
+              <!--<i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i>-->
             </el-col>
-            <el-col :span="6" :offset="12">
+            <el-col :span="2" :offset="15">
               <button @click="addCollection" class="collection">收藏</button>
-              <button>点赞</button>
+              <!--<button>点赞</button>-->
             </el-col>
           </el-row>
           <br/>
@@ -35,26 +35,26 @@
       </el-col>
     </el-row>
 
-    <el-row>
-      <!--评论部分-->
-      <el-col class="comment" :span="18" :offset="3">
-        <p>评论专区</p>
-        <el-input
-          type="textarea"
-          style="auto-size:none"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入内容"
-          v-model="userComm">
-        </el-input>
-        <el-button @click="addComment">添加评论</el-button>
-        <el-col class="commentTxt" v-for="o in commentText">
-          <el-card shadow="never">
-            <h4>{{o.accountName}}</h4>
-            <p>{{o.userComment}}</p>
-          </el-card>
-        </el-col>
-      </el-col>
-    </el-row>
+    <!--<el-row>-->
+      <!--&lt;!&ndash;评论部分&ndash;&gt;-->
+      <!--<el-col class="comment" :span="18" :offset="3">-->
+        <!--<p>评论专区</p>-->
+        <!--<el-input-->
+          <!--type="textarea"-->
+          <!--style="auto-size:none"-->
+          <!--:autosize="{ minRows: 2, maxRows: 4}"-->
+          <!--placeholder="请输入内容"-->
+          <!--v-model="userComm">-->
+        <!--</el-input>-->
+        <!--<el-button @click="addComment">添加评论</el-button>-->
+        <!--<el-col class="commentTxt" v-for="o in commentText">-->
+          <!--<el-card shadow="never">-->
+            <!--<h4>{{o.accountName}}</h4>-->
+            <!--<p>{{o.userComment}}</p>-->
+          <!--</el-card>-->
+        <!--</el-col>-->
+      <!--</el-col>-->
+    <!--</el-row>-->
 
     <br/>
   </div>

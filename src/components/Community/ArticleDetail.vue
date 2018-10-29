@@ -7,7 +7,7 @@
           <el-main>
               <el-col span="24" tag="h2" class="title">
                 <div class="triangle"></div>{{articleName}}
-                <button>点赞</button>
+                <!--<button>点赞</button>-->
                 <hr/>
               </el-col>
               <span>

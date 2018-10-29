@@ -15,7 +15,7 @@
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">{{item.recipePraiseNum}}点赞 · 120留言</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · 0留言</time>
             </div>
           </div>
         </el-card><br/>
@@ -35,7 +35,7 @@
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">{{item.recipePraiseNum}}点赞 · 120留言</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · 0留言</time>
             </div>
           </div>
         </el-card><br/>
@@ -55,7 +55,7 @@
               <p>{{item.accountName}}</p>
             </div>
             <div class="bottom clearfix">
-              <time class="time">{{item.recipePraiseNum}}点赞 · {{commentNum}}留言</time>
+              <time class="time">{{item.recipePraiseNum}}点赞 · 0留言</time>
             </div>
           </div>
         </el-card><br/>
@@ -72,7 +72,7 @@
     data(){
       return{
         recipeBriefList:[],
-        commentNum:''
+        commentNum:0
       }
     },
     created(){

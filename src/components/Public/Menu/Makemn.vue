@@ -193,6 +193,8 @@
 
 <script>
   export default {
+    //注入
+    inject: ['reload'],
     name: "Makemn",
     data() {
       return {
@@ -262,7 +264,10 @@
             newLength[i].stepContent.length = 150;
           }
         }
-      }
+      },
+      '$route': function (to, from) {
+        this.reload();
+      },
     },
     computed: {
       dieltTitle() {

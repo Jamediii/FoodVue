@@ -17,7 +17,9 @@
           <el-main>
             <span>
               <div class="rectangle"></div>
-              <router-link to="/community_author">&nbsp;{{item.accountName}}</router-link>
+              <!--<router-link to="/community_author">&nbsp;-->
+                {{item.accountName}}
+              <!--</router-link>-->
             </span><br/>
             <span>{{item.dietIntroduce}}</span><span>……</span>
           </el-main>

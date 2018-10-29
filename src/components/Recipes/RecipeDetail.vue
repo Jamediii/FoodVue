@@ -248,6 +248,13 @@
                 } else {
                   detailsIdsArray.push({userId, collect: [this.p_recipeId]});
                   localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                  $(".collection").text("已收藏");
+                  this.$notify({
+                    title: '成功',
+                    message: '收藏宝典成功!d=====(￣▽￣*)b',
+                    type: 'success'
+                  });
+                  break;
                 }
               }
               $(".collection").text("已收藏");
