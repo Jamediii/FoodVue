@@ -196,22 +196,29 @@
           let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
           // 加入收藏
           if ($(".collection").text() === '收藏') {
+            let isUser = false; // 假设是没有这个用户的
+            let Id = '';
             // 一开始就有保存其他人的 === 存在
             if (detailsIdsArray != null) {
+              // 判断是否存在该用户
               for (let i = 0; i < detailsIdsArray.length; i++) {
                 if (detailsIdsArray[i].userId === userId) {
-                  if (detailsIdsArray[i].collectUser != null) {
-                    detailsIdsArray[i].collectUser.push(this.dietId);
-                    localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
-                  } else {
-                    detailsIdsArray[i].collectUser = [];
-                    detailsIdsArray[i].collectUser.push(this.dietId);
-                    localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
-                  }
+                  isUser = true;
+                  Id = i;
+                }
+              }
+              if (isUser) {
+                if (detailsIdsArray[Id].collectUser != null) {
+                  detailsIdsArray[Id].collectUser.push(this.dietId);
+                  localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
                 } else {
-                  detailsIdsArray.push({userId, collectUser: [this.dietId]});
+                  detailsIdsArray[Id].collectUser = [];
+                  detailsIdsArray[Id].collectUser.push(this.dietId);
                   localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
                 }
+              } else {
+                detailsIdsArray.push({userId, collectUser: [this.dietId]});
+                localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
               }
               $(".collection").text("已收藏");
               this.$notify({
@@ -222,7 +229,10 @@
             } else {
               //  ==== 不存在
               let newArray = [];
+              console.log(userId);
+              console.log(this.dietId);
               newArray.push({userId, collectUser: [this.dietId]});
+              console.log(newArray);
               $(".collection").text("已收藏");
               this.$notify({
                 title: '成功',
@@ -230,41 +240,39 @@
                 type: 'success'
               });
               localStorage.setItem('detailsIds', JSON.stringify(newArray));
-              return;
             }
           } else {
             //  取消收藏 ---- 收藏过的情况下 detailsIdsArray存在的情况下
-            for (let i = 0; i < detailsIdsArray.length; i++) {
-              if (detailsIdsArray[i].userId === userId) {
-                for (let j = 0; j < detailsIdsArray[i].collectUser.length; j++) {
-                  console.log(detailsIdsArray[i].collectUser[j] === this.dietId);
-                  if (detailsIdsArray[i].collectUser[j] === this.dietId) {
-                    this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
-                      confirmButtonText: '确定',
-                      cancelButtonText: '取消',
-                      type: 'warning'
-                    }).then(() => {
-                      this.$notify({
-                        title: '成功',
-                        message: '取消收藏成功!(っ °Д °;)っ',
-                        type: 'success'
-                      });
+            this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$notify({
+                title: '成功',
+                message: '取消收藏成功!(っ °Д °;)っ',
+                type: 'success'
+              });
+              for (let i = 0; i < detailsIdsArray.length; i++) {
+                if (detailsIdsArray[i].userId === userId) {
+                  for (let j = 0; j < detailsIdsArray[i].collectUser.length; j++) {
+                    console.log(detailsIdsArray[i].collectUser[j] === this.dietId);
+                    if (detailsIdsArray[i].collectUser[j] === this.dietId) {
                       detailsIdsArray[i].collectUser.splice(j, 1);
                       $(".collection").text('收藏');
                       localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
                       return;
-                    }).catch(() => {
-                      this.$message({
-                        type: 'info',
-                        message: '取消操作'
-                      });
-                    });
+                    }
                   }
                 }
               }
-            }
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消操作'
+              });
+            });
           }
-          localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
         } else {
           // 未登录状态
           this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {

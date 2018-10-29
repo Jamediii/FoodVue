@@ -3,7 +3,7 @@
     <!-- 没有粉丝情况下 -->
     <div v-if="recipesY.length <= 0" class="no-content">
       <span>到现在都还没有一个粉丝?</span>
-      <router-link to="" class="toRouter">马上互粉别人吧！</router-link>
+      <router-link to="/user_recipe" class="toRouter">马上互粉别人吧！</router-link>
     </div>
     <!--有粉丝情况下-->
     <el-row :gutter="20" v-else>
@@ -74,6 +74,10 @@
   .no-content {
     text-align: center;
     line-height: 300px;
+  }
+
+  a:hover {
+    color: red;
   }
 
   p {

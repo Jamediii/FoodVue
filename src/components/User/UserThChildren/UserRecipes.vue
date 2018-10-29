@@ -112,7 +112,6 @@
         .then((result) => {
           // 过审菜谱
           this.recipesY.dielt = result.data.data[0];
-          console.log(this.recipesY.dielt);
           // 未过审菜谱
           this.recipesN = result.data.data[1];
         })

@@ -120,7 +120,7 @@
         userComm: "",
         //显示评论内容
         commentText: [],
-        commentTime:null,
+        commentTime: null,
       }
     },
     mounted() {
@@ -168,7 +168,6 @@
           // 用户是否关注过他
           this.$axios.get(`${$LH.url}/users/queryFans/${this.userId}/${this.fansId}`)
             .then(isFans => {
-              console.log(isFans.data.data);
               if (isFans.data.data.length > 0) {
                 $('.followUser').text('已关注')
               }
@@ -198,7 +197,7 @@
               commentTime: this.commentTime,
             })
               .then((res) => {
-                this.userComm="";
+                this.userComm = "";
                 if (res.data.data) {
                   this.$axios.post(`${$LH.url}/comment/showConmment`, {
                     menu_Id: this.p_recipeId
@@ -233,29 +232,29 @@
           let detailsIdsArray = JSON.parse(localStorage.getItem("detailsIds"));
           // 加入收藏
           if ($(".collection").text() === '收藏') {
+            let isUser = false; // 假设是没有这个用户的
+            let Id = '';
             // 一开始就有保存其他人的 === 存在
             if (detailsIdsArray != null) {
+              // 判断是否存在该用户
               for (let i = 0; i < detailsIdsArray.length; i++) {
                 if (detailsIdsArray[i].userId === userId) {
-                  if (detailsIdsArray[i].collect != null) {
-                    detailsIdsArray[i].collect.push(this.p_recipeId);
-                    localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
-                  } else {
-                    detailsIdsArray[i].collect = [];
-                    detailsIdsArray[i].collect.push(this.p_recipeId);
-                    localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
-                  }
-                } else {
-                  detailsIdsArray.push({userId, collect: [this.p_recipeId]});
-                  localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
-                  $(".collection").text("已收藏");
-                  this.$notify({
-                    title: '成功',
-                    message: '收藏宝典成功!d=====(￣▽￣*)b',
-                    type: 'success'
-                  });
-                  break;
+                  isUser = true;
+                  Id = i;
                 }
+              }
+              if (isUser) {
+                if (detailsIdsArray[Id].collect != null) {
+                  detailsIdsArray[Id].collect.push(this.p_recipeId);
+                  localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                } else {
+                  detailsIdsArray[Id].collect = [];
+                  detailsIdsArray[Id].collect.push(this.p_recipeId);
+                  localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
+                }
+              } else {
+                detailsIdsArray.push({userId, collect: [this.p_recipeId]});
+                localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
               }
               $(".collection").text("已收藏");
               this.$notify({
@@ -266,7 +265,10 @@
             } else {
               //  ==== 不存在
               let newArray = [];
+              console.log(userId);
+              console.log(this.p_recipeId);
               newArray.push({userId, collect: [this.p_recipeId]});
+              console.log(newArray);
               $(".collection").text("已收藏");
               this.$notify({
                 title: '成功',
@@ -274,41 +276,39 @@
                 type: 'success'
               });
               localStorage.setItem('detailsIds', JSON.stringify(newArray));
-              return;
             }
           } else {
             //  取消收藏 ---- 收藏过的情况下 detailsIdsArray存在的情况下
-            for (let i = 0; i < detailsIdsArray.length; i++) {
-              if (detailsIdsArray[i].userId === userId) {
-                for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
-                  console.log(detailsIdsArray[i].collect[j] === this.p_recipeId);
-                  if (detailsIdsArray[i].collect[j] === this.p_recipeId) {
-                    this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
-                      confirmButtonText: '确定',
-                      cancelButtonText: '取消',
-                      type: 'warning'
-                    }).then(() => {
-                      this.$notify({
-                        title: '成功',
-                        message: '取消收藏成功!(っ °Д °;)っ',
-                        type: 'success'
-                      });
+            this.$confirm('您老确定要这样子做吗?(。_。)', '取消收藏', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$notify({
+                title: '成功',
+                message: '取消收藏成功!(っ °Д °;)っ',
+                type: 'success'
+              });
+              for (let i = 0; i < detailsIdsArray.length; i++) {
+                if (detailsIdsArray[i].userId === userId) {
+                  for (let j = 0; j < detailsIdsArray[i].collect.length; j++) {
+                    console.log(detailsIdsArray[i].collect[j] === this.p_recipeId);
+                    if (detailsIdsArray[i].collect[j] === this.p_recipeId) {
                       detailsIdsArray[i].collect.splice(j, 1);
                       $(".collection").text('收藏');
                       localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
                       return;
-                    }).catch(() => {
-                      this.$message({
-                        type: 'info',
-                        message: '取消操作'
-                      });
-                    });
+                    }
                   }
                 }
               }
-            }
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消操作'
+              });
+            });
           }
-          localStorage.setItem('detailsIds', JSON.stringify(detailsIdsArray));
         } else {
           // 未登录状态
           this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
@@ -372,8 +372,8 @@
       addThumbsUp() {
         if (localStorage.getItem("Flag") === 'isLogin') {
           if ($('.thumbsUp').text() === '点赞') {
-            this.$axios.post(`${$LH.url}/praiseNum`,{
-              detailsId:this.p_recipeId
+            this.$axios.post(`${$LH.url}/praiseNum`, {
+              detailsId: this.p_recipeId
             })
               .then(() => {
                 this.$message({
@@ -391,8 +391,8 @@
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              this.$axios.get(`${$LH.url}/praiseNum/cancel`,{
-                detailsId:this.p_recipeId
+              this.$axios.get(`${$LH.url}/praiseNum/cancel`, {
+                detailsId: this.p_recipeId
               })
                 .then(() => {
                   this.$message({
@@ -500,25 +500,28 @@
     border-bottom: 1px dashed #8cccc1;
   }
 
-  .commentTxt img{
+  .commentTxt img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-bottom: 10px;
   }
 
-  .commentTxt .commentInner{
-    margin-top:16px;
+  .commentTxt .commentInner {
+    margin-top: 16px;
 
   }
-  .commentTxt .commentInner .el-col{
+
+  .commentTxt .commentInner .el-col {
     box-sizing: border-box;
     /*padding-top: 10px;*/
   }
-  .commentTxt .commentInner .el-col span{
+
+  .commentTxt .commentInner .el-col span {
     margin-top: 10px;
   }
-  .commentTxt .commentInner p{
+
+  .commentTxt .commentInner p {
     margin-top: 16px;
   }
 
