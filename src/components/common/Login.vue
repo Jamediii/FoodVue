@@ -154,7 +154,6 @@
 
   #login .box-card .el-form-item{
     clear:both;
-
   }
   #login .box-card .el-button {
     background-color: #87d6c8;
