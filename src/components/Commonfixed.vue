@@ -149,7 +149,7 @@
       this.$store.state.isShow = Boolean(localStorage.getItem("Flag") === 'isLogin')
     },
     mounted() {
-      this.$axios.post('http://localhost:3000/recipes/find').then((res) => {
+      this.$axios.post(`${$LH.url}/recipes/find`).then((res) => {
         this.checkData = res.data.data;
       }).catch((err) => {
         console.log(err);
@@ -184,7 +184,7 @@
       searchMathing() {
         this.showMathing = [];
         var reg = new RegExp(".*?" + this.inputsel + ".*?", "g");
-        if ($("#search .myselect select").val() == "按食谱名称") {
+        if ($("#search .myselect select").val() === "按食谱名称") {
           for (let i = 0; i < this.checkData.length; i++) {
             if (reg.test(this.checkData[i].recipeName)) {
               this.showMathing.push({
@@ -212,7 +212,7 @@
             }
           }
         }
-        if (this.showMathing.length == 0) {
+        if (this.showMathing.length === 0) {
           this.showMathing.push({name: "暂无结果"});
         }
         if (!this.inputsel.length) {
@@ -228,12 +228,12 @@
       upText(text, id) {
         this.isClick = true;
         this.showlist = false;
-        if(text != "暂无结果"){
+        if(text !== "暂无结果"){
           this.inputsel = text;
         }
-        if ($("#search .myselect select").val() == "按食谱名称") {
+        if ($("#search .myselect select").val() === "按食谱名称") {
           this.recipeSearchId = id;
-        } else if ($("#search .myselect select").val() == "按食谱作者") {
+        } else if ($("#search .myselect select").val() === "按食谱作者") {
           this.recipeSearchId = id;
         }
       },
@@ -242,14 +242,14 @@
       findRec() {
         if (this.isClick) {
           //如果是点击了列表项再点击搜索
-          if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱名称") {
+          if (this.recipeSearchId && $("#search .myselect select").val() === "按食谱名称") {
             //根据食谱ID跳转到相应的路由
             this.$router.push('/recipe_detail/' + this.recipeSearchId);
-          } else if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱作者") {
+          } else if (this.recipeSearchId && $("#search .myselect select").val() === "按食谱作者") {
             //根据用户id跳转到用户相应的用户做的菜谱。。。。。
             this.$router.push("/fhuser/" + this.recipeSearchId);
           }
-          if(this.showMathing[0].name == "暂无结果"){
+          if(this.showMathing[0].name === "暂无结果"){
             this.$message('不好意思，暂无结果喔d=====(￣▽￣*)b');
           }
           this.isClick = false;
@@ -259,7 +259,7 @@
           sessionStorage.setItem('sendMathString', JSON.stringify(this.showMathing));
           if (this.showMathing.length <= 0) {
             this.$message('不好意思，输入不能为空喔d=====(￣▽￣*)b');
-          } else if (this.showMathing[0].name == "暂无结果") {
+          } else if (this.showMathing[0].name === "暂无结果") {
             this.$message('不好意思，暂无结果喔d=====(￣▽￣*)b');
           } else {
             window.location.reload();

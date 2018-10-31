@@ -8,11 +8,11 @@
           <img :src="recipeCoverImg">
           <h2 style="font-weight: bold">{{recipeName}}</h2><br/>
           <el-row style="height: 30px;line-height: 30px">
-            <el-col :span="6">
+            <el-col :span="7">
               <i class="el-icon-star-on" style="color: #8cccc1;"></i> 点赞{{recipePraiseNum}}人
-              <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言24条
+              <i class="el-icon-edit-outline" style="color: #8cccc1;padding-left: 20px"></i> 留言{{commentNum}}条
             </el-col>
-            <el-col :span="6" :offset="12">
+            <el-col :span="7" :offset="10">
               <button class="collection" @click="addCollection">收藏</button>
               <button class="thumbsUp" @click="addThumbsUp">点赞</button>
             </el-col>
@@ -76,7 +76,6 @@
   import RecipeStep from './RecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
   import Recommend from '../Community/Recommend.vue'
-
   export default {
     //注入
     inject: ['reload'],
@@ -125,6 +124,8 @@
         commentText: [],
         commentTime: null,
         commentId: [],
+        //显示评论数量
+        commentNum:0,
         //显示删除
       }
     },
@@ -135,6 +136,17 @@
       })
         .then((res) => {
           this.commentText = res.data.data;
+        })
+        .catch(function (err) {
+          console.log(err)
+        });
+
+      //获取评论的条数
+      this.$axios.post(`${$LH.url}/comment`, {
+        menu_Id: this.p_recipeId
+      })
+        .then((res) => {
+          this.commentNum = res.data.data[0].commentNum;
         })
         .catch(function (err) {
           console.log(err)
@@ -183,7 +195,6 @@
 
         });
 
-
     },
     watch: {
       '$route': function (to, from) {
@@ -209,6 +220,7 @@
                     menu_Id: this.p_recipeId
                   })
                     .then((res) => {
+                      this.reload();
                       this.commentText = res.data.data;
                       var len = res.data.data.length;
                       for (let i = 0; i < len; i++) {
@@ -415,46 +427,23 @@
             this.$axios.post(`${$LH.url}/praiseNum`, {
               detailsId: this.p_recipeId
             })
-              .then(() => {
-                this.$message({
-                  message: '感谢您的喜欢!',
-                  type: 'success'
-                });
-                $('.thumbsUp').text('已点赞');
-              }).catch(err => {
-              console.log(err);
-            });
-          } else {
-            // 取消点赞
-            this.$confirm('您老确定要这样子做吗?(。_。)', '取消点赞', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              this.$axios.get(`${$LH.url}/praiseNum/cancel`, {
-                detailsId: this.p_recipeId
-              })
-                .then(() => {
+              .then((res) => {
+                if (res.data.data) {
                   this.$message({
-                    message: '感谢您之前一直以来的陪伴!',
+                    message: '感谢您的喜欢!',
                     type: 'success'
                   });
-                  $(".thumbsUp").text('点赞');
-                }).catch(err => {
-                console.log(err);
-              })
-            }).catch(() => {
-              this.$message({
-                type: 'info',
-                message: '取消操作'
-              });
+                  $('.thumbsUp').text('已点赞');
+                }
+              }).catch(err => {
+              console.log(err);
             });
           }
         } else {
           // 未登录状态
           this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
             confirmButtonText: '确定',
-            callback: action => {
+            callback: () => {
               this.$router.push('/login');
             }
           })
