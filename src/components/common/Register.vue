@@ -69,7 +69,9 @@
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
-        } else {
+        } else if(value.length < 6){
+          callback(new Error('密码长度不能低于6位'));
+        }else{
           if (this.registerInfo.checkPwd !== '') {
             this.$refs.registerInfo.validateField('checkPwd');
           }

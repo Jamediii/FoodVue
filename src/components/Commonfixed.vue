@@ -3,6 +3,8 @@
     <!--最新版本的 Bootstrap 核心 CSS 文件-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--导航栏部分-->
     <nav class="navbar navbar-default ">
       <div class="container-fluid w">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -15,7 +17,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <router-link  class="navbar-brand" to="/">乐享食间</router-link>
+          <router-link class="navbar-brand" to="/">乐享食间</router-link>
 
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,8 +73,8 @@
               </el-dropdown>
             </li>
           </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+        </div>
+      </div>
     </nav>
 
     <!--搜索部分-->
@@ -110,7 +112,7 @@
       </div>
     </el-row>
 
-    <router-view v-if="isRouterAlive" ></router-view>
+    <router-view v-if="isRouterAlive"></router-view>
 
   </div>
 </template>
@@ -126,9 +128,9 @@
   });
   export default {
     name: "Commonfixed",
-    provide(){
-      return{
-        reload:this.reload
+    provide() {
+      return {
+        reload: this.reload
       }
     },
     data() {
@@ -138,7 +140,9 @@
         showMathing: [],
         showlist: false,
         recipeSearchId: 0,
-        isRouterAlive:true,
+        isRouterAlive: true,
+        //判断是否被点击
+        isClick: false,
       }
     },
     created() {
@@ -146,13 +150,6 @@
     },
     mounted() {
       this.$axios.post('http://localhost:3000/recipes/find').then((res) => {
-        // var sdata = res.data.data;
-        // console.log(sdata);
-        // var len = sdata.length;
-        // for (var i = 0; i < len; i++) {
-        //   this.rsNameBefore.push(sdata[i].recipeName);
-        //   this.raNameBefore.push(sdata[i].accountName);
-        // }
         this.checkData = res.data.data;
       }).catch((err) => {
         console.log(err);
@@ -160,13 +157,14 @@
     },
 
     methods: {
-      reload(){
+      reload() {
         this.isRouterAlive = false;
         //在修改数据之后使用$nextTick，则可以在回调中获取更新后的DOM
-        this.$nextTick(()=>{
-          this.isRouterAlive=true
+        this.$nextTick(() => {
+          this.isRouterAlive = true
         })
       },
+
       //退出登录
       exitEdit() {
         this.$store.state.user.state = false;
@@ -181,41 +179,42 @@
           }
         });
       },
+
       //搜索匹配方法
       searchMathing() {
-        // var len1 = this.rsNameBefore.length;
-        // var len2 = this.raNameBefore.length;
         this.showMathing = [];
-        // var reg = new RegExp(".*?" + this.inputsel + ".*?", "g");
-        // if ($("#search .myselect select").val() == "按食谱名称") {
-        //   for (let i = 0; i < len1; i++) {
-        //     if (reg.test(this.rsNameBefore[i])) {
-        //       this.showMathing.push(this.rsNameBefore[i]);
-        //     }
-        //   }
-        // } else {
-        //   for (let i = 0; i < len2; i++) {
-        //     if (reg.test(this.raNameBefore[i])) {
-        //       this.showMathing.push(this.raNameBefore[i]);
-        //     }
-        //   }
-        // }
-
         var reg = new RegExp(".*?" + this.inputsel + ".*?", "g");
         if ($("#search .myselect select").val() == "按食谱名称") {
           for (let i = 0; i < this.checkData.length; i++) {
             if (reg.test(this.checkData[i].recipeName)) {
-              this.showMathing.push({id: this.checkData[i].detailsId, name: this.checkData[i].recipeName});
+              this.showMathing.push({
+                id: this.checkData[i].detailsId,
+                name: this.checkData[i].recipeName,
+                img: this.checkData[i].recipeCoverImg,
+                mathSatate: 1,
+              });
             }
           }
         } else {
+          var myArr = [];
           for (let i = 0; i < this.checkData.length; i++) {
-            if (reg.test(this.checkData[i].accountName)) {
-              this.showMathing.push({id: this.checkData[i].userId, name: this.checkData[i].accountName});
+            myArr.push(this.checkData[i].userId);
+          }
+          let newmyArray = $.unique(myArr);
+          for (let j = 0; j < newmyArray.length; j++) {
+            if (reg.test(this.checkData[j].accountName)) {
+              this.showMathing.push({
+                id: this.checkData[j].userId,
+                name: this.checkData[j].accountName,
+                img: this.checkData[j].headPhoto,
+                mathSatate: 0,
+              });
             }
           }
         }
-
+        if (this.showMathing.length == 0) {
+          this.showMathing.push({name: "暂无结果"});
+        }
         if (!this.inputsel.length) {
           this.showMathing = [];
           this.showlist = false;
@@ -224,10 +223,14 @@
         }
 
       },
+
       //将选择的下拉框内容，放到搜索框中
       upText(text, id) {
-        this.inputsel = text;
+        this.isClick = true;
         this.showlist = false;
+        if(text != "暂无结果"){
+          this.inputsel = text;
+        }
         if ($("#search .myselect select").val() == "按食谱名称") {
           this.recipeSearchId = id;
         } else if ($("#search .myselect select").val() == "按食谱作者") {
@@ -237,12 +240,31 @@
 
       //单击搜寻按钮，找到相应的结果
       findRec() {
-        if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱名称") {
-          //根据食谱ID跳转到相应的路由
-          this.$router.push('/recipe_detail/' + this.recipeSearchId);
-        } else if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱作者") {
-          //根据用户id跳转到用户相应的用户做的菜谱。。。。。
-          this.$router.push("/fhuser/" + this.recipeSearchId);
+        if (this.isClick) {
+          //如果是点击了列表项再点击搜索
+          if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱名称") {
+            //根据食谱ID跳转到相应的路由
+            this.$router.push('/recipe_detail/' + this.recipeSearchId);
+          } else if (this.recipeSearchId && $("#search .myselect select").val() == "按食谱作者") {
+            //根据用户id跳转到用户相应的用户做的菜谱。。。。。
+            this.$router.push("/fhuser/" + this.recipeSearchId);
+          }
+          if(this.showMathing[0].name == "暂无结果"){
+            this.$message('不好意思，暂无结果喔d=====(￣▽￣*)b');
+          }
+          this.isClick = false;
+        } else {
+          //如果是没有点击列表而直接点击搜索
+          sessionStorage.removeItem("sendMathString");
+          sessionStorage.setItem('sendMathString', JSON.stringify(this.showMathing));
+          if (this.showMathing.length <= 0) {
+            this.$message('不好意思，输入不能为空喔d=====(￣▽￣*)b');
+          } else if (this.showMathing[0].name == "暂无结果") {
+            this.$message('不好意思，暂无结果喔d=====(￣▽￣*)b');
+          } else {
+            window.location.reload();
+            this.$router.push('/fuzzysearch');
+          }
         }
       },
 
@@ -257,7 +279,7 @@
   nav.navbar-default {
     /*background-color: #fff;*/
     margin-bottom: 0;
-    font-size:18px;
+    font-size: 18px;
     color: #8cccc1;
     background: linear-gradient(to top, #daeae8 0%, #daeae800);
   }
@@ -266,7 +288,8 @@
     border: 1px solid transparent;
     border-bottom-color: #daeae8;
   }
-  .navbar-brand{
+
+  .navbar-brand {
     font-size: 22px;
   }
 
@@ -341,7 +364,6 @@
     background-color: #eee;
   }
 
-
   #search {
     padding: 10px 0;
     height: 144px;
@@ -351,6 +373,10 @@
 
   #search {
     line-height: 144px;
+  }
+
+  #search .inputSearch .searchList li {
+    padding-left: 10px;
   }
 
   /*搜索部分结束*/

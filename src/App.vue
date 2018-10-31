@@ -209,12 +209,13 @@
   }
 
   /*公共头部样式*/
-  .title.el-header {
-    background-color: #daeae8;
-    color: #333;
+
+  .headercss {
+    background-color: #8cccc1;
     text-align: left;
     line-height: 60px;
     font-size: 16px;
+    color: #fff;
   }
 
   #app {

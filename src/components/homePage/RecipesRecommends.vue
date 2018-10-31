@@ -70,7 +70,6 @@
       chg() {
         this.isShowRC = !this.isShowRC;
         var rcData = this.$store.state.RecipeRecom.data.data;
-        // console.log(rcData.length);
         var len = rcData.length - 1;
         var rom = Math.abs(parseInt(Math.random() * len));
         var start = rom - 10;
