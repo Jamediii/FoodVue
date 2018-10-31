@@ -40,8 +40,6 @@ import RecipeClassList from '../components/Recipes/recipeClassList.vue'
 import UserRecipe from '../components/Community/UserRecipe.vue'
 //达人推荐。用户上传的菜谱详情页
 import UserRecipeDetail from '../components/Community/UserRecipeDetail.vue'
-//模糊查询的列表组件对应路由
-import FuzzySearch from '../components/homePage/FuzzySearch.vue'
 
 
 Vue.use(Router);
@@ -127,7 +125,7 @@ export default new Router({
         // 根组件一定要带'/',子组件则不需要
         {
           // 用户--我的显示路由
-          path: 'user',
+          path: '/user',
           name: 'User',
           component: User,
           children: browseUser,
@@ -137,7 +135,7 @@ export default new Router({
         },
         {
           // 用户资料修改路由
-          path: 'modifyinfo',
+          path: '/modifyinfo',
           name: 'ModifyUserInfo',
           component: ModifyUserInfo,
           meta: {
@@ -146,7 +144,7 @@ export default new Router({
         },
         {
           // 用户粉丝--显示路由
-          path: 'fhuser/:userId',
+          path: '/fhuser/:userId',
           name: 'fhUser',
           component: fhUser,
           children: fhBrowseUser,
@@ -156,7 +154,7 @@ export default new Router({
         },
         // 用户是否真的要制作菜谱路由
         {
-          path: 'menu',
+          path: '/menu',
           name: 'Menu',
           component: Menu,
           meta: {
@@ -165,7 +163,7 @@ export default new Router({
         },
         // 用户填写菜谱路由
         {
-          path: 'makemn/:menuName',
+          path: '/makemn/:menuName',
           name: 'Makemn',
           component: Makemn,
           meta: {
@@ -174,16 +172,11 @@ export default new Router({
         },
         //分类后的菜谱路由
         {
-          path: 'recipecl/:recipeClassifyId',
+          path: '/recipecl/:recipeClassifyId',
           name: 'RecipeClassList',
           component: RecipeClassList,
+
         },
-        //模糊查询列表显示的路由
-        {
-          path: 'fuzzysearch',
-          name: 'FuzzySearch',
-          component: FuzzySearch,
-        }
 
       ]
     },

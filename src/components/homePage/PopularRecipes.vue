@@ -67,14 +67,14 @@
 
 <style scoped>
   #popRecipes {
-    height: 680px;
+    height: 760px;
     margin-top: 40px;
     position: relative;
   }
 
   #popRecipes img {
     width: 100%;
-    height: 100%;
+    height: 240px;
   }
 
   #popRecipes div.icon-title {

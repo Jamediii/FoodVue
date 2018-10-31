@@ -76,6 +76,7 @@
                 <el-col :span="6" :offset="2">
                   <el-input placeholder="数量"
                             type="number"
+                            min="0"
                             v-model="obj.Num">
                     <i slot="suffix" class="el-ico-third-shuzi"></i>
                   </el-input>
@@ -386,12 +387,27 @@
         //-----所有的图片
         for (let k = 0; k <= this.form.steplist.length; k++) {
           // 传入的文件名设置 -------
+          console.log(this.$refs['recipesPhoto'].files[0]);
           if (k === 0) {
+            if (!this.$refs['recipesPhoto'].files[0]) {
+              this.$message({
+                message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ~ＹＯ',
+                type: 'warning'
+              });
+              return false;
+            }
             formData.append(`dieltFile${k}`,this.$refs['recipesPhoto'].files[0]);
-            continue;
+          }else {
+            if (!this.$refs[`step${k - 1}`][0].files[0]) {
+              this.$message({
+                message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ~ＹＯ',
+                type: 'warning'
+              });
+              return false;
+            }
+            formData.append(`dieltFile${k}`, this.$refs[`step${k - 1}`][0].files[0]);
           }
-          console.log(`step${k - 1}`);
-          formData.append(`dieltFile${k}`, this.$refs[`step${k - 1}`][0].files[0]);
+
         }
         this.$axios({
           method: 'post',

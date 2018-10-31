@@ -9,12 +9,15 @@
     <!-- 有食谱情况下 -->
     <div v-else>
       <el-row>
-        <!-- 过审菜谱 -->
-        <el-col :span="11">
-          <div v-if="recipesY.recipe.length > 0" v-for="(data,key) in recipesY.recipe">
-            <i></i>
+        <el-col :span="8">
+          <!-- 过审菜谱 -->
+          <div
+            class="boxFater"
+            v-if="recipesY.recipe.length > 0"
+            v-for="(data,key) in recipesY.recipe">
             <div class="receipeBox" @click="toDetailed(data.detailsId)">
               <div class="receipeLeft">
+                <i><img src="../../../assets/审核通过.png" alt=""></i>
                 <img :src="data.recipeCoverImg" :alt="data.recipeName">
                 <div class="receipeRight">
                   <div class="receipeName">
@@ -29,10 +32,15 @@
               </div>
             </div>
           </div>
-          <div v-if="recipesY.dielt.length > 0" v-for="(data,key) in recipesY.dielt">
-            <i></i>
+        </el-col>
+        <el-col :span="8">
+          <div
+            class="boxFater"
+            v-if="recipesY.dielt.length > 0"
+            v-for="(data,key) in recipesY.dielt">
             <div class="receipeBox" @click="toRecipesDetailed(data.dietId)">
               <div class="receipeLeft">
+                <i><img src="../../../assets/审核通过.png" width="100%" alt=""></i>
                 <img :src="data.dietPhoto" width="30%" :alt="data.dietTitle">
                 <div class="receipeRight">
                   <div class="receipeName">
@@ -49,18 +57,19 @@
             </div>
           </div>
         </el-col>
-
-        <!-- 未过审菜谱 -->
-        <el-col :span="11" :push="2">
-          <div v-for="(data,key) in recipesN">
-            <i></i>
+        <el-col :span="8">
+          <!-- 未过审菜谱 -->
+          <div
+            class="boxFater"
+            v-for="(data,key) in recipesN">
             <div class="receipeBox">
               <div class="receipeLeft">
+                <i><img src="../../../assets/审核中.png" width="100%" alt=""></i>
                 <img :src="data.dietPhoto" :alt="data.dietTitle">
                 <div class="receipeRight">
                   <div class="receipeName">
                     <span>{{data.dietTitle}}</span>
-                    <span class="releaseTime">{{data.releaseTime}}</span>
+                    <span class="releaseTime">{{data.releaseTime.substring(0,10)}}</span>
                   </div>
                   <div class="receipeBrief">
                     <div v-if="data.dietIntroduce">
@@ -83,6 +92,7 @@
 <script>
   // 显示菜谱
   export default {
+    inject: ['reload'],
     name: "UserRecipes",
     data() {
       return {
@@ -129,7 +139,12 @@
       toRecipesDetailed(detailsId) {
         this.$router.push(`/user_recipe/${detailsId}`);
       },
-    }
+    },
+    watch: {
+      '$route': function (to, from) {
+        this.reload();
+      },
+    },
 
   }
 </script>
@@ -151,12 +166,15 @@
   }
 
   /* 有菜谱了 */
-  .el-row>div {
+  .el-row > div {
     position: relative;
   }
+
+  .boxFater {
+    padding: 20px;
+  }
+
   .receipeBox {
-    width: 80%;
-    height: 80%;
     margin-bottom: 20px;
     padding: 8px;
     border: 1px outset #999999;
@@ -169,14 +187,16 @@
   i {
     position: absolute;
     font-style: normal;
-    /*background: url('../../../assets/adopt.jpg') center ;*/
-    /*background-color: red;*/
     background-size: cover;
-    width: 50px;
+    width: 120px;
     height: 50px;
-    right: 90px;
-    top: -13px;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
     z-index: 100;
+    opacity: 0;
   }
 
   /* 背景的阴影 */
@@ -195,24 +215,40 @@
     }
   }
 
+  .receipeBox:hover i {
+    animation: iShow 400ms ease-out;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes iShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   .receipeLeft {
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   .receipeLeft img {
     width: 100%;
     height: 100%;
   }
-
+  
   .receipeRight {
-    width: 401px;
+    width: 96%;
+    height: 100px;
     position: absolute;
     padding: 5px;
     color: whitesmoke;
     right: 8px;
     bottom: -200px;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
   }
 
   /* 右边的划过 */
@@ -226,16 +262,23 @@
       bottom: -200px;
     }
     to {
-      bottom: 8px;
+      bottom: 10px;
     }
   }
-
 
   /* 简介 */
   .receipeBrief {
     text-align: right;
     width: 100%;
     padding-top: 10px;
+  }
+
+  .receipeBrief > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   /* 标题 */
