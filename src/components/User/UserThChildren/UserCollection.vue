@@ -7,16 +7,18 @@
     </div>
 
     <!-- 有收藏情况下 -->
-    <div v-else>
-      <el-row :gutter="12" v-for="(o,index) in recipesY.collect">
-        <el-col style="margin-top:10px; position: relative; cursor: pointer" :span="8"
+    <div v-else class="content">
+      <el-row :gutter="12">
+        <el-col style="margin-top:10px; position: relative; cursor: pointer"
+                v-for="(o,index) in recipesY.collect"
+                :span="8"
                 @click.native.stop="toDetailed(o)">
           <el-card shadow="always">
-            <el-col :span="8">
+            <el-col :span="9">
               <img :src="o.recipeCoverImg" alt="">
             </el-col>
-            <el-col :span="14" :push="2">
-              <h5>{{o.recipeName}}</h5>
+            <el-col :span="15">
+              <h5 class="recipeName">{{o.recipeName}}</h5>
               <p v-if="o.recipeBrief"
                  style="
               display: -webkit-box;
@@ -40,16 +42,19 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-row :gutter="12" v-for="(o,index) in recipesY.collectUser">
-        <el-col style="margin-top:10px; position: relative; cursor: pointer" :span="8"
+      <el-row :gutter="12" >
+        <el-col style="margin-top:10px; position: relative; cursor: pointer"
+                v-for="(o,index) in recipesY.collectUser"
+                :span="8"
                 @click.native.stop="toDetailed(o)">
           <el-card shadow="always">
-            <el-col :span="8">
+            <el-col :span="9">
               <img :src="o.dietPhoto" alt="">
             </el-col>
-            <el-col :span="14" :push="2">
-              <h5>{{o.dietTitle}}</h5>
-              <p style="
+            <el-col :span="15">
+              <h5 class="recipeName">{{o.dietTitle}}</h5>
+              <p v-if="o.dietIntroduce"
+                 style="
               display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -57,6 +62,15 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">{{o.dietIntroduce}}</p>
+              <p v-else
+                 style="
+              display: -webkit-box;
+              white-space: pre-wrap;
+              word-wrap: break-word;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp:2;margin-top:20px;">该作品还未有详细的介绍</p>
               <span class="cancelColl" @click.stop="collection(o)">×</span>
             </el-col>
           </el-card>
@@ -104,7 +118,7 @@
               console.log(err.message);
             })
           }
-          if (detailsIdsArray[i].collectUser > 0) {
+          if (detailsIdsArray[i].collectUser.length > 0) {
             this.$axios.get(`${$LH.url}/operat/getCollection/${JSON.stringify(detailsIdsArray[i].collectUser)}`)
               .then(async (result) => {
                 for (let i = 0; i < result.data.data.length; i++) {
@@ -228,10 +242,25 @@
     text-decoration: underline;
   }
 
+  .content p {
+    font-size: 14px;
+  }
+
+  .el-card {
+    padding-bottom: 20px;
+  }
+
+  h5.recipeName {
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .cancelColl {
     position: absolute;
-    right: -10px;
-    top: -20px;
+    right: 15px;
+    top: 0;
     cursor: pointer;
     z-index: 1000;
   }

@@ -9,8 +9,8 @@
     <div v-else>
       <el-row>
         <!-- 过审菜谱 -->
-        <el-col :span="11">
-          <div v-if="recipesY.recipe.length > 0" v-for="(data,key) in recipesY.recipe">
+        <el-col :span="8" v-for="(data,key) in recipesY.recipe">
+          <div v-if="recipesY.recipe.length > 0">
             <i></i>
             <div class="receipeBox" @click="toDetailed(data.detailsId)">
               <div class="receipeLeft">
@@ -28,7 +28,9 @@
               </div>
             </div>
           </div>
-          <div v-if="recipesY.dielt.length > 0" v-for="(data,key) in recipesY.dielt">
+        </el-col>
+        <el-col :span="8" v-for="(data,key) in recipesY.dielt">
+          <div v-if="recipesY.dielt.length > 0">
             <i></i>
             <div class="receipeBox" @click="toRecipesDetailed(data.dietId)">
               <div class="receipeLeft">
@@ -105,25 +107,11 @@
 </script>
 
 <style scoped>
-  /* 没有菜谱 */
-  .no-content {
-    text-align: center;
-    line-height: 300px;
-  }
-
-  .no-content a:hover {
-    color: red;
-  }
-
-  .toRouter {
-    font-size: 20px;
-    font-weight: bold;
-  }
-
   /* 有菜谱了 */
-  .el-row>div {
+  .el-row > div {
     position: relative;
   }
+
   .receipeBox {
     width: 80%;
     height: 80%;
@@ -168,6 +156,7 @@
   .receipeLeft {
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   .receipeLeft img {
@@ -176,13 +165,14 @@
   }
 
   .receipeRight {
-    width: 401px;
+    width: 96%;
+    height: 100px;
     position: absolute;
     padding: 5px;
     color: whitesmoke;
     right: 8px;
     bottom: -200px;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
   }
 
   /* 右边的划过 */
@@ -196,16 +186,23 @@
       bottom: -200px;
     }
     to {
-      bottom: 8px;
+      bottom: 10px;
     }
   }
-
 
   /* 简介 */
   .receipeBrief {
     text-align: right;
     width: 100%;
     padding-top: 10px;
+  }
+
+  .receipeBrief > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   /* 标题 */

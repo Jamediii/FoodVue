@@ -183,7 +183,6 @@
 
   body {
     /*background-color: #fff;*/
-    font-size:14px;
   }
 
   .w {
@@ -209,13 +208,12 @@
   }
 
   /*公共头部样式*/
-
-  .headercss {
-    background-color: #8cccc1;
+  .title.el-header {
+    background-color: #daeae8;
+    color: #333;
     text-align: left;
     line-height: 60px;
     font-size: 16px;
-    color: #fff;
   }
 
   #app {

@@ -36,13 +36,14 @@
             <img :src="recipesRImg[index]" class="image">
             <div style="padding: 14px;" class="left">
               <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
-                <span style="white-space: nowrap;over-flow:hidden;">{{recipesRName[index]}}</span>
+                <span>{{recipesRName[index]}}</span>
               </router-link>
               <div class="bottom clearfix">
                 <p>by&nbsp;{{recipesRAuthor[index]}}</p>
               </div>
             </div>
           </el-card>
+
         </el-col>
       </el-col>
     </el-row>
@@ -70,6 +71,7 @@
       chg() {
         this.isShowRC = !this.isShowRC;
         var rcData = this.$store.state.RecipeRecom.data.data;
+        // console.log(rcData.length);
         var len = rcData.length - 1;
         var rom = Math.abs(parseInt(Math.random() * len));
         var start = rom - 10;
@@ -122,7 +124,7 @@
   }
 
   #recipesComm .inner-RC .showrc img {
-    height: 100%;
+    height: 240px;
     width: 100%;
   }
 

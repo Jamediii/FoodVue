@@ -19,7 +19,7 @@
           <br/>
 
           <div class="author">
-            <img :src=dietPhoto class="headPhoto">
+            <img :src=headPhoto class="headPhoto">
             <span style="color: #8cccc1">{{accountName}}</span>
             <button @click="followUser" class="followUser">关注</button>
             <p style="font-size: 13px;color: #666;"><br/>{{dietIntroduce}}</p>
@@ -97,15 +97,10 @@
         .then((res) => {
           var allData = res.data.data;
           var dietDetail = allData[0];
-          console.log(dietDetail);
           // 用户的Id
           this.userId = dietDetail[0].userId;
           this.dietId = dietDetail[0].dietId;
-          if (!/^http/.test(allData[0][0].headPhoto)) {
-            this.headPhoto = `${$LH.url}/images/userPhoto/${allData[0][0].headPhoto}`;
-          } else {
-            this.headPhoto = allData[0][0].headPhoto;
-          }
+          this.headPhoto = dietDetail[0].headPhoto;
           this.dietTitle = dietDetail[0].dietTitle;
           this.dietIntroduce = dietDetail[0].dietIntroduce;
           this.accountName = dietDetail[0].accountName;

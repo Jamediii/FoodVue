@@ -6,38 +6,67 @@
       <!--右侧菜谱部分-->
       <el-col :span="18">
         <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
-        <el-main id="main" style="padding:0">
-          <div id="wrap">
-            <div style="display: inline-block" class="box box-item" v-for="o in list">
-              <div class="info">
-                <div class="pic"><img :src="o.recipeCoverImg" alt=""></div>
-                <div class="title">
-                  <router-link :to="`/recipe_detail/${o.detailsId}`">
-                    <p>{{o.recipeName}}</p>
-                  </router-link>
+        <div id="main">
+          <Waterfall id="wrap"
+                     :align="Waterfall.align"
+                     style="margin: 0 0;max-width: 100%"
+                     :gutterWidth="Waterfall.gutterWidth"
+                     :maxCol="Waterfall.maxCol">
+            <WaterfallItem
+              class="box box-item"
+              v-for="(o,key) in list"
+              :width="WaterfallItem.width">
+              <transition-group
+                enter-active-class="animated zoomIn"
+                leave-active-class="animated zoomOut">
+                <div class="info"
+                     :key="key">
+                  <div class="pic">
+                    <img :src="o.recipeCoverImg" alt="">
+                  </div>
+                  <div class="title">
+                    <router-link :to="`/recipe_detail/${o.detailsId}`">
+                      <p>{{o.recipeName}}</p>
+                    </router-link>
+                  </div>
+                  <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
+                  <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
                 </div>
-                <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
-                <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
-              </div>
-            </div>
-          </div>
-          <el-alert v-if="isButtomShow"
-                    title="不好意思已经到底咯"
-                    type="warning">
-          </el-alert>
-        </el-main>
+              </transition-group>
+            </WaterfallItem>
+          </Waterfall>
+        </div>
+        <el-alert v-if="isButtomShow"
+                  title="不好意思已经到底咯"
+                  type="warning">
+        </el-alert>
       </el-col>
       <!--右侧文章作者推荐-->
       <el-col class="rclRight" :span="6">
         <div class="grid-content">
           <h3>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}作者推荐</h3>
-          <el-card shadow="never" class="box-card" v-for="(o,index) in list" :key="index" v-if="index <5">
+          <el-card shadow="never"
+                   class="box-card"
+                   v-for="(o,index) in rankingUser"
+                   :key="index"
+                   v-if="index <5"
+                   @click.native="toUserInfo(o.fansId)">
             <div class="text item">
-              <el-col :span="10">
+              <el-col :span="12">
+                <img v-if="index === 0" src="../../assets/排名1.png" alt="">
+                <img v-else-if="index === 1" src="../../assets/排名2.png" alt="">
+                <img v-else-if="index === 2" src="../../assets/排名3.png" alt="">
+                <img v-else-if="index === 3" src="../../assets/排名4.png" alt="">
+                <img v-else-if="index === 4" src="../../assets/排名5.png" alt="">
                 <img :src="o.headPhoto" alt="">
               </el-col>
-              <el-col :span="10">
-                <p>{{o.accountName}}</p>
+              <el-col :span="8">
+                <div class="sex" style="overflow: hidden">
+                  <span style="float: left">{{o.accountName}}</span>
+                  <img v-if="o.sex==='女'" src="../../assets/性别女.png" style="float: left" alt="">
+                  <img v-else src="../../assets/性别男.png" alt="">
+                </div>
+                <p><img src="../../assets/粉丝.png" alt="">{{o.fansNum}}</p>
               </el-col>
             </div>
           </el-card>
@@ -48,6 +77,7 @@
 </template>
 
 <script>
+  import {Waterfall, WaterfallItem} from 'vue2-waterfall';
   export default {
     inject: ['reload'],
     name: "recipeClassList",
@@ -55,17 +85,45 @@
       return {
         recipeClassOne: [],//所有的数据
         recipeClassName: "",//菜谱分类对应的名称
+        rankingUser: [], // 用户拥有粉丝数排名
         isButtomShow: false,
         //瀑布流
         list: [],
         limit: 9,
         page: 1,
+        Waterfall: {
+          align: 'center',
+          maxCol: 3,
+          gutterWidth: 5,
+        },
+        WaterfallItem: {
+          width: 360,
+        }
       }
     },
+    components: {
+      Waterfall, WaterfallItem
+    },
     mounted() {
+      this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
+        .then((res) => {
+            this.recipeClassOne = res.data.data;
+            this.recipeClassName = res.data.data[0].recipeClassifyName;
+            this.get();
+          }
+        ).catch((err) => {
+        console.log(err);
+      });
+
+      this.$axios.get(`${$LH.url}/praiseNum/rankingUser`)
+        .then((res) => {
+          this.rankingUser = res.data.data.slice(0, 5);
+          console.log(this.rankingUser);
+        })
+        .catch()
+
       //监听滚动事件
       window.addEventListener("scroll", this.loadMore, true);
-      this.get();
     },
     watch: {
       '$route': function (to, from) {
@@ -75,46 +133,42 @@
     methods: {
       //瀑布流的方法
       get() {
-        this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
-          .then((res) => {
-            // console.log(res);
-            this.recipeClassName = res.data.data[0].recipeClassifyName;
-              if (this.page == 1) {
-                for (var i = 0; i < this.limit * this.page; i++) {
-                  if (res.data.data[i]) {
-                    this.list.push(res.data.data[i]);
-                  } else {
-                    this.isButtomShow = true;
-                  }
-
-                }
-              } else {
-                for (var i = this.limit * (this.page - 1); i < this.limit * this.page; i++) {
-                  if (res.data.data[i]) {
-                    this.list = this.list.concat(res.data.data[i])
-                  }
-                  else {
-                    this.isButtomShow = true;
-                  }
-                }
-              }
+        if (this.page == 1) {
+          for (var i = 0; i < this.limit * this.page; i++) {
+            if (this.recipeClassOne[i]) {
+              this.list.push(this.recipeClassOne[i]);
+            } else {
+              this.isButtomShow = true;
             }
-          ).catch((err) => {
-          console.log(err);
-        })
+
+          }
+        } else {
+          for (var i = this.limit * (this.page - 1); i < this.limit * this.page; i++) {
+            if (this.recipeClassOne[i]) {
+              this.list = this.list.concat(this.recipeClassOne[i])
+            }
+            else {
+              this.isButtomShow = true;
+            }
+          }
+        }
       },
       loadMore() {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-            var clientHeight = document.documentElement.clientHeight; //document.documentElement获取数据
-            var scrollTop = document.documentElement.scrollTop; //document.documentElement获取数据
-            var scrollHeight = document.documentElement.scrollHeight;//document.documentElement获取数据
-            if (clientHeight + scrollTop + 20 >= scrollHeight) {
-              this.page++;
-              this.get();
-            }
-          }, 13);
+          var clientHeight = document.documentElement.clientHeight; //document.documentElement获取数据
+          var scrollTop = document.documentElement.scrollTop; //document.documentElement获取数据
+          var scrollHeight = document.documentElement.scrollHeight;//document.documentElement获取数据
+          if (clientHeight + scrollTop + 20 >= scrollHeight) {
+            this.page++;
+            this.get();
+          }
+        }, 13);
       },
+      // 去用户详细界面
+      toUserInfo(userId) {
+        this.$router.push(`/fhuser/${userId}`);
+      }
     },
   }
 </script>
@@ -156,6 +210,44 @@
     height: 80px;
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  #recipeCList .rclRight .sex {
+    width: 500px;
+    padding-top: 5px;
+  }
+
+  #recipeCList .rclRight .sex > img {
+    width: 23px;
+    height: 23px;
+    margin-bottom: 0;
+  }
+
+  #recipeCList .rclRight p {
+    padding-top: 30px;
+    vertical-align: bottom;
+  }
+
+  #recipeCList .rclRight p>img {
+    margin-bottom: 0;
+    margin-right: 5px;
+    width: 23px;
+    height: 23px;
+    vertical-align: center;
+  }
+
+  .item>div:first-child>img:first-child {
+    float: left;
+    width: 25% !important;
+    height: 25% !important;
+    margin-right: 10px;
+  }
+
+  .item>div:first-child>img:last-child {
+    float: left;
+    width: 50% !important;
+    /*width: 153px;*/
+    /*padding-left: 60px !important;*/
   }
 
   /*瀑布流开始*/
@@ -248,27 +340,28 @@
   }
 
   #wrap .box {
-    width: 307px;
+    width: 350px;
     height: auto;
-    padding: 10px;
+    padding: 20px 10px 10px 10px;
     border: none;
-    float: left;
+    /*float: left;*/
     margin-right: 28px;
   }
 
   #wrap .box .info {
-    width: 307px;
+    /*width: 307px;*/
     height: auto;
     border-radius: 8px;
+    padding-bottom: 10px;
     box-shadow: 0 0 11px #666;
     background: #fff;
   }
 
   #wrap .box .info .pic {
-    width: 280px;
-    height: 200px;
-    margin: 0 auto;
-    padding-top: 10px;
+    width: 100%;
+    height: auto;
+    /*margin: 0 auto;*/
+    padding: 10px;
   }
 
   #wrap .box .info .pic:hover {
@@ -280,7 +373,7 @@
   }
 
   #wrap .box .info .pic img {
-    width: 280px;
+    width: 100%;
     border-radius: 3px;
   }
 

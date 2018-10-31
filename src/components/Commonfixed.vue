@@ -112,7 +112,7 @@
       </div>
     </el-row>
 
-    <router-view v-if="isRouterAlive"></router-view>
+    <router-view v-if="isRouterAlive" ></router-view>
 
   </div>
 </template>
@@ -128,9 +128,9 @@
   });
   export default {
     name: "Commonfixed",
-    provide() {
-      return {
-        reload: this.reload
+    provide(){
+      return{
+        reload:this.reload
       }
     },
     data() {

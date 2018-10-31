@@ -76,6 +76,7 @@
   import RecipeStep from './RecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
   import Recommend from '../Community/Recommend.vue'
+
   export default {
     //注入
     inject: ['reload'],
