@@ -22,7 +22,7 @@
   $(function () {
     $(window).scroll(function () {
       // console.log($(document).scrollTop());
-      if($(document).scrollTop()>1480 && $(document).scrollTop() <= 1600){
+      if($(document).scrollTop()>1610 && $(document).scrollTop() <= 1692){
         var scrollT = $(document).scrollTop()-20;
         // console.log(scrollT);
         $("#recipesComm").offset({"top":scrollT});

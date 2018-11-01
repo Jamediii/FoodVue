@@ -87,7 +87,7 @@
             this.recipesRAuthor.push(rcData[i].accountName);
             this.recipeRcomId.push(rcData[i].detailsId);
           } else {
-            console.log(rcData[i]);
+            // console.log(rcData[i]);
             this.recipesRImg.push("https://cp1.douguo.com/upload/caiku/4/2/0/600x400_4241833e7dd7e4b041964353faadc300.jpg");
             this.recipesRName.push("史上最全寿司教程，学会交作业哟");
             this.recipesRAuthor.push("小菁同学");
@@ -124,7 +124,7 @@
   }
 
   #recipesComm .inner-RC .showrc img {
-    height: 240px;
+    height: 100%;
     width: 100%;
   }
 

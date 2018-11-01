@@ -2,8 +2,7 @@
   <div>
     <el-header>热门菜品</el-header>
     <el-main>
-      <el-row :gutter="20" v-for="(item,index) in recommendList" :key="index"
-              v-if="item.detailsId>41 && item.detailsId<47">
+      <el-row :gutter="20" v-for="(item,index) in recommendList" :key="index" v-if="item.detailsId>41 && item.detailsId<47">
         <el-col :span="10">
           <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
             <img :src=item.recipeCoverImg>
@@ -11,9 +10,11 @@
         </el-col>
         <el-col :span="14">
           <div>
-            <router-link :to="{path:'/recipe_detail/' + item.detailsId}"><p>{{item.recipeName}}<span>…</span></p>
+            <router-link :to="{path:'/recipe_detail/' + item.detailsId}"><p class="title">{{item.recipeName}}</p>
             </router-link>
-            <p>{{item.recipeBrief}}<span>…</span></p>
+            <p>{{item.recipeBrief}}
+              <span>…</span>
+            </p>
           </div>
         </el-col>
       </el-row>
@@ -44,14 +45,25 @@
         .catch(function (err) {
           console.log(err)
         });
-    },
-
-
-
+    }
   }
 </script>
 
 <style scoped>
+  .title{
+    font-size: 14px;
+    width: 75%;
+    height: 35px;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-space:nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 限制在一个块元素显示的文本的行数 */
+    -webkit-box-orient: vertical; /* 垂直排列 */
+    /*word-break: break-all;  !* 内容自动换行 *!*/
+  }
+
   img {
     width: 100%;
     border-radius: 5px;

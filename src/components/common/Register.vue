@@ -38,7 +38,7 @@
                             autocomplete="off"></el-input>
                   <el-button type="primary" @click="checkVeriCode" style="width: 45%" class="right">获取验证码</el-button>
                 </el-form-item>
-               <div class="agreen">
+                <div class="agreen">
                   <input type="checkbox" v-model="beSureReg">
                   我已经阅读并且同意，
                   <router-link style="color:#337ab7" to="/regagreement">乐享美食注册协议</router-link>
@@ -69,6 +69,8 @@
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
+        } else if (value.length < 6) {
+          callback(new Error('密码长度不能低于6位'));
         } else {
           if (this.registerInfo.checkPwd !== '') {
             this.$refs.registerInfo.validateField('checkPwd');
@@ -240,7 +242,7 @@
     width: 100%;
   }
 
-  #register .el-col .el-form-item .agreen{
+  #register .el-col .el-form-item .agreen {
     font-size: 14px;
   }
 </style>

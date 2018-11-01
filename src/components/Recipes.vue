@@ -12,12 +12,6 @@
       <recipe-selected></recipe-selected>
     </el-col>
   </el-row>
-
-  <!--<html-view></html-view>-->
-  <!--<iframe src="../../test.html" width="1200" height="300" frameborder="0" scrolling="auto"style="position:absolute;top: -300px;left: 0px;"></iframe>-->
-
-  <!--<iframe src="../../static/index.html"  width="100%" frameborder="0" scrolling="no" id="external-frame" onload="setIframeHeight(this)"></iframe>-->
-
   <br/>
 </div>
 </template>
@@ -35,18 +29,7 @@
         'loop-pic':LoopPic,
         'recipe-popular':RecipePopular,
         'recipe-selected':RecipeSelected,
-      },
-      method:{
-            setIframeHeight(iframe) {
-              if (iframe) {
-                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                if (iframeWin.document.body) {
-                  iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                }
-              }
-            }
       }
-
     }
 </script>
 

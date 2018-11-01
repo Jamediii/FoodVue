@@ -5,7 +5,7 @@
       <!--轮播图部分-->
       <el-col :xs="24" :sm="24" :md="16" :lg="17" :xl="17">
         <div class="block">
-          <el-carousel height="400px">
+          <el-carousel height="440px">
             <el-carousel-item v-for="(item,index) in imgs" :key="index">
               <img :src="item.pic" alt="">
               <!--<router-link to="/recipe_detail"></router-link>-->
@@ -22,6 +22,7 @@
       </el-col>
       <!--右边文章推荐部分-->
       <el-col class="ArticleRemRight" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+        <el-header class="headercss">&nbsp;>>&nbsp;&nbsp;热门文章</el-header>
         <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 4">
 
           <el-col :span="7">
