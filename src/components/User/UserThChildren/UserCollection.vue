@@ -12,10 +12,11 @@
         <el-col style="margin-top:10px; position: relative; cursor: pointer"
                 v-for="(o,index) in recipesY.collect"
                 :span="8"
+                @mouseover.native="getAnimate($event)"
                 @click.native.stop="toDetailed(o)">
           <el-card shadow="always">
             <el-col :span="9">
-              <img :src="o.recipeCoverImg" alt="">
+              <img :src="o.recipeCoverImg" width="100%" alt="">
             </el-col>
             <el-col :span="15">
               <h5 class="recipeName">{{o.recipeName}}</h5>
@@ -49,7 +50,7 @@
                 @click.native.stop="toDetailed(o)">
           <el-card shadow="always">
             <el-col :span="9">
-              <img :src="o.dietPhoto" alt="">
+              <img :src="o.dietPhoto" width="100%" alt="">
             </el-col>
             <el-col :span="15">
               <h5 class="recipeName">{{o.dietTitle}}</h5>
@@ -203,6 +204,14 @@
         } else {
           this.$router.push(`/user_recipe/${detail.dietId}`);
         }
+      },
+      // 鼠标经过时给样式
+      getAnimate(e) {
+
+      },
+      // 鼠标离开时给样式
+      leaveAnimate(e) {
+
       }
     },
     watch: {

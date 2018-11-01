@@ -94,7 +94,6 @@
       this.$axios.get(`${$LH.url}/users/${userId}`)
         .then(async (result) => {
           this.userInfo = await result.data.data[0];
-          console.log(this.userInfo);
         }).catch(err => {
         console.log(err);
       });

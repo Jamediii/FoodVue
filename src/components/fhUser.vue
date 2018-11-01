@@ -31,12 +31,17 @@
                @change="changeBg('userHd','headPhoto')"
                style="display: none" form="Headportrait">
         <!--名字-->
-        <span>{{userInfo.accountName}}</span>
+        <span>
+          {{userInfo.accountName}}
+          <i v-if="userInfo.sex === '女'"><img src="../assets/性别女.png" width="8%" alt=""></i>
+          <i v-else><img src="../assets/性别男.png" width="8%" alt=""></i>
+        </span>
         <!--等级-->
         <!--经验-->
 
         <!--关注粉丝-->
-        <el-button class="chang-userInfo" @click.native="joinFans">{{concern}}<i class="el-icon-star-on"></i></el-button>
+        <el-button class="chang-userInfo" @click.native="joinFans">{{concern}}<i class="el-icon-star-on"></i>
+        </el-button>
       </div>
 
       <div style="margin-top: 80px">
@@ -99,11 +104,11 @@
         .then(result => {
           if (!result.data.data[0]) {
             this.concern = '关注'
-          }else {
+          } else {
             this.concern = '已关注'
           }
         })
-        .catch(err=> {
+        .catch(err => {
           console.log(err);
         })
     },
@@ -133,7 +138,7 @@
                 message: '似乎网络开了点小差呢,关注失败了ㄟ( ▔, ▔ )ㄏ'
               });
             });
-        }else {
+        } else {
           // 取关
           this.$axios.get(`${$LH.url}/users/abolishFans/${userId}/${fansId}`)
             .then(() => {
@@ -185,11 +190,11 @@
             console.log(result.data.data[0]);
             if (!result.data.data[0]) {
               this.concern = '关注'
-            }else {
+            } else {
               this.concern = '已关注'
             }
           })
-          .catch(err=> {
+          .catch(err => {
             console.log(err);
           })
       }

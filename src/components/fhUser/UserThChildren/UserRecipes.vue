@@ -17,7 +17,7 @@
                 <img :src="data.recipeCoverImg" :alt="data.recipeName">
                 <div class="receipeRight">
                   <div class="receipeName">
-                    <span>{{data.recipeName}}</span>
+                    <p>{{data.recipeName}}</p>
                   </div>
                   <div class="receipeBrief">
                     <div>
@@ -37,7 +37,7 @@
                 <img :src="data.dietPhoto" width="30%" :alt="data.dietTitle">
                 <div class="receipeRight">
                   <div class="receipeName">
-                    <span>{{data.dietTitle}}</span>
+                    <p>{{data.dietTitle}}</p>
                     <span class="releaseTime">{{data.releaseTime}}</span>
                   </div>
                   <div class="receipeBrief">
@@ -139,7 +139,7 @@
 
   /* 背景的阴影 */
   .receipeBox:hover {
-    animation: receipeY 400ms ease-out;
+    animation: receipeY 300ms ease-out;
     /* 设置停留在最后一帧 */
     animation-fill-mode: forwards;
   }
@@ -168,11 +168,11 @@
     width: 96%;
     height: 100px;
     position: absolute;
-    padding: 5px;
+    padding: 6px;
     color: whitesmoke;
     right: 8px;
-    bottom: -200px;
-    background: rgba(0, 0, 0, 0.2);
+    bottom: -300px;
+    background: rgba(0, 0, 0, 0.6);
   }
 
   /* 右边的划过 */
@@ -183,10 +183,10 @@
 
   @keyframes receipeRight {
     from {
-      bottom: -200px;
+      bottom: -300px;
     }
     to {
-      bottom: 10px;
+      bottom: 8px;
     }
   }
 
@@ -198,6 +198,7 @@
   }
 
   .receipeBrief > div {
+    font-size: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -206,8 +207,11 @@
   }
 
   /* 标题 */
-  .receipeName > span {
-    /*font-size: 30px;*/
+  .receipeName > p {
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
     cursor: pointer;
   }
 

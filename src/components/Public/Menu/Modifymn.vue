@@ -8,13 +8,13 @@
                  label-width="80px">
           <el-form-item label="菜谱名称">
             <el-tooltip class="item" effect="dark" content="文字尽量限制在20字内" placement="right">
-              <el-input v-model="dieltTitle"></el-input>
+              <el-input v-model="form.dietTitle"></el-input>
             </el-tooltip>
           </el-form-item>
           <el-form-item label="菜谱大图">
             <div>
               <label for="recipe">
-                <img :src="basicPhoto" width="100%" alt="">
+                <img :src="form.dietPhoto" width="100%" alt="">
               </label>
             </div>
             <input type="file"
@@ -26,7 +26,7 @@
           </el-form-item>
           <el-form-item label="简介">
             <el-input type="textarea"
-                      v-model="form.dieltSyon"
+                      v-model="form.dietIntroduce"
                       :autosize="{ minRows: 3, maxRows: 5}"
             ></el-input>
           </el-form-item>
@@ -39,7 +39,7 @@
                  ref="recipeNum"
                  :model="form">
           <el-form-item label="烹饪时间(分钟)">
-            <el-select v-model="form.dieltTime" placeholder="请选择大致烹饪时间">
+            <el-select v-model="form.dietTime" placeholder="请选择大致烹饪时间">
               <el-option label="5" value="5"></el-option>
               <el-option label="10" value="10"></el-option>
               <el-option label="15" value="15"></el-option>
@@ -52,7 +52,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="份量(人份)">
-            <el-select v-model="form.dieltWeight" placeholder="请选择大致烹饪时间">
+            <el-select v-model="form.dietWeigh" placeholder="请选择大致烹饪时间">
               <el-option label="1" value="1"></el-option>
               <el-option label="2" value="2"></el-option>
               <el-option label="3" value="3"></el-option>
@@ -69,7 +69,7 @@
                 <el-col :span="8">
                   <el-input
                     placeholder="食材名称"
-                    v-model="obj.Name">
+                    v-model="obj.foodName">
                     <i slot="suffix" class="el-ico-third-caigoushicai"></i>
                   </el-input>
                 </el-col>
@@ -77,15 +77,13 @@
                   <el-input placeholder="数量"
                             type="number"
                             min="0"
-                            v-model="obj.Num">
+                            v-model="obj.foodNum">
                     <i slot="suffix" class="el-ico-third-shuzi"></i>
                   </el-input>
                 </el-col>
                 <el-col :span="2"
                         :push="1"
-                        @click.native="delFoodList(form.foodlist,key)"
-                        @mouseover.native="showIco(icoChange.foodIco,key)"
-                        @mouseleave.native="hideIco(icoChange.foodIco,key)">
+                        @click.native="delFoodList(form.foodlist,key)">
                   <!--<i class="el-icon-circle-close-outline"
                      v-if='icoChange.foodIco[key] === true'
                      style="font-size: 30px;vertical-align: middle;color:red"></i>
@@ -98,6 +96,7 @@
               </el-row>
             </div>
 
+            <!-- 增加按钮
             <el-row>
               <el-button style="width: 70%; margin-top: 15px"
                          type="success"
@@ -105,7 +104,7 @@
                          round>
                 添加食材
               </el-button>
-            </el-row>
+            </el-row>-->
           </el-form-item>
         </el-form>
       </el-col>
@@ -138,9 +137,7 @@
                   <div class="depictIco">
                     <el-col :span="2"
                             :push="1"
-                            @click.native="delFoodList(form.steplist,key)"
-                            @mouseover.native="showIco(icoChange.stepIco,key)"
-                            @mouseleave.native="hideIco(icoChange.stepIco,key)">
+                            @click.native="delFoodList(form.steplist,key)">
                       <!--<i class="el-icon-circle-close-outline"
                          v-if="icoChange.stepIco[key]"></i>
                       <i class="el-icon-circle-close"
@@ -148,26 +145,22 @@
                       <i class="el-icon-circle-close-outline"></i>
                     </el-col>
 
+                    <!-- 增加按钮
                     <el-col :span="2"
                             :push="1"
                             @click.native="addFoodList(form.steplist,key)"
                             @mouseover.native="showIco(icoChange.stepIco,key*2)"
                             @mouseleave.native="hideIco(icoChange.stepIco,key*2)">
-                      <!--<i class="el-icon-circle-plus-outline"
-                         v-if="icoChange.stepIco[key*2]"></i>
-                      <i class="el-icon-circle-plus"
-                         v-else></i>-->
                       <i class="el-icon-circle-plus-outline"></i>
-                    </el-col>
+                    </el-col>-->
                   </div>
                   <el-input class="depict"
                             type="textarea"
                             :autosize="{ minRows: 6, maxRows: 6}"
                             placeholder="请输入内容"
-                            @keyup.native="checkInputNum(obj.stepContent,150)"
-                            v-model="obj.stepContent">
+                            v-model="obj.stepDetail">
                   </el-input>
-                  <span>剩余{{150-obj.stepContent.length}}个字</span>
+                  <span>剩余{{150-obj.stepDetail.length}}个字</span>
                 </div>
               </div>
             </div>
@@ -176,19 +169,19 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="8" :offset="17">
-        <el-button type="primary"
-                   class="el-icon-success"
-                   @click.native="uploadBtn"
-        >上传菜谱
-        </el-button>
-        <el-button
-          type="info"
-          plain
-          @click.native="cancelBtn">
-          取消上传
-          <i class="el-icon-delete el-icon--right"></i></el-button>
-      </el-col>
+      <!--<el-col :span="8" :offset="17">-->
+        <!--<el-button type="primary"-->
+                   <!--class="el-icon-success"-->
+                   <!--@click.native="uploadBtn"-->
+        <!--&gt;修改菜谱-->
+        <!--</el-button>-->
+        <!--<el-button-->
+          <!--type="info"-->
+          <!--plain-->
+          <!--@click.native="cancelBtn">-->
+          <!--取消修改-->
+        <!--</el-button>-->
+      <!--</el-col>-->
     </el-row>
   </div>
 </template>
@@ -197,33 +190,20 @@
   export default {
     //注入
     inject: ['reload'],
-    name: "Makemn",
+    name: "Modifymn",
     data() {
       return {
-        // 菜谱大图片
-        basicPhoto: '',
-        // 菜谱步骤图片
-        stepsPhoto: '',
-        form: {
-          dieltSyon: '',
-          // 烹饪时间 + 份量 + 食材[]
-          dieltTime: '',
-          dieltWeight: '',
-          foodlist: [
-            {
-              Num: '',
-              Name: ''
-            }
-          ],
-          // 步骤图片名 + 步骤内容
-          steplist: [
-            {
-              stepPHName: '',
-              stepPhoto: '',
-              stepContent: ''
-            }
-          ],
-        },
+        form: {},
+
+        // dietTitle: '', // 菜谱标题
+        // dietIntroduce: '', // 简介
+        // // 烹饪时间 + 份量 + 食材[]
+        // dietTime: '', // 制作时间
+        // dietWeight: '', // 使用人份
+        // foodlist: [],
+        // // 步骤图片名 + 步骤内容
+        // steplist: [],
+
         // 图标的替换
         icoChange: {
           foodIco: [
@@ -233,47 +213,48 @@
             true, true
           ]
         }
-
       }
     },
     // 挂载时显示的图片
     mounted() {
-      this.$axios.get(`${$LH.url}/recipes/basicPhoto`)
+      this.$axios.get(`${$LH.url}/operat/modifymn/${this.$route.params.modifyId}`)
         .then(result => {
-          this.basicPhoto = result.data.data.basicPhoto.replace(':', ':/');
-          this.stepsPhoto = result.data.data.stepsPhoto.replace(':', ':/');
-          this.form.steplist[0].stepPhoto = this.stepsPhoto;
+          console.log(result);
+          this.form = result.data.data[0][0];
+
+          this.form.foodlist = result.data.data[1];
+          this.form.steplist = result.data.data[2];
         })
         .catch(err => {
           console.log(err);
         });
     },
     watch: {
-      // 监听变化
-      'form.steplist.length'(newLength, oldLength) {
-        if (newLength > oldLength) {
-          this.form.steplist[this.form.steplist.length - 1].stepPhoto = this.stepsPhoto;
-        }
-      },
-      // // 监听字数的变化
-      // 'form.steplist'(newLength) {
-      //   for (let i = 0; i < newLength.length; i++) {
-      //     if (newLength[i].stepContent.length >= 150) {
-      //       this.$notify.error({
-      //         title: '错误',
-      //         message: '字数限制啦!'
-      //       });
-      //       newLength[i].stepContent.length = 150;
+      //   // 监听变化
+      //   'form.steplist.length'(newLength, oldLength) {
+      //     if (newLength > oldLength) {
+      //       this.form.steplist[this.form.steplist.length - 1].stepPhoto = this.stepsPhoto;
       //     }
-      //   }
-      // },
+      //   },
+      //   // 监听字数的变化
+      //   'form.steplist'(newLength) {
+      //     for (let i = 0; i < newLength.length; i++) {
+      //       if (newLength[i].stepDetail.length >= 150) {
+      //         this.$notify.error({
+      //           title: '错误',
+      //           message: '字数限制啦!'
+      //         });
+      //         newLength[i].stepDetail.length = 150;
+      //       }
+      //     }
+      //   },
       '$route': function (to, from) {
         this.reload();
       },
     },
     computed: {
-      dieltTitle() {
-        return this.$route.params.menuName;
+      dieltId() {
+        return this.$route.params.modifyId;
       }
     },
     methods: {
@@ -285,7 +266,7 @@
             message: `您输入的长度超过了${maxLength}个字`,
             type: 'warning'
           });
-          input=input.substring(0,149);
+          input = input.substring(0, 149);
         }
       },
       // 图片预览
@@ -305,7 +286,7 @@
           var simpleFile = this.$refs[inputName][0].files[0];
           this.form.steplist[fileSrc].stepPHName = simpleFile.name
         }
-        if (simpleFile.size /1024 / 1024 > 3) {
+        if (simpleFile.size / 1024 / 1024 > 3) {
           this.$message.error('上传图片大小不能超过 3MB(￣▽￣)"!');
           return false;
         }
@@ -328,15 +309,6 @@
           }
         }
       },
-      // 显示图标
-      showIco(keyObj, key) {
-        keyObj[key] = false;
-      },
-      // 隐藏图标
-      hideIco(keyObj, key) {
-        keyObj[key] = true;
-      },
-      // 隐藏图标
       // 删除列表
       delFoodList(formArray, key) {
         if (formArray.length <= 1) {
@@ -344,6 +316,7 @@
           return false;
         }
         formArray.splice(key, 1);
+        console.log(formArray);
         this.$notify({
           title: '成功',
           message: '删除成功！',
@@ -351,26 +324,28 @@
         });
       },
       // 增加列表<要增加的表名>
-      addFoodList(formName) {
-        if (formName === this.form.foodlist) {
-          formName.push({
-            Num: '',
-            Name: ''
-          });
-          this.icoChange.foodIco.push(true);
-        } else {
-          formName.push({
-            stepPhoto: '',
-            stepContent: ''
-          });
-          this.icoChange.stepIco.push(true, true);
-        }
-        this.$notify({
-          title: '成功',
-          message: '增加成功！',
-          type: 'success'
-        });
-      },
+      // addFoodList(formName) {
+      //   if (formName === this.form.foodlist) {
+      //     formName.push({
+      //       foodNum: '',
+      //       foodName: ''
+      //     });
+      //     this.icoChange.foodIco.push(true);
+      //     console.log(this.form.foodlist);
+      //   } else {
+      //     formName.push({
+      //       stepPhoto: '',
+      //       stepContent: ''
+      //     });
+      //     this.icoChange.stepIco.push(true, true);
+      //   }
+      //   this.$notify({
+      //     title: '成功',
+      //     message: '增加成功！',
+      //     type: 'success'
+      //   });
+      // },
+
       // 菜谱提交
       uploadBtn() {
         let formData = new FormData();
@@ -396,8 +371,8 @@
               });
               return false;
             }
-            formData.append(`dieltFile${k}`,this.$refs['recipesPhoto'].files[0]);
-          }else {
+            formData.append(`dieltFile${k}`, this.$refs['recipesPhoto'].files[0]);
+          } else {
             if (!this.$refs[`step${k - 1}`][0].files[0]) {
               this.$message({
                 message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ~ＹＯ',
@@ -423,9 +398,10 @@
           this.$message.error('上传失败,赶快看看是哪里出错了');
         });
       },
+
       // 取消上传
       cancelBtn() {
-        this.$confirm('此操作将永久删除该菜谱, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除修改, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

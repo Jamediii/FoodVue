@@ -3,7 +3,7 @@
     <el-form ref="form"
              :model="form"
              :rules="rules"
-             label-width="100px"
+             label-width="120px"
              class="demo-dynamic">
       <!--名字-->
       <el-row>

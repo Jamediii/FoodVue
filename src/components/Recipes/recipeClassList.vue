@@ -16,12 +16,9 @@
               class="box box-item"
               v-for="(o,key) in list"
               :width="WaterfallItem.width">
-              <transition-group
-                enter-active-class="animated zoomIn"
-                leave-active-class="animated zoomOut">
                 <div class="info"
                      :key="key">
-                  <div class="pic">
+                  <div class="pic animated flipInX">
                     <img :src="o.recipeCoverImg" alt="">
                   </div>
                   <div class="title">
@@ -32,7 +29,6 @@
                   <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
                   <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
                 </div>
-              </transition-group>
             </WaterfallItem>
           </Waterfall>
         </div>
@@ -364,13 +360,13 @@
     padding: 10px;
   }
 
-  #wrap .box .info .pic:hover {
-    -webkit-animation: shade 3s ease-in-out 1;
-    -moz-animation: shade 3s ease-in-out 1;
-    -ms-animation: shade 3s ease-in-out 1;
-    -o-animation: shade 3s ease-in-out 1;
-    animation: shade 3s ease-in-out 1;
-  }
+  /*#wrap .box .info .pic:hover {*/
+    /*-webkit-animation: shade 3s ease-in-out 1;*/
+    /*-moz-animation: shade 3s ease-in-out 1;*/
+    /*-ms-animation: shade 3s ease-in-out 1;*/
+    /*-o-animation: shade 3s ease-in-out 1;*/
+    /*animation: shade 3s ease-in-out 1;*/
+  /*}*/
 
   #wrap .box .info .pic img {
     width: 100%;

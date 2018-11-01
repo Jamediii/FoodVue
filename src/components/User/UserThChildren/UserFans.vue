@@ -10,7 +10,11 @@
       <div v-for="data in recipesY" class="fans-cont">
         <el-col :span="4">
           <img :src="data.headPhoto" :alt="data.userId" :title="data.accountName">
-          <span class="userName">{{data.accountName}}</span>
+          <span class="userName">
+            <img v-if="data.sex === '女'" src="../../../assets/性别女.png" width="20" alt="">
+            <img v-else src="../../../assets/性别男.png" width="20" alt="">
+            {{data.accountName}}
+          </span>
           <el-button
             class="to-user"
             type="primary"
@@ -107,11 +111,11 @@
   /*--> 动画 <--*/
   .userName {
     position: absolute;
-    right: 0;
-    top: 25px;
+    right: 0px;
+    top: 20px;
     font-size: 16px;
     overflow: hidden;
-    width: 70px;
+    width: 120px;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     -webkit-text-overflow: ellipsis;

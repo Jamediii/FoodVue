@@ -45,7 +45,7 @@
                 <div class="receipeRight">
                   <div class="receipeName">
                     <span>{{data.dietTitle}}</span>
-                    <span class="releaseTime">{{data.releaseTime}}</span>
+                    <span class="releaseTime">{{data.releaseTime.substring(0,10)}}</span>
                   </div>
                   <div class="receipeBrief">
                     <div>
@@ -62,7 +62,7 @@
           <div
             class="boxFater"
             v-for="(data,key) in recipesN">
-            <div class="receipeBox">
+            <div class="receipeBox" @click="changeReceipe(data.dietId)">
               <div class="receipeLeft">
                 <i><img src="../../../assets/审核中.png" width="100%" alt=""></i>
                 <img :src="data.dietPhoto" :alt="data.dietTitle">
@@ -124,6 +124,7 @@
           this.recipesY.dielt = result.data.data[0];
           // 未过审菜谱
           this.recipesN = result.data.data[1];
+          console.log(this.recipesN);
         })
         .catch((err) => {
           console.log(err.message);
@@ -139,6 +140,38 @@
       toRecipesDetailed(detailsId) {
         this.$router.push(`/user_recipe/${detailsId}`);
       },
+      // 审核中的菜谱的修改
+      changeReceipe(receipesId) {
+        this.$router.push(`/modifymn/${receipesId}`);
+      },
+      // 删除菜谱
+      delUserRecipe(recipesId) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.get(`${$LH.url}/operat/delUserRecipe/${recipesId}`)
+            .then(() => {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+            })
+            .catch(err => {
+              this.$message({
+                type: 'info',
+                message: '删除失败！'
+              });
+              console.log(err);
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      }
     },
     watch: {
       '$route': function (to, from) {
@@ -188,7 +221,7 @@
     position: absolute;
     font-style: normal;
     background-size: cover;
-    width: 120px;
+    width: 150px;
     height: 50px;
     right: 0;
     top: 0;
@@ -211,15 +244,15 @@
       box-shadow: 0 0;
     }
     to {
-      box-shadow: 3px 3px 10px #666666;
+      box-shadow: 1px 1px 20px #666666;
     }
   }
 
   .receipeBox:hover i {
-    animation: iShow 400ms ease-out;
+    animation: iShow 300ms ease-out;
     animation-fill-mode: forwards;
   }
-  
+
   @keyframes iShow {
     from {
       opacity: 0;
@@ -239,16 +272,16 @@
     width: 100%;
     height: 100%;
   }
-  
+
   .receipeRight {
     width: 96%;
     height: 100px;
     position: absolute;
-    padding: 5px;
+    padding: 6px;
     color: whitesmoke;
     right: 8px;
-    bottom: -200px;
-    background: rgba(0, 0, 0, 0.2);
+    bottom: -300px;
+    background: rgba(0, 0, 0, 0.6);
   }
 
   /* 右边的划过 */
@@ -259,10 +292,10 @@
 
   @keyframes receipeRight {
     from {
-      bottom: -200px;
+      bottom: -300px;
     }
     to {
-      bottom: 10px;
+      bottom: 8px;
     }
   }
 
@@ -274,6 +307,7 @@
   }
 
   .receipeBrief > div {
+    font-size: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -283,7 +317,7 @@
 
   /* 标题 */
   .receipeName > span {
-    /*font-size: 30px;*/
+    padding-right: 20px;
     cursor: pointer;
   }
 

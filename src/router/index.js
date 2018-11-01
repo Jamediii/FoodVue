@@ -16,8 +16,9 @@ import HomePageMiddle from '../components/homePage/HomePageMiddle.vue'
 // 用户确定制作菜谱界面
 import Menu from '../components/Public/Menu.vue'
 // 用户制作菜谱界面
-// import Makemn from '../components/Public/Menu/MakemnCopy-0.vue'
 import Makemn from '../components/Public/Menu/Makemn.vue'
+// 用户修改菜谱界面
+import Modifymn from '../components/Public/Menu/Modifymn.vue'
 //添加活动组件
 import Activity from '../components/Activity.vue'
 
@@ -166,6 +167,15 @@ export default new Router({
           path: '/makemn/:menuName',
           name: 'Makemn',
           component: Makemn,
+          meta: {
+            isLogin: true
+          }
+        },
+        // 用户修改菜谱路由
+        {
+          path: '/modifymn/:modifyId',
+          name: 'Modifymn',
+          component: Modifymn,
           meta: {
             isLogin: true
           }
