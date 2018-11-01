@@ -7,6 +7,7 @@
         <el-main>
           <img :src="recipeCoverImg">
           <h2 style="font-weight: bold">{{recipeName}}</h2><br/>
+
           <el-row style="height: 30px;line-height: 30px">
             <el-col :span="7">
               <i class="el-icon-star-on" style="color: #8cccc1;"></i> 点赞{{recipePraiseNum}}人
@@ -14,7 +15,10 @@
             </el-col>
             <el-col :span="7" :offset="10">
               <button class="collection" @click="addCollection">收藏</button>
-              <button class="thumbsUp" @click="addThumbsUp">点赞</button>
+              <div class="demo">
+                <img v-for="o in hert" :src="`../../../static/images/${(o % 3 )+ 1}.png`" alt="">
+              </div>
+              <button class="thumbsUp" style="position: absolute;bottom: 0;right:25px;" @click="addThumbsUp">点赞</button>
             </el-col>
           </el-row>
           <div>
@@ -76,6 +80,7 @@
   import RecipeStep from './RecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
   import Recommend from '../Community/Recommend.vue'
+  import {mycookie} from '../../../static/js/myCookie.js'
 
   export default {
     //注入
@@ -94,6 +99,8 @@
         fansId: '',
         // 点赞数
         thumbsUp: '',
+        hert: 1,
+        everyPraiseNum: 0,
         //菜谱详情表内数据
         detailsId: '',
         recipeName: '',
@@ -126,7 +133,7 @@
         commentTime: null,
         commentId: [],
         //显示评论数量
-        commentNum:0,
+        commentNum: 0,
         //显示删除
       }
     },
@@ -221,7 +228,7 @@
                     menu_Id: this.p_recipeId
                   })
                     .then((res) => {
-                      this.reload();
+                      this.commentNum++;
                       this.commentText = res.data.data;
                       var len = res.data.data.length;
                       for (let i = 0; i < len; i++) {
@@ -317,10 +324,10 @@
             } else {
               //  ==== 不存在
               let newArray = [];
-              console.log(userId);
-              console.log(this.p_recipeId);
+              // console.log(userId);
+              // console.log(this.p_recipeId);
               newArray.push({userId, collect: [this.p_recipeId]});
-              console.log(newArray);
+              // console.log(newArray);
               $(".collection").text("已收藏");
               this.$notify({
                 title: '成功',
@@ -365,7 +372,7 @@
           // 未登录状态
           this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
             confirmButtonText: '确定',
-            callback: action => {
+            callback: () => {
               this.$router.push('/login');
             }
           });
@@ -423,23 +430,52 @@
 
       // 点赞 + 取消点赞
       addThumbsUp() {
+        var x = 100;
+        var y = 900;
+        var num = Math.floor(Math.random() * 3 + 1);
+        var index = $('.demo').children('img').length;
+        var rand = parseInt(Math.random() * (x - y + 1) + y);
+        $(".demo>img").animate({
+          bottom: "800px",
+          opacity: "0",
+          left: rand,
+        }, 3000);
+
         if (localStorage.getItem("Flag") === 'isLogin') {
-          if ($('.thumbsUp').text() === '点赞') {
+          var date = new Date();
+          let year = date.getFullYear();
+          let month = date.getMonth();
+          let day = date.getDate();
+          let startday = Date.parse(new Date(`${year}-${month + 1}-${day} 00:00:00`));
+          let endday = Date.parse(new Date(`${year}-${month + 1}-${day} 24:00:00`));
+          var differday = endday - startday;
+          if (this.everyPraiseNum === 5) {
+            var exp = new Date();
+            exp.setTime(exp.getTime() + differday);//设置过期时间
+            document.cookie = 'flag' + "=" + 1 + ";expires=" + exp.toGMTString();
+          }
+          //如果cookie存在，并且点赞数小于5，可以继续点赞
+          if (this.everyPraiseNum < 5 && !document.cookie) {
+            this.hert++;
+            this.everyPraiseNum++;
             this.$axios.post(`${$LH.url}/praiseNum`, {
-              detailsId: this.p_recipeId
+              detailsId: this.p_recipeId,
             })
               .then((res) => {
                 if (res.data.data) {
-                  this.$message({
-                    message: '感谢您的喜欢!',
-                    type: 'success'
-                  });
-                  $('.thumbsUp').text('已点赞');
+                  this.recipePraiseNum++;
                 }
               }).catch(err => {
               console.log(err);
             });
+          } else {
+            //否则不能点赞
+            this.$message({
+              message: '一天最多能点5次哦',
+              type: 'warning'
+            });
           }
+
         } else {
           // 未登录状态
           this.$alert('亲,你还未登录哦!赶快加入我们吧!( •̀ ω •́ )✧', '消息', {
@@ -466,6 +502,7 @@
     text-align: center;
     border: none;
     text-decoration: none;
+    bottom: 100px;
   }
 
   .author {
@@ -479,7 +516,6 @@
 
   img {
     width: 100%;
-    /*height: 400px;*/
   }
 
   .headPhoto {
@@ -497,11 +533,9 @@
   }
 
   .el-main {
-    /*background-color: white;*/
     color: #333;
     text-align: left;
     border: 1px solid gainsboro;
-    /*padding: 0px;*/
   }
 
   .el-row {
@@ -510,10 +544,6 @@
 
   .el-col {
     border-radius: 4px;
-  }
-
-  .row-bg {
-    /*background-color: #f9fafc;*/
   }
 
   .el-row {
@@ -558,4 +588,19 @@
     cursor: pointer;
   }
 
+  /*点赞特效*/
+
+  .demo {
+    position: absolute;
+    left: 90%;
+  }
+
+  #container .demo > img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    margin-left: -10px;
+  }
 </style>

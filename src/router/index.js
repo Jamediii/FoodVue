@@ -40,6 +40,9 @@ import RecipeClassList from '../components/Recipes/recipeClassList.vue'
 import UserRecipe from '../components/Community/UserRecipe.vue'
 //达人推荐。用户上传的菜谱详情页
 import UserRecipeDetail from '../components/Community/UserRecipeDetail.vue'
+//模糊查询的列表组件对应路由
+import FuzzySearch from '../components/homePage/FuzzySearch.vue'
+
 
 
 Vue.use(Router);
@@ -177,6 +180,13 @@ export default new Router({
           component: RecipeClassList,
 
         },
+        //模糊查询列表显示的路由
+        {
+          path: 'fuzzysearch',
+          name: 'FuzzySearch',
+          component: FuzzySearch,
+        }
+
 
       ]
     },

@@ -252,6 +252,7 @@
           if(this.showMathing[0].name === "暂无结果"){
             this.$message('不好意思，暂无结果喔d=====(￣▽￣*)b');
           }
+          this.inputsel="";
           this.isClick = false;
         } else {
           //如果是没有点击列表而直接点击搜索
@@ -262,7 +263,9 @@
           } else if (this.showMathing[0].name === "暂无结果") {
             this.$message('不好意思，暂无结果喔d=====(￣▽￣*)b');
           } else {
-            window.location.reload();
+            this.reload();
+            this.inputsel="";
+            this.showMathing=[];
             this.$router.push('/fuzzysearch');
           }
         }
@@ -346,7 +349,7 @@
 
   #search .inputSearch .searchList {
     position: absolute;
-    top: 82px;
+    top: 70px;
     z-index: 99999;
     border: 1px solid #ccc;
     border-top-color: transparent;
@@ -354,10 +357,14 @@
     background-color: #fff;
     overflow: hidden;
   }
+  #search .inputSearch .searchList ul{
+    margin-top: 10px;
+  }
 
   #search .inputSearch .searchList li {
     line-height: 24px;
     color: #333;
+    padding-left: 10px;
   }
 
   #search .inputSearch .searchList li:hover {
@@ -375,9 +382,6 @@
     line-height: 144px;
   }
 
-  #search .inputSearch .searchList li {
-    padding-left: 10px;
-  }
 
   /*搜索部分结束*/
 
