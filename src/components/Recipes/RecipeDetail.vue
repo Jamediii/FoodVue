@@ -37,6 +37,11 @@
       </el-col>
       <el-col :span="8">
         <recommend></recommend>
+        <el-col>
+          <div id="toTop">
+            <i class="el-icon-caret-top" @click="toTop"></i>
+          </div>
+        </el-col>
       </el-col>
     </el-row>
 
@@ -76,6 +81,17 @@
 </template>
 
 <script>
+  //回到顶部
+  $(function(){
+    $(window).scroll(function () {
+      if($(window).scrollTop()<400){
+        $("#toTop").css({"display":"none"})
+      }else {
+        $("#toTop").css({"display":"block"})
+      }
+      $("#toTop").offset({"top":$(window).scrollTop()+600})
+    })
+  });
   import RecipeFoodTable from './RecipeFoodTable'
   import RecipeStep from './RecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
@@ -209,6 +225,10 @@
       },
     },
     methods: {
+      // 回到顶部
+      toTop(){
+        $(document).scrollTop(0)
+      },
       //添加评论
       addComment() {
         this.commentTime = new Date().toLocaleString();
@@ -460,18 +480,18 @@
           //如果cookie存在，并且点赞数小于5，可以继续点赞
           // if (everyPraiseNum < 5) {
           //控制小心心的
-            this.hert++;
-            // everyPraiseNum++;
-            this.$axios.post(`${$LH.url}/praiseNum`, {
-              detailsId: this.p_recipeId,
-            })
-              .then((res) => {
-                if (res.data.data) {
-                  this.recipePraiseNum++;
-                }
-              }).catch(err => {
-              console.log(err);
-            });
+          this.hert++;
+          // everyPraiseNum++;
+          this.$axios.post(`${$LH.url}/praiseNum`, {
+            detailsId: this.p_recipeId,
+          })
+            .then((res) => {
+              if (res.data.data) {
+                this.recipePraiseNum++;
+              }
+            }).catch(err => {
+            console.log(err);
+          });
           // } else {
           //   //否则不能点赞
           //   this.$message({
@@ -495,6 +515,18 @@
 </script>
 
 <style scoped>
+
+  #toTop{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid #8cccc1;
+    cursor: pointer;
+    color: #8cccc1;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+  }
 
   button {
     width: 80px;
