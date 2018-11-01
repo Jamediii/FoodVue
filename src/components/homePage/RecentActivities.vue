@@ -69,7 +69,7 @@
   }
 
   #recentActivity .activity img {
-    height: 240px;
+    height: 100%;
     width: 100%;
   }
   #recentActivity .el-header {

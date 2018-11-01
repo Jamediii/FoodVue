@@ -80,7 +80,6 @@
   import RecipeStep from './RecipeStep'
   import {collectionLS} from '../../assets/js/collectionLocalStorage.js'
   import Recommend from '../Community/Recommend.vue'
-  import {mycookie} from '../../../static/js/myCookie.js'
 
   export default {
     //注入
@@ -100,7 +99,7 @@
         // 点赞数
         thumbsUp: '',
         hert: 1,
-        everyPraiseNum: 0,
+        // everyPraiseNum: 0,
         //菜谱详情表内数据
         detailsId: '',
         recipeName: '',
@@ -324,10 +323,7 @@
             } else {
               //  ==== 不存在
               let newArray = [];
-              // console.log(userId);
-              // console.log(this.p_recipeId);
               newArray.push({userId, collect: [this.p_recipeId]});
-              // console.log(newArray);
               $(".collection").text("已收藏");
               this.$notify({
                 title: '成功',
@@ -430,6 +426,7 @@
 
       // 点赞 + 取消点赞
       addThumbsUp() {
+        //点赞特效
         var x = 100;
         var y = 900;
         var num = Math.floor(Math.random() * 3 + 1);
@@ -441,23 +438,30 @@
           left: rand,
         }, 3000);
 
+        //每天每个菜谱只能点5次
         if (localStorage.getItem("Flag") === 'isLogin') {
-          var date = new Date();
-          let year = date.getFullYear();
-          let month = date.getMonth();
-          let day = date.getDate();
-          let startday = Date.parse(new Date(`${year}-${month + 1}-${day} 00:00:00`));
-          let endday = Date.parse(new Date(`${year}-${month + 1}-${day} 24:00:00`));
-          var differday = endday - startday;
-          if (this.everyPraiseNum === 5) {
-            var exp = new Date();
-            exp.setTime(exp.getTime() + differday);//设置过期时间
-            document.cookie = 'flag' + "=" + 1 + ";expires=" + exp.toGMTString();
-          }
+          // var date = new Date();
+          // let year = date.getFullYear();
+          // let month = date.getMonth();
+          // let day = date.getDate();
+          // let startday = Date.parse(new Date(`${year}-${month + 1}-${day} 00:00:00`));
+          // let endday = Date.parse(new Date(`${year}-${month + 1}-${day} 24:00:00`));
+          // var differday = endday - startday;
+          //存入cookie
+          // var exp = new Date();
+          // exp.setTime(exp.getTime() + differday);//设置过期时间
+          // let pointPrise = [];
+          // let recipeId =this.p_recipeId;
+          // let everyPraiseNum = 0;
+          // everyPraiseNum++;
+          // pointPrise.push({detailsId: recipeId, everyPraiseNum: everyPraiseNum});
+          // document.cookie = name + "=" + JSON.stringify(pointPrise) + ";expires=" + exp.toGMTString();
+
           //如果cookie存在，并且点赞数小于5，可以继续点赞
-          if (this.everyPraiseNum < 5 && !document.cookie) {
+          // if (everyPraiseNum < 5) {
+          //控制小心心的
             this.hert++;
-            this.everyPraiseNum++;
+            // everyPraiseNum++;
             this.$axios.post(`${$LH.url}/praiseNum`, {
               detailsId: this.p_recipeId,
             })
@@ -468,13 +472,13 @@
               }).catch(err => {
               console.log(err);
             });
-          } else {
-            //否则不能点赞
-            this.$message({
-              message: '一天最多能点5次哦',
-              type: 'warning'
-            });
-          }
+          // } else {
+          //   //否则不能点赞
+          //   this.$message({
+          //     message: '一天最多能点5次哦',
+          //     type: 'warning'
+          //   });
+          // }
 
         } else {
           // 未登录状态
