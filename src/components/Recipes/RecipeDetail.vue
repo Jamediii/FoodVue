@@ -3,7 +3,7 @@
   <div id="container" class="w">
     <p style="color: transparent">111</p>
     <el-row :gutter="30">
-      <el-col :span="16" :xs="24" :sm="24" :md="22" :lg="16" :xl="16">
+      <el-col :span="16">
         <el-main>
           <img :src="recipeCoverImg">
           <h2 style="font-weight: bold">{{recipeName}}</h2><br/>
@@ -82,14 +82,14 @@
 
 <script>
   //回到顶部
-  $(function(){
+  $(function () {
     $(window).scroll(function () {
-      if($(window).scrollTop()<400){
-        $("#toTop").css({"display":"none"})
-      }else {
-        $("#toTop").css({"display":"block"})
+      if ($(window).scrollTop() < 400) {
+        $("#toTop").css({"display": "none"})
+      } else {
+        $("#toTop").css({"display": "block"})
       }
-      $("#toTop").offset({"top":$(window).scrollTop()+600})
+      $("#toTop").offset({"top": $(window).scrollTop() + 600})
     })
   });
   import RecipeFoodTable from './RecipeFoodTable'
@@ -226,7 +226,7 @@
     },
     methods: {
       // 回到顶部
-      toTop(){
+      toTop() {
         $(document).scrollTop(0)
       },
       //添加评论

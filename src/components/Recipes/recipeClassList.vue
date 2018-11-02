@@ -101,6 +101,7 @@
       Waterfall, WaterfallItem
     },
     mounted() {
+      // 获取该分类的菜谱
       this.$axios.get(`${$LH.url}/recipes/classify/${this.$route.params.recipeClassifyId}`)
         .then((res) => {
             this.recipeClassOne = res.data.data;
@@ -111,6 +112,7 @@
         console.log(err);
       });
 
+      // 用户按粉丝数排名
       this.$axios.get(`${$LH.url}/praiseNum/rankingUser`)
         .then((res) => {
           this.rankingUser = res.data.data.slice(0, 5);
