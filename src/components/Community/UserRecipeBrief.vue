@@ -2,7 +2,7 @@
   <div id="container">
     <el-row :gutter="10">
       <el-container v-for="(item,index) in infoList" :key="index">
-        <el-aside width="310px">
+        <el-aside width="40%">
           <br/>
           <img :src=item.dietPhoto>
         </el-aside>
@@ -24,7 +24,7 @@
             <span>{{item.dietIntroduce}}</span><span>……</span>
           </el-main>
           <el-footer>
-            <el-button style="background-color: #8cccc1;color: white"><router-link tag="span" :to="{path:'/user_recipe/' + item.dietId}">继续阅读</router-link></el-button>
+            <el-button style="background-color: #8cccc1;color: white;font-size: 16px"><router-link tag="span" :to="{path:'/user_recipe/' + item.dietId}">继续阅读</router-link></el-button>
           </el-footer>
         </el-container>
       </el-container>
@@ -134,83 +134,9 @@
 </script>
 
 <style scoped>
-  /*button{*/
-    /*position: absolute;*/
-    /*top: 10px;*/
-  /*}*/
-  /*.cover{*/
-    /*background: #000;*/
-    /*position: relative;*/
-  /*}*/
-
-  /*.image{*/
-    /*width: 100%;*/
-    /*display: block;*/
-    /*!*float: left;*!*/
-  /*}*/
-  /*.image:hover{*/
-    /*opacity:0.6;*/
-  /*}*/
-  /*.title{*/
-    /*font-size: 14px;*/
-    /*width: 70%;*/
-    /*height: 35px;*/
-    /*line-height: 35px;*/
-    /*!*text-overflow: ellipsis;*!*/
-    /*overflow: hidden;*/
-    /*word-space:nowrap;*/
-    /*!*border: 1px solid pink;*!*/
-  /*}*/
-  /*.info{*/
-    /*position: relative;*/
-    /*text-overflow: ellipsis;*/
-  /*}*/
-  /*.author{*/
-    /*display: inline-block;*/
-    /*position: absolute;*/
-    /*right: 10px;*/
-    /*top:-15px;*/
-    /*font-size: 9px;*/
-    /*text-align: center;*/
-    /*text-overflow: ellipsis;*/
-    /*color: #6a6a6a;*/
-  /*}*/
-  /*.headPhoto{*/
-    /*width: 40px;*/
-    /*height: 40px;*/
-    /*border-radius: 20px;*/
-    /*border: 1px solid white;*/
-  /*}*/
-  /*.el-card{*/
-    /*!*padding: 15px;*!*/
-    /*border-radius: 0px;*/
-  /*}*/
-  /*.time {*/
-    /*font-size: 10px;*/
-    /*color: #999;*/
-  /*}*/
-
-  /*.bottom {*/
-    /*margin-top: 13px;*/
-    /*line-height: 12px;*/
-  /*}*/
-
-  /*.button {*/
-    /*padding: 0;*/
-    /*float: right;*/
-  /*}*/
-
-  /*.clearfix:before,*/
-  /*.clearfix:after {*/
-    /*display: table;*/
-    /*content: "";*/
-  /*}*/
-
-  /*.clearfix:after {*/
-    /*clear: both*/
-  /*}*/
-
-
+  div{
+    font-size: 16px;
+  }
   .header_height{
     height: 40px;
   }
@@ -221,14 +147,14 @@
     text-decoration: none;
   }
   img{
-    width: 280px;
+    width: 90%;
   }
   .el-header{
     background-color: white;
     color: #333;
     text-align: left;
     line-height: 60px;
-    font-size: 18px;
+    font-size: 22px;
 
   }
   .el-footer{

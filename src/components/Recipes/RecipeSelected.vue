@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="50">
-      <el-col :span="8" v-for="(item,index) in recipeBriefList" :key="index" v-if="item.detailsId>41 && item.detailsId<54">
+      <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="(item,index) in recipeBriefList" :key="index" v-if="item.detailsId>41 && item.detailsId<54">
         <el-card :body-style="{ padding: '0px' }">
           <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
             <img :src=item.recipeCoverImg class="image">
@@ -53,7 +53,7 @@
 
 <style scoped>
   .title{
-    font-size: 14px;
+    font-size: 16px;
     width: 70%;
     height: 35px;
     line-height: 35px;
@@ -74,7 +74,7 @@
     position: absolute;
     right: 10px;
     top:-15px;
-    font-size: 9px;
+    font-size: 12px;
     text-align: center;
     text-overflow: ellipsis;
     color: #6a6a6a;
@@ -94,7 +94,7 @@
   }
 
   .time {
-    font-size: 10px;
+    font-size: 12px;
     color: #999;
   }
 

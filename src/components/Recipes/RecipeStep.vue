@@ -4,7 +4,7 @@
       <el-container>
         <el-header><span style="font-size: 20px;font-weight: bold">详细步骤</span></el-header>
         <el-container v-for="(item,index) in recipeStepList" :key="index">
-          <el-aside width="300px">
+          <el-aside width="40%">
             <img :src=item.recipeStepImg>
           </el-aside>
           <el-main>
@@ -41,8 +41,11 @@
 </script>
 
 <style scoped>
+  div{
+    font-size: 16px;
+  }
   img{
-    width: 250px;
+    width: 90%;
   }
   .el-header {
     background-color: white;

@@ -4,11 +4,6 @@
       <el-table-column prop="foodName" label="食材表 " width="180"></el-table-column>
       <el-table-column prop="foodNum" label=" " width=""></el-table-column>
     </el-table>
-    <!--<el-table :data="accessoriesList" style="width: 100%">-->
-      <!--<el-table-column prop="accessoriesName" label="调料表 " width="180"></el-table-column>-->
-      <!--<el-table-column prop="accessoriesNum" label=" " width=""></el-table-column>-->
-    <!--</el-table>-->
-
   </div>
 </template>
 
@@ -42,6 +37,7 @@
   div{
     padding: 20px;
     background: white;
+    font-size: 16px;
   }
 
 </style>

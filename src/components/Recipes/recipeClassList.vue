@@ -4,7 +4,7 @@
     <p style="height:20px;"></p>
     <el-row :gutter="20">
       <!--右侧菜谱部分-->
-      <el-col :span="18">
+      <el-col :span="18" :xs="24" :sm="24" :md="22" :lg="17" :xl="18">
         <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
         <div id="main">
           <Waterfall id="wrap"
@@ -38,7 +38,7 @@
         </el-alert>
       </el-col>
       <!--右侧文章作者推荐-->
-      <el-col class="rclRight" :span="6">
+      <el-col class="rclRight hidden-xs-only hidden-sm-only hidden-md-only" :span="6">
         <div class="grid-content">
           <h3>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}作者推荐</h3>
           <el-card shadow="never"

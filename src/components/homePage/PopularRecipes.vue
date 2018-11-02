@@ -2,7 +2,7 @@
   <!--最受欢迎食谱部分-->
   <div id="popRecipes" class="w">
     <!--<div class="icon-title">每日编辑推荐</div>-->
-    <el-header >>>&nbsp;&nbsp;每日编辑推荐</el-header>
+    <el-header style="font-size: 22px" >>>&nbsp;&nbsp;每日编辑推荐</el-header>
     <el-row :gutter="20">
       <div>
         <!--<el-col :span="3">&nbsp;</el-col>-->
@@ -11,10 +11,15 @@
             <img :src="o.recipeCoverImg" class="image im">
             <div style="padding: 14px;">
               <router-link :to="`recipe_detail/${o.detailsId}`">
-                  <span>{{o.recipeName}}
-                    <span style="color:#FF7979;" class="glyphicon glyphicon-heart"></span> {{o.recipePraiseNum}}</span>
+                  <span>
+                    <p class="title">
+                      {{o.recipeName}}
+                    </p>
+                    <span style="color:#FF7979;" class="glyphicon glyphicon-heart"></span>
+                    {{o.recipePraiseNum}}
+                  </span>
               </router-link>
-              <div class="bottom clearfix">
+              <div class="bottom clearfix" style="display: inline-block">
                 by&nbsp;<span>{{o.accountName}}</span>
                 <!--<button class="right" @click="addcollection(o.detailsId)">收藏</button>-->
               </div>
@@ -66,6 +71,22 @@
 </script>
 
 <style scoped>
+  div{
+    font-size: 16px;
+  }
+  .title{
+    font-size: 16px;
+    width: 70%;
+    height: 35px;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-space:nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 限制在一个块元素显示的文本的行数 */
+    -webkit-box-orient: vertical; /* 垂直排列 */
+    /*word-break: break-all;  !* 内容自动换行 *!*/
+  }
   #popRecipes {
     height: 760px;
     margin-top: 40px;

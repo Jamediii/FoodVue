@@ -3,7 +3,7 @@
   <div id="container" class="w">
     <p style="color: transparent">111</p>
     <el-row :gutter="30">
-      <el-col :span="16">
+      <el-col :span="16" :xs="24" :sm="24" :md="22" :lg="16" :xl="16">
         <el-main>
           <img :src="recipeCoverImg">
           <h2 style="font-weight: bold">{{recipeName}}</h2><br/>
@@ -29,13 +29,13 @@
             <img :src=headPhoto class="headPhoto">
             <span style="color: #8cccc1">{{recipeAuthor}}</span>
             <button class="followUser" @click="followUser">关注</button>
-            <p style="font-size: 13px;color: #666;"><br/>{{recipeBrief}}</p>
+            <p style="font-size: 16px;color: #666;"><br/>{{recipeBrief}}</p>
           </div>
           <recipe-food-table></recipe-food-table>
           <recipe-step></recipe-step>
         </el-main>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="8" class="hidden-xs-only hidden-sm-only hidden-md-only" :lg="8" :xl="8">
         <recommend></recommend>
         <el-col>
           <div id="toTop">
@@ -515,7 +515,9 @@
 </script>
 
 <style scoped>
-
+  div{
+    font-size: 16px;
+  }
   #toTop{
     width: 30px;
     height: 30px;
@@ -539,6 +541,7 @@
     border: none;
     text-decoration: none;
     bottom: 100px;
+    font-size: 16px;
   }
 
   .author {

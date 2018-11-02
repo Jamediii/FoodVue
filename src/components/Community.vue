@@ -2,13 +2,13 @@
   <div class="w">
     <p style="color: transparent">111</p>
     <el-row :gutter="20">
-      <el-col :span="16">
+      <el-col :span="16" :xs="24" :sm="24" :md="22" :lg="15" :xl="16">
         <el-header >享食社区&nbsp;&nbsp;>>&nbsp;所有文章</el-header>
         <el-main >
           <article-brief></article-brief>
         </el-main>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="8" class="hidden-xs-only hidden-sm-only hidden-md-only" :lg="9" :xl="8">
       <!--<article-search></article-search><br/>-->
         <recommend></recommend>
       </el-col>
@@ -21,6 +21,7 @@
   import ArticleBrief from './Community/ArticleBrief.vue'
   import ArticleSearch from './Community/ArticleSearch.vue'
   import Recommend from './Community/Recommend.vue'
+  import 'element-ui/lib/theme-chalk/display.css'
 
   export default {
     name: "Community",
@@ -42,7 +43,7 @@
     color: #333;
     text-align: left;
     line-height: 60px;
-    font-size: 18px;
+    font-size: 22px;
     color: white;
   }
   .el-main {

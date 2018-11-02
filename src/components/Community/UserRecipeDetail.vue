@@ -2,9 +2,9 @@
   <div id="container" class="w">
     <p style="color: transparent">111</p>
     <el-row :gutter="30">
-      <el-col :span="16">
+      <el-col :span="16" :xs="24" :sm="24" :md="22" :lg="16" :xl="16">
         <el-main>
-          <img :src="dietPhoto">
+          <img :src=dietPhoto>
           <h2 style="font-weight: bold">{{dietTitle}}</h2><br/>
           <el-row style="height: 30px;line-height: 30px">
             <el-col :span="6">
@@ -30,7 +30,7 @@
       </el-col>
 
 
-      <el-col :span="8">
+      <el-col :span="8" class="hidden-xs-only hidden-sm-only hidden-md-only" :lg="8" :xl="8">
         <recommend></recommend>
       </el-col>
     </el-row>

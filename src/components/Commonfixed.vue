@@ -84,14 +84,14 @@
           <img src="../assets/Hlogo.png" width="100px" alt="">
         </el-col>
         <el-col class="myselect" :xs="4" :sm="3" :md="3" :lg="3" :xl="3" :offset="2">
-          <select style="height:40px;width: 80%;border-radius: 4px;border-color:#dcdfe6;color:#606266;outline:none;"
+          <select style="height:40px;width: 80%;border-radius: 4px;border-color:#dcdfe6;color:#606266;outline:none;font-size: 16px"
                   name="" id="">
             <option value="按食谱名称">按食谱名称</option>
             <option value="按食谱作者">按食谱作者</option>
           </select>
         </el-col>
         <el-col class="inputSearch" :xs="7" :sm="8" :md="8" :lg="8" :xl="8">
-          <el-input style="height: 40px;width: 100%;" v-model="inputsel" @keyup.native="searchMathing"
+          <el-input style="height: 40px;width: 100%;font-size: 16px" v-model="inputsel" @keyup.native="searchMathing"
                     placeholder="请输入内容"/>
           <div v-if="showlist" class="searchList">
             <ul>
@@ -102,7 +102,7 @@
           </div>
         </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-          <el-button @click="findRec">搜寻</el-button>
+          <el-button @click="findRec" style="font-size: 16px">搜寻</el-button>
         </el-col>
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4" :offset="1">
           <router-link to="/menu" class="right"><span style="background-color: #fff;"><i

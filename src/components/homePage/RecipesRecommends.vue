@@ -100,6 +100,9 @@
 </script>
 
 <style scoped>
+  div{
+    font-size: 16px;
+  }
   #recipesComm {
     height: 600px;
     padding-top: 30px;

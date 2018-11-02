@@ -2,26 +2,16 @@
   <!--达人菜谱推荐-->
   <div class="w" id="userRecipeRecom">
     <el-row :gutter="20">
-      <el-col :span="16">
+      <el-col :span="16"  :xs="24" :sm="24" :md="22" :lg="15" :xl="16">
         <el-header>达人推荐&nbsp;&nbsp;>>&nbsp;&nbsp;作品动态</el-header>
         <el-main>
           <user-recipe-brief></user-recipe-brief>
         </el-main>
       </el-col>
-      <el-col :span="8">
-        <!--<article-search></article-search><br/>-->
+      <el-col :span="8" class="hidden-xs-only hidden-sm-only hidden-md-only" :lg="9" :xl="8">
         <recommend></recommend>
       </el-col>
     </el-row>
-
-    <!--<el-row :gutter="30">-->
-      <!--<el-col :span="24">-->
-        <!--<user-recipe-brief></user-recipe-brief>-->
-
-      <!--</el-col>-->
-
-    <!--</el-row>-->
-
     <br/>
   </div>
 </template>
@@ -52,7 +42,7 @@
     color: #333;
     text-align: left;
     line-height: 60px;
-    font-size: 18px;
+    font-size: 22px;
     color: white;
   }
 

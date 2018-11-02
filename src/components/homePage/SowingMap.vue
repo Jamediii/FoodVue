@@ -13,7 +13,7 @@
           </el-carousel>
         </div>
 
-        <p>開始感受到炎炎夏日的威力,最適合來道麻辣開胃的川味料理,溫順椒香拌著麵條及軟嫩的雞腿肉,爽脆的黃瓜,交織出豐富層次~另人純垂涎三尺的美味</p>
+        <p style="font-size: 16px">开始感受到炎炎夏日的威力，最适合来道麻辣开胃的川味料理，温顺椒香拌着面条及软嫩的鸡腿肉，爽脆的黄瓜，交织出丰富层次~另人纯垂涎三尺的美味</p>
         <!--<ul>-->
         <!--<li><span class="glyphicon glyphicon glyphicon-user"></span>作者名称</li>-->
         <!--<li><span class="glyphicon glyphicon glyphicon-heart"></span>点赞数</li>-->
@@ -25,10 +25,10 @@
         <el-header class="headercss">&nbsp;>>&nbsp;&nbsp;热门文章</el-header>
         <el-card @click.native="todetail" shadow="hover" v-for="(o,index) in homepageArt" :key="index" v-if="index < 4">
 
-          <el-col :span="7">
-            <img width="100px" :src="o.articleCoverImg" alt="">
+          <el-col :span="9">
+            <img width="100%" :src="o.articleCoverImg" alt="">
           </el-col>
-          <el-col :span="13 " :offset="4">
+          <el-col :span="14 " :offset="1">
             <router-link class="text-color" :to="`/article_detail/${o.articleId}`">
               <span>{{o.articleName}}</span>
             </router-link>
@@ -81,6 +81,9 @@
 </script>
 
 <style scoped>
+  div{
+    font-size: 16px;
+  }
   /*轮播图部分开始*/
   #Sowingmap {
     margin-top: 40px;

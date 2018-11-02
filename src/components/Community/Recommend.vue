@@ -50,8 +50,11 @@
 </script>
 
 <style scoped>
+  div{
+    font-size: 16px;
+  }
   .title{
-    font-size: 14px;
+    font-size: 16px;
     width: 75%;
     height: 35px;
     line-height: 35px;
@@ -79,7 +82,7 @@
     color: #333;
     text-align: left;
     line-height: 60px;
-    font-size: 18px;
+    font-size: 22px;
     color: white;
   }
 

@@ -5,7 +5,7 @@
       <el-row class="inner-RA">
         <el-col :span="24">
           <!--<h2>近期活动</h2>-->
-          <el-header>>>&nbsp;&nbsp;近期活动</el-header>
+          <el-header style="font-size: 22px">>>&nbsp;&nbsp;近期活动</el-header>
           <!--<p>这里可能有你意想不到的活动哦</p>-->
         </el-col>
       </el-row>
@@ -50,6 +50,9 @@
 </script>
 
 <style scoped>
+  div{
+    font-size: 16px;
+  }
   #recentActivity {
     padding-top: 20px;
     margin-top: 20px;
