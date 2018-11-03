@@ -77,7 +77,7 @@
   border:1px solid #ccc;
   border-radius: 50%;
   position: absolute;
-  z-index:9999999999999999999999999;
+  z-index:999;
   right:30px;
 }
 #topArrow:hover{

@@ -1,5 +1,5 @@
 <template>
-  <div class="w">
+  <div class="w" id="changeUserInfo">
     <div class="clearfloat">
       <el-row >
         <el-col :span="6">
@@ -65,6 +65,10 @@
       }
     }
   }
+
+  $(function () {
+    $('#changeUserInfo').css('height',$(window).height() - 318);
+  })
 </script>
 
 <style scoped>

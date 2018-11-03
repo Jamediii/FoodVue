@@ -6,7 +6,7 @@
         <h2>总有一款适合你!</h2>
 
         <p>还拿不定主意吗？过来看看今日的菜谱推荐</p>
-        <el-col @click.native="chg"><i id="changRe" class=" el-icon-refresh"></i></el-col>
+        <el-col @click.native="chg"><i id="changRe" class=" el-icon-refresh" style="font-size: 50px"></i></el-col>
       </el-col>
 
       <!--切换显示两个菜谱-->

@@ -17,6 +17,7 @@
             v-for="(data,key) in recipesY.recipe">
             <div class="receipeBox" @click="toDetailed(data.detailsId)">
               <div class="receipeLeft">
+                <!--<span class="del-userRecipe" @click="delUserRecipe()">1111</span>-->
                 <i><img src="../../../assets/审核通过.png" alt=""></i>
                 <img :src="data.recipeCoverImg" :alt="data.recipeName">
                 <div class="receipeRight">
@@ -214,6 +215,14 @@
     border-radius: 10px;
     position: relative;
     overflow: hidden;
+  }
+
+  /* 删除菜谱 */
+  .del-userRecipe {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../assets/下拉删除.png');
   }
 
   /* 过审图标 */

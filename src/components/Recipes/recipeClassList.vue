@@ -26,8 +26,8 @@
                       <p>{{o.recipeName}}</p>
                     </router-link>
                   </div>
-                  <span class="glyphicon glyphicon glyphicon-user"></span>{{o.accountName}}
-                  <span class="glyphicon glyphicon glyphicon-heart"></span>{{o.recipePraiseNum}}
+                  <span class="glyphicon glyphicon glyphicon-user" style="color:#ff7979"></span>{{o.accountName}}
+                  <span class="glyphicon glyphicon glyphicon-heart" style="color:#ff7979"></span>{{o.recipePraiseNum}}
                 </div>
             </WaterfallItem>
           </Waterfall>
@@ -48,7 +48,7 @@
                    v-if="index <5"
                    @click.native="toUserInfo(o.fansId)">
             <div class="text item">
-              <el-col :span="12">
+              <el-col :span="13">
                 <img v-if="index === 0" src="../../assets/排名1.png" alt="">
                 <img v-else-if="index === 1" src="../../assets/排名2.png" alt="">
                 <img v-else-if="index === 2" src="../../assets/排名3.png" alt="">
@@ -56,9 +56,9 @@
                 <img v-else-if="index === 4" src="../../assets/排名5.png" alt="">
                 <img :src="o.headPhoto" alt="">
               </el-col>
-              <el-col :span="8">
-                <div class="sex" style="overflow: hidden">
-                  <span style="float: left">{{o.accountName}}</span>
+              <el-col :span="9">
+                <div class="sex">
+                  <span>{{o.accountName}}</span>
                   <img v-if="o.sex==='女'" src="../../assets/性别女.png" style="float: left" alt="">
                   <img v-else src="../../assets/性别男.png" alt="">
                 </div>
@@ -88,12 +88,12 @@
         limit: 9,
         page: 1,
         Waterfall: {
-          align: 'center',
-          maxCol: 3,
+          align: 'left',
+          maxCol: 4,
           gutterWidth: 5,
         },
         WaterfallItem: {
-          width: 360,
+          width: 340,
         }
       }
     },
@@ -176,7 +176,7 @@
     background-color: #8cccc1;
     text-align: left;
     line-height: 60px;
-    font-size: 16px;
+    font-size: 22px;
     color: #fff;
   }
 
@@ -195,7 +195,7 @@
     height: 60px;
     line-height: 60px;
     display: block;
-    font-size: 16px;
+    font-size: 22px;
     font-weight: normal;
     padding: 0 20px;
     background-color: #8cccc1;
@@ -211,6 +211,7 @@
   }
 
   #recipeCList .rclRight .sex {
+    overflow: hidden;
     width: 500px;
     padding-top: 5px;
   }
@@ -220,9 +221,13 @@
     height: 23px;
     margin-bottom: 0;
   }
+  #recipeCList .rclRight .sex > span {
+    float: left;
+    font-size: 16px;
+  }
 
   #recipeCList .rclRight p {
-    padding-top: 30px;
+    padding-top: 20px;
     vertical-align: bottom;
   }
 
@@ -251,6 +256,10 @@
   /*瀑布流开始*/
   img {
     border: none;
+  }
+
+  .info {
+    text-align: center;
   }
 
   a {
@@ -340,7 +349,7 @@
   #wrap .box {
     width: 350px;
     height: auto;
-    padding: 20px 10px 10px 10px;
+    padding: 20px 15px 10px 15px;
     border: none;
     /*float: left;*/
     margin-right: 28px;

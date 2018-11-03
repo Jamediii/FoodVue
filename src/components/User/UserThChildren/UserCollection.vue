@@ -8,20 +8,22 @@
 
     <!-- 有收藏情况下 -->
     <div v-else class="content">
-      <el-row :gutter="12">
-        <el-col style="margin-top:10px; position: relative; cursor: pointer"
-                v-for="(o,index) in recipesY.collect"
-                :span="8"
-                @mouseover.native="getAnimate($event)"
-                @click.native.stop="toDetailed(o)">
-          <el-card shadow="always">
-            <el-col :span="9">
-              <img :src="o.recipeCoverImg" width="100%" alt="">
-            </el-col>
-            <el-col :span="15">
-              <h5 class="recipeName">{{o.recipeName}}</h5>
-              <p v-if="o.recipeBrief"
-                 style="
+      <div class="contRecipes">
+        <span class="recipes-title">菜谱</span>
+        <el-row :gutter="12">
+          <el-col style="margin-top:10px; position: relative; cursor: pointer"
+                  v-for="(o,index) in recipesY.collect"
+                  :span="8"
+                  @mouseover.native="getAnimate($event)"
+                  @click.native.stop="toDetailed(o)">
+            <el-card shadow="always">
+              <el-col :span="9">
+                <img :src="o.recipeCoverImg" width="100%" alt="">
+              </el-col>
+              <el-col :span="15">
+                <h5 class="recipeName">{{o.recipeName}}</h5>
+                <p v-if="o.recipeBrief"
+                   style="
               display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -29,8 +31,8 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">{{o.recipeBrief}}</p>
-              <p v-else
-                 style="
+                <p v-else
+                   style="
               display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -38,24 +40,27 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">该作品还未有详细的介绍</p>
-              <span class="cancelColl" @click.stop="collection(o)">×</span>
-            </el-col>
-          </el-card>
-        </el-col>
-      </el-row>
-      <el-row :gutter="12" >
-        <el-col style="margin-top:10px; position: relative; cursor: pointer"
-                v-for="(o,index) in recipesY.collectUser"
-                :span="8"
-                @click.native.stop="toDetailed(o)">
-          <el-card shadow="always">
-            <el-col :span="9">
-              <img :src="o.dietPhoto" width="100%" alt="">
-            </el-col>
-            <el-col :span="15">
-              <h5 class="recipeName">{{o.dietTitle}}</h5>
-              <p v-if="o.dietIntroduce"
-                 style="
+                <span class="cancelColl" @click.stop="collection(o)">×</span>
+              </el-col>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+      <div  class="contRecipes">
+        <span class="recipes-title">达人推荐</span>
+        <el-row :gutter="12" >
+          <el-col style="margin-top:10px; position: relative; cursor: pointer"
+                  v-for="(o,index) in recipesY.collectUser"
+                  :span="8"
+                  @click.native.stop="toDetailed(o)">
+            <el-card shadow="always">
+              <el-col :span="9">
+                <img :src="o.dietPhoto" width="100%" alt="">
+              </el-col>
+              <el-col :span="15">
+                <h5 class="recipeName">{{o.dietTitle}}</h5>
+                <p v-if="o.dietIntroduce"
+                   style="
               display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -63,8 +68,8 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">{{o.dietIntroduce}}</p>
-              <p v-else
-                 style="
+                <p v-else
+                   style="
               display: -webkit-box;
               white-space: pre-wrap;
               word-wrap: break-word;
@@ -72,11 +77,12 @@
               text-overflow: ellipsis;
               -webkit-box-orient: vertical;
               -webkit-line-clamp:2;margin-top:20px;">该作品还未有详细的介绍</p>
-              <span class="cancelColl" @click.stop="collection(o)">×</span>
-            </el-col>
-          </el-card>
-        </el-col>
-      </el-row>
+                <span class="cancelColl" @click.stop="collection(o)">×</span>
+              </el-col>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -278,4 +284,20 @@
     color: red;
     font-size: 25px;
   }
+
+  div.contRecipes{
+    padding:5px 30px 10px 30px;
+    margin:50px;
+    border:4px solid #ebcbbe;
+  }
+  span.recipes-title{
+    display:block;
+    width:150px;
+    height:30px;
+    position:relative;
+    top:-20px;
+    text-align: center;
+    background: white;
+  }
+
 </style>

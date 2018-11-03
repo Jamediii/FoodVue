@@ -616,11 +616,14 @@
   }
 
   .commentTxt .commentInner .el-col span {
+    font-size: 14px;
+    color: #4a4c4a;
     margin-top: 10px;
   }
 
   .commentTxt .commentInner p {
     margin-top: 16px;
+    font-size: 20px;
   }
 
   .commentTxt .commentInner .el-icon-delete:hover {
@@ -631,7 +634,8 @@
 
   .demo {
     position: absolute;
-    left: 90%;
+    bottom: 2px;
+    left: 92%;
   }
 
   #container .demo > img {

@@ -15,7 +15,7 @@
                 <router-link to="/community_author">&nbsp;{{authorName}}</router-link>
               </span><br/><br/>
               <img :src=articlePic><br/>
-              <p v-html="articleContent">{{articleContent}}</p>
+              <p class="articleContent"  v-html="articleContent">{{articleContent}}</p>
           </el-main>
         </el-col>
         <el-col :span="8">
@@ -164,5 +164,9 @@
     width: 5px;
     background: #8cccc1;
     display: inline-block;
+  }
+
+  p.articleContent {
+    font-size: 16px;
   }
 </style>

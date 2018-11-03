@@ -8,7 +8,7 @@
         <el-header class="headercss">>>&nbsp;&nbsp;搜索结果</el-header>
         <el-main id="main" style="padding:0">
           <div id="wrap">
-            <div style="display: inline-block" class="box box-item" v-for="o in matchString">
+            <div  class="box" v-for="o in matchString">
               <div class="info">
                 <div class="pic"><img :src="o.img" alt=""></div>
                 <div class="title">
@@ -31,7 +31,7 @@
           <el-header class="headercss">&nbsp;&nbsp;热门菜品</el-header>
           <el-card shadow="never" class="box-card" v-for="(o,index) in hotRecipe" :key="index" v-if="index <5">
             <div class="text item">
-              <el-col :span="13">
+              <el-col :span="10">
                 <img  :src="o.recipeCoverImg" alt="">
               </el-col>
               <el-col :span="11">
@@ -87,6 +87,15 @@
 </script>
 
 <style scoped>
+
+  #wrap{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: flex-start;
+    align-items:center;
+    align-content: flex-start;
+  }
 
   #fuzzysearch #main {
     margin-top: 20px;
@@ -172,12 +181,9 @@
   }
 
   #wrap .box {
-    width: 258px;
-    height: auto;
     padding: 5px;
-    border: none;
-    float: left;
     margin-right: 10px;
+    text-align: center;
   }
 
   #wrap .box .info {

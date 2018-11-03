@@ -5,7 +5,7 @@
       <!--轮播图部分-->
       <el-col :xs="24" :sm="24" :md="16" :lg="17" :xl="17">
         <div class="block">
-          <el-carousel height="440px">
+          <el-carousel height="520px">
             <el-carousel-item v-for="(item,index) in imgs" :key="index">
               <img :src="item.pic" alt="">
               <!--<router-link to="/recipe_detail"></router-link>-->
@@ -135,5 +135,8 @@
     margin-bottom: 20px;
   }
 
+  .headercss {
+    font-size:22px;
+  }
   /*右边文章推荐部分结束*/
 </style>
