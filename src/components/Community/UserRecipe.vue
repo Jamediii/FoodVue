@@ -4,7 +4,7 @@
     <el-row>
     <!--背景大图-->
     <div class="bg">
-      <img src="../../assets/userbg2_meitu_4.jpg" style="width: 100%;margin-top: -20px;opacity: 0.9">
+      <img src="../../assets/userbg.jpg" style="width: 100%;margin-top: -20px;opacity: 0.9">
       <router-link to="/menu">
         <div class="create">
           发布我的新食谱<br/>(๑•̀ㅂ•́)و✧
