@@ -62,7 +62,7 @@
           "https://cp1.douguo.com/upload/caiku/6/6/6/600x400_662a97b83d14e55ecb2ac3be3bd56396.jpg"
         ],
         recipeRcomId: [50, 59, 21],
-        recipesRName: ["胡萝卜鸡蛋饼", "椰汁红豆糕#雀巢营养早餐#", "紫菜包饭"],
+        recipesRName: ["胡萝卜鸡蛋饼", "椰汁红豆糕", "紫菜包饭"],
         recipesRAuthor: ["Mi_manchi", "揪揪耳朵", "Queen_Chow"],
 
       }
