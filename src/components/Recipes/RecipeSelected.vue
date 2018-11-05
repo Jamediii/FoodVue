@@ -1,7 +1,106 @@
 <template>
   <div>
     <el-row :gutter="50">
-      <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="(item,index) in recipeBriefList" :key="index" v-if="item.detailsId>41 && item.detailsId<54">
+      <el-col :span="20">
+        <el-header >享受美食&nbsp;&nbsp;&nbsp;享受生活 — — 精选</el-header>
+      </el-col>
+      <el-col :span="4">
+        <router-link to="/recipecl/8">
+          <p style="text-align: right;height:60px;line-height: 60px">查看全部精选菜谱>></p>
+        </router-link>
+      </el-col>
+      <br/>
+      <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="(item,index) in recipeBriefList" :key="index"
+              v-if="item.detailsId>41 && item.detailsId<48">
+              <!--v-if="(item.recipeClassifyId == recipeClassifyIds.recipeClassifyId) && index0<6">-->
+
+        <el-card :body-style="{ padding: '0px' }">
+          <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+            <img :src=item.recipeCoverImg class="image">
+          </router-link>
+          <div class="info" style="padding: 14px;">
+            <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+              <p class="title">{{ item.recipeName }}</p>
+            </router-link>
+            <div class="author">
+              <img class="headPhoto" :src=item.headPhoto>
+              <p>{{item.accountName}}</p>
+            </div>
+            <div class="bottom clearfix">
+              <time class="time">{{item.recipePraiseNum}}点赞 · {{item.commentSum}}留言</time>
+            </div>
+          </div>
+        </el-card><br/>
+      </el-col>
+
+      <el-col :span="20">
+        <el-header >享受美食&nbsp;&nbsp;&nbsp;享受生活 — — 家常菜</el-header>
+      </el-col>
+      <el-col :span="4">
+        <router-link to="/recipecl/1">
+          <p style="text-align: right;height:60px;line-height: 60px">查看全部家常菜菜谱>></p>
+        </router-link>
+      </el-col>
+      <br/>
+      <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="(item,index) in recipeBriefList" :key="index" v-if="item.detailsId>61 && item.detailsId<68">
+        <el-card :body-style="{ padding: '0px' }">
+          <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+            <img :src=item.recipeCoverImg class="image">
+          </router-link>
+          <div class="info" style="padding: 14px;">
+            <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+              <p class="title">{{ item.recipeName }}</p>
+            </router-link>
+            <div class="author">
+              <img class="headPhoto" :src=item.headPhoto>
+              <p>{{item.accountName}}</p>
+            </div>
+            <div class="bottom clearfix">
+              <time class="time">{{item.recipePraiseNum}}点赞 · {{item.commentSum}}留言</time>
+            </div>
+          </div>
+        </el-card><br/>
+      </el-col>
+
+      <el-col :span="20">
+        <el-header >享受美食&nbsp;&nbsp;&nbsp;享受生活 — — 煲汤</el-header>
+      </el-col>
+      <el-col :span="4">
+        <router-link to="/recipecl/8">
+          <p style="text-align: right;height:60px;line-height: 60px">查看全部煲汤菜谱>></p>
+        </router-link>
+      </el-col>
+      <br/>
+      <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="(item,index) in recipeBriefList" :key="index" v-if="item.detailsId>92 && item.detailsId<99">
+        <el-card :body-style="{ padding: '0px' }">
+          <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+            <img :src=item.recipeCoverImg class="image">
+          </router-link>
+          <div class="info" style="padding: 14px;">
+            <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
+              <p class="title">{{ item.recipeName }}</p>
+            </router-link>
+            <div class="author">
+              <img class="headPhoto" :src=item.headPhoto>
+              <p>{{item.accountName}}</p>
+            </div>
+            <div class="bottom clearfix">
+              <time class="time">{{item.recipePraiseNum}}点赞 · {{item.commentSum}}留言</time>
+            </div>
+          </div>
+        </el-card><br/>
+      </el-col>
+
+      <el-col :span="20">
+        <el-header >享受美食&nbsp;&nbsp;&nbsp;享受生活 — — 主食</el-header>
+      </el-col>
+      <el-col :span="4">
+        <router-link to="/recipecl/7">
+          <p style="text-align: right;height:60px;line-height: 60px">查看全部主食菜谱>></p>
+        </router-link>
+      </el-col>
+      <br/>
+      <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="(item,index) in recipeBriefList" :key="index" v-if="item.detailsId>5 && item.detailsId<12">
         <el-card :body-style="{ padding: '0px' }">
           <router-link :to="{path:'/recipe_detail/' + item.detailsId}">
             <img :src=item.recipeCoverImg class="image">
@@ -32,11 +131,19 @@
     data(){
       return{
         recipeBriefList:[],
-        commentNum:0
+        recipeClassName: "",//菜谱分类对应的名称
+        commentNum:0,
+        recipeClassifyIdList:[
+          {recipeClassifyId:8},
+          {recipeClassifyId:1},
+          {recipeClassifyId:2},
+          {recipeClassifyId:3},
+          {recipeClassifyId:7},
+        ]
       }
     },
     created(){
-      //根据id获取的菜谱
+      //获取全部的菜谱
       this.$axios.get(`${$LH.url}/recipes/all`)
         .then((res) =>{
           var allData = res.data.data;
@@ -116,6 +223,16 @@
 
   .clearfix:after {
     clear: both
+  }
+
+  .el-header{
+    /*background-color: #8cccc1;*/
+    color: #333;
+    text-align: left;
+    line-height: 60px;
+    font-size: 26px;
+    font-weight: bold;
+    /*color: white;*/
   }
 
 </style>

@@ -1,17 +1,24 @@
 <template>
   <!--达人菜谱推荐-->
   <div class="w" id="userRecipeRecom">
-    <el-row :gutter="20">
-      <el-col :span="16"  :xs="24" :sm="24" :md="22" :lg="15" :xl="16">
-        <el-header>达人推荐&nbsp;&nbsp;>>&nbsp;&nbsp;作品动态</el-header>
-        <el-main>
-          <user-recipe-brief></user-recipe-brief>
-        </el-main>
-      </el-col>
-      <el-col :span="8" class="hidden-xs-only hidden-sm-only hidden-md-only" :lg="9" :xl="8">
-        <recommend></recommend>
-      </el-col>
-    </el-row>
+    <el-row>
+    <!--背景大图-->
+    <div class="bg">
+      <img src="../../assets/userbg2_meitu_4.jpg" style="width: 100%;margin-top: -20px;opacity: 0.9">
+      <router-link to="/menu">
+        <div class="create">
+          发布我的新食谱<br/>(๑•̀ㅂ•́)و✧
+        </div>
+      </router-link>
+    </div>
+      <br/>
+      <div class="tags">
+        <div class="tag" @click="changeTag('user-recipe-brief')"><p style="margin-right: 20px">作品动态</p></div>
+        <div class="tag" @click="changeTag('user-recipe-author')"><p>厨友圈</p></div>
+      </div>
+      <user-recipe-brief :is="currentTag" keep-alive></user-recipe-brief>
+   </el-row>
+
     <br/>
   </div>
 </template>
@@ -20,19 +27,74 @@
   import UserRecipeBrief from './UserRecipeBrief.vue'
   import RecipePopular from '../Recipes/RecipePopular.vue'
   import Recommend from './Recommend.vue'
+  import UserRecipeAuthor from './UserRecipeAuthor.vue'
 
   export default {
     name: "UserRecipe",
     components: {
       'user-recipe-brief': UserRecipeBrief,
       'recipe-popular': RecipePopular,
-      'recommend':Recommend
+      'recommend':Recommend,
+      'user-recipe-author':UserRecipeAuthor
     },
-
+    data() {
+      return {
+        currentTag:'user-recipe-brief'
+      };
+    },
+    methods: {
+      changeTag(tab){
+        this.currentTag = tab
+      }
+    }
   }
 </script>
 
+
 <style scoped>
+  .tags{
+    width: 100%;
+  }
+  .tag{
+    width: 49%;
+    /*width: 50%;*/
+    display: inline-block;
+  }
+  .bg{
+    position: relative;
+  }
+  .create{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -30px 0 0 -100px;
+    width: 200px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 4px;
+    color: white;
+    background-color: rgba(192, 196, 204, 0.5);
+    border: none;
+    cursor:pointer;
+  }
+  p{
+    /*border: 1px solid pink;*/
+    height: 80px;
+    line-height: 80px;
+    color: #8cccc1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 3px solid #8cccc1;
+    cursor: pointer;
+  }
+  p:hover{
+    /*border-bottom: 3px solid #8cccc1;*/
+    background-color: gainsboro;
+  }
+
   #userRecipeRecom {
     padding-top: 20px;
   }

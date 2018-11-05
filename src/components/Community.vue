@@ -9,7 +9,6 @@
         </el-main>
       </el-col>
       <el-col :span="8" class="hidden-xs-only hidden-sm-only hidden-md-only" :lg="9" :xl="8">
-      <!--<article-search></article-search><br/>-->
         <recommend></recommend>
       </el-col>
     </el-row>
