@@ -9,7 +9,7 @@
     <el-row :gutter="20" v-else>
       <div v-for="data in recipesY" class="fans-cont">
         <el-col :span="4">
-          <img :src="data.headPhoto" :alt="data.userId" :title="data.accountName">
+          <img :src="data.headPhoto" :alt="data.userId" width="40%" :title="data.accountName">
           <span class="userName">
             <img v-if="data.sex === '女'" src="../../../assets/性别女.png" width="20" alt="">
             <img v-else src="../../../assets/性别男.png" width="20" alt="">

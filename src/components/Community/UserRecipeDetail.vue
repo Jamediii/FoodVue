@@ -185,6 +185,14 @@
       addCollection() {
         // 登录状态
         if (localStorage.getItem("Flag") === 'isLogin') {
+          if(localStorage.getItem('userId') === this.userId.toString()) {
+            this.$message({
+              message: '警告! 不可以自己收藏自己的菜谱哦(￣▽￣)"',
+              type: 'warning'
+            });
+            return false;
+          }
+
           // 获取Id
           let userId = localStorage.getItem('userId');
           // 获取存储 -- 存在 / 不存在
@@ -283,6 +291,13 @@
       // 关注 + 取关
       followUser() {
         if (localStorage.getItem("Flag") === 'isLogin') {
+          if(localStorage.getItem('userId') === this.userId.toString()) {
+            this.$message({
+              message: '警告! 不可以自己关注自己哦(￣▽￣)"',
+              type: 'warning'
+            });
+            return false;
+          }
           if ($('.followUser').text() === '关注') {
             this.$axios.get(`${$LH.url}/users/joinFans/${localStorage.getItem('userId')}/${this.userId}`)
               .then(() => {

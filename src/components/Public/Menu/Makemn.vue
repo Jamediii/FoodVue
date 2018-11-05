@@ -75,8 +75,6 @@
                 </el-col>
                 <el-col :span="6" :offset="2">
                   <el-input placeholder="数量"
-                            type="number"
-                            min="0"
                             v-model="obj.Num">
                     <i slot="suffix" class="el-ico-third-shuzi"></i>
                   </el-input>

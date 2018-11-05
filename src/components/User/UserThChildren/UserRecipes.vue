@@ -2,22 +2,21 @@
   <div>
     <!-- 没有食谱情况下 -->
     <div v-if="recipesY.recipe.length === 0 && recipesY.dielt.length === 0 && recipesN.length === 0" class="no-content">
-      <span>你还拥有自己的菜谱,赶快去</span>
+      <span>你还未拥有自己的菜谱,赶快去</span>
       <router-link to="/menu" class="toRouter">发表新菜谱呀(ง •_•)ง</router-link>
     </div>
 
     <!-- 有食谱情况下 -->
     <div v-else>
       <el-row>
+        <!-- 达人菜谱 -->
         <el-col :span="8">
-          <!-- 过审菜谱 -->
           <div
             class="boxFater"
             v-if="recipesY.recipe.length > 0"
             v-for="(data,key) in recipesY.recipe">
             <div class="receipeBox" @click="toDetailed(data.detailsId)">
               <div class="receipeLeft">
-                <!--<span class="del-userRecipe" @click="delUserRecipe()">1111</span>-->
                 <i><img src="../../../assets/审核通过.png" alt=""></i>
                 <img :src="data.recipeCoverImg" :alt="data.recipeName">
                 <div class="receipeRight">
@@ -34,11 +33,13 @@
             </div>
           </div>
         </el-col>
+        <!-- 用户菜谱 -->
         <el-col :span="8">
           <div
             class="boxFater"
             v-if="recipesY.dielt.length > 0"
             v-for="(data,key) in recipesY.dielt">
+            <span class="del-userRecipe" @click="delUserRecipe(data.dietId)">×</span>
             <div class="receipeBox" @click="toRecipesDetailed(data.dietId)">
               <div class="receipeLeft">
                 <i><img src="../../../assets/审核通过.png" width="100%" alt=""></i>
@@ -58,11 +59,13 @@
             </div>
           </div>
         </el-col>
+        <!-- 用户未过审菜谱 -->
         <el-col :span="8">
           <!-- 未过审菜谱 -->
           <div
             class="boxFater"
             v-for="(data,key) in recipesN">
+            <span class="del-userRecipe" @click="delUserRecipe(data.dietId)">×</span>
             <div class="receipeBox" @click="changeReceipe(data.dietId)">
               <div class="receipeLeft">
                 <i><img src="../../../assets/审核中.png" width="100%" alt=""></i>
@@ -125,7 +128,6 @@
           this.recipesY.dielt = result.data.data[0];
           // 未过审菜谱
           this.recipesN = result.data.data[1];
-          console.log(this.recipesN);
         })
         .catch((err) => {
           console.log(err.message);
@@ -147,11 +149,12 @@
       },
       // 删除菜谱
       delUserRecipe(recipesId) {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除该菜谱且无发恢复, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          console.log(recipesId);
           this.$axios.get(`${$LH.url}/operat/delUserRecipe/${recipesId}`)
             .then(() => {
               this.$message({
@@ -219,10 +222,16 @@
 
   /* 删除菜谱 */
   .del-userRecipe {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 30px;
+    z-index: 99;
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('../../../assets/下拉删除.png');
+    right: 35px;
+    color: #ffffff;
+    cursor: pointer;
+    text-shadow: 1px 1px 5px #2d2d2d;
   }
 
   /* 过审图标 */
