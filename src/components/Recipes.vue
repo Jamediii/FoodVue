@@ -23,7 +23,7 @@
   import RecipeSelected from './Recipes/RecipeSelected.vue'
 
   export default {
-        name: "Recipes",
+      name: "Recipes",
       components:{
         'recipe-brief':RecipeBrief,
         'loop-pic':LoopPic,
@@ -62,14 +62,5 @@
     padding: 10px 0;
     background-color: #f9fafc;
   }
-
-  .el-header{
-    background-color: #fae8c8;
-    color: #333;
-    text-align: left;
-    line-height: 60px;
-    font-size: 16px;
-  }
-
 
 </style>
