@@ -17,7 +17,7 @@
             <img :src="recipesRImg[index]" class="image">
             <div style="padding: 14px;" class="left">
               <router-link :to="`recipe_detail/${recipeRcomId[index]}`">
-                <span style="white-space: nowrap">{{recipesRName[index]}}</span>
+                <span>{{recipesRName[index]}}</span>
               </router-link>
               <div class="bottom clearfix">
                 <p>by&nbsp;{{recipesRAuthor[index]}}</p>
@@ -62,13 +62,16 @@
           "https://cp1.douguo.com/upload/caiku/6/6/6/600x400_662a97b83d14e55ecb2ac3be3bd56396.jpg"
         ],
         recipeRcomId: [50, 59, 21],
-        recipesRName: ["胡萝卜鸡蛋饼", "椰汁红豆糕#雀巢营养早餐#", "紫菜包饭"],
+        recipesRName: ["胡萝卜鸡蛋饼", "椰汁红豆糕", "紫菜包饭"],
         recipesRAuthor: ["Mi_manchi", "揪揪耳朵", "Queen_Chow"],
 
       }
     },
     methods: {
       chg() {
+        if($(".inner-RC .el-card img").height() >= 165){
+          $(".inner-RC .el-card img").height("165px")
+        }
         this.isShowRC = !this.isShowRC;
         var rcData = this.$store.state.RecipeRecom.data.data;
         // console.log(rcData.length);
@@ -89,7 +92,7 @@
           } else {
             // console.log(rcData[i]);
             this.recipesRImg.push("https://cp1.douguo.com/upload/caiku/4/2/0/600x400_4241833e7dd7e4b041964353faadc300.jpg");
-            this.recipesRName.push("史上最全寿司教程，学会交作业哟");
+            this.recipesRName.push("史上最全寿司教程");
             this.recipesRAuthor.push("小菁同学");
             this.recipeRcomId.push(26);
           }
@@ -100,9 +103,10 @@
 </script>
 
 <style scoped>
-  div{
+  div {
     font-size: 16px;
   }
+
   #recipesComm {
     height: 600px;
     padding-top: 30px;
