@@ -12,7 +12,7 @@
                 <router-link :to="{path:'/fhuser/' + item.dietId + '/recipe/'}">
                   <span style="font-size: 16px">{{item.accountName}}</span><br>
                 </router-link>
-                  <span style="font-size: 12px;color: #999">已发表4个菜谱</span>
+                  <span style="font-size: 12px;color: #999">已发表{{item.recipeSum}}个菜谱</span>
               </el-col>
               <el-col :span="8">
                 <router-link :to="{path:'/fhuser/' + item.dietId + '/recipe/'}">
@@ -42,11 +42,11 @@
     },
     created(){
       //获取的全部菜谱
-      this.$axios.get(`${$LH.url}/recipes/users/all`)
+      this.$axios.get(`${$LH.url}/recipes/users/info`)
         .then((res) =>{
           var allData = res.data.data;
           this.userRecipeBriefList=allData;
-          this.fansId = this.userRecipeBriefList[0].userId;
+          // this.fansId = this.userRecipeBriefList[0].userId;
         })
         .catch(function (err) {
           console.log(err)
@@ -63,7 +63,8 @@
   }
   button {
     width: 140px;
-    height: 30px;
+    height: 40px;
+    line-height: 40px;
     border-radius: 4px;
     background-color: #8cccc1;
     color: white;
