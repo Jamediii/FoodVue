@@ -69,8 +69,8 @@
     },
     methods: {
       chg() {
-        if($(".inner-RC .el-card img").height() >= 165){
-          $(".inner-RC .el-card img").height("165px")
+        if($(".inner-RC .el-card img").height() >= 230){
+          $(".inner-RC .el-card img").height("230px")
         }
         this.isShowRC = !this.isShowRC;
         var rcData = this.$store.state.RecipeRecom.data.data;
