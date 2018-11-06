@@ -11,8 +11,8 @@
         <el-col :span="4">
           <img :src="data.headPhoto" :alt="data.userId" width="40%" :title="data.accountName">
           <span class="userName">
-            <img v-if="data.sex === '女'" src="../../../assets/性别女.png" width="20" alt="">
-            <img v-else src="../../../assets/性别男.png" width="20" alt="">
+            <img v-if="data.sex === '女'" src="../../../assets/girl.png" width="20" alt="">
+            <img v-else src="../../../assets/boy.png" width="20" alt="">
             {{data.accountName}}
           </span>
           <el-button

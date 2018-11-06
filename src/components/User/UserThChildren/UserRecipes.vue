@@ -17,7 +17,7 @@
             v-for="(data,key) in recipesY.recipe">
             <div class="receipeBox" @click="toDetailed(data.detailsId)">
               <div class="receipeLeft">
-                <i><img src="../../../assets/审核通过.png" alt=""></i>
+                <i><img src="../../../assets/passThrough.png" alt=""></i>
                 <img :src="data.recipeCoverImg" :alt="data.recipeName">
                 <div class="receipeRight">
                   <div class="receipeName">
@@ -42,7 +42,7 @@
             <span class="del-userRecipe" @click="delUserRecipe(data.dietId)">×</span>
             <div class="receipeBox" @click="toRecipesDetailed(data.dietId)">
               <div class="receipeLeft">
-                <i><img src="../../../assets/审核通过.png" width="100%" alt=""></i>
+                <i><img src="../../../assets/passThrough.png" width="100%" alt=""></i>
                 <img :src="data.dietPhoto" width="30%" :alt="data.dietTitle">
                 <div class="receipeRight">
                   <div class="receipeName">
@@ -68,7 +68,7 @@
             <span class="del-userRecipe" @click="delUserRecipe(data.dietId)">×</span>
             <div class="receipeBox" @click="changeReceipe(data.dietId)">
               <div class="receipeLeft">
-                <i><img src="../../../assets/审核中.png" width="100%" alt=""></i>
+                <i><img src="../../../assets/Audit.png" width="100%" alt=""></i>
                 <img :src="data.dietPhoto" :alt="data.dietTitle">
                 <div class="receipeRight">
                   <div class="receipeName">

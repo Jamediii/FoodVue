@@ -47,8 +47,8 @@
         <!--名字-->
         <span>
           {{userInfo.accountName}}
-          <i v-if="userInfo.sex === '女'"><img src="../assets/性别女.png" width="10%" alt=""></i>
-          <i v-else><img src="../assets/性别男.png" width="10%" alt=""></i>
+          <i v-if="userInfo.sex === '女'"><img src="../assets/girl.png" width="10%" alt=""></i>
+          <i v-else><img src="../assets/boy.png" width="10%" alt=""></i>
         </span>
         <!--等级-->
         <!--经验-->

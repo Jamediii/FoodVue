@@ -1,20 +1,20 @@
 <template>
 
-    <div id="homepageModel">
-      <app-recipeimg></app-recipeimg>
-      <app-sowing-map></app-sowing-map>
-      <app-popular-recipes></app-popular-recipes>
-      <el-row class="bigbg">
-        <el-col :span="24">
-          <app-recipes-recommend></app-recipes-recommend>
-          <app-recent-acivities></app-recent-acivities>
-        </el-col>
-      </el-row>
-      <div>
-        <i @click="totop" id="topArrow" class="el-icon-caret-top "></i>
-      </div>
-
+  <div id="homepageModel">
+    <app-recipeimg></app-recipeimg>
+    <app-sowing-map></app-sowing-map>
+    <app-popular-recipes></app-popular-recipes>
+    <el-row class="bigbg">
+      <el-col :span="24">
+        <app-recipes-recommend></app-recipes-recommend>
+        <app-recent-acivities></app-recent-acivities>
+      </el-col>
+    </el-row>
+    <div>
+      <i @click="totop" id="topArrow" class="el-icon-caret-top "></i>
     </div>
+
+  </div>
 </template>
 
 <script>
@@ -46,42 +46,42 @@
   import popularRecipes from './PopularRecipes.vue'
   //导入活动组件
   import recentAcivities from './RecentActivities.vue'
-    export default {
-        name: "HomePageMiddle",
-      components:{
-        'app-recipeimg':recipeimg,
-        'app-sowing-map':sowingmap,
-        'app-recipes-recommend':recipesRecommends,
-        'app-popular-recipes':popularRecipes,
-        'app-recent-acivities':recentAcivities
-      },
-      methods:{
-        totop() {
-          $(document).scrollTop(0);
-        }
+  export default {
+    name: "HomePageMiddle",
+    components:{
+      'app-recipeimg':recipeimg,
+      'app-sowing-map':sowingmap,
+      'app-recipes-recommend':recipesRecommends,
+      'app-popular-recipes':popularRecipes,
+      'app-recent-acivities':recentAcivities
+    },
+    methods:{
+      totop() {
+        $(document).scrollTop(0);
       }
     }
+  }
 </script>
 
 <style scoped>
-#homepageModel .bigbg{
-  height: 1200px;
-  background: url("../../assets/rc_bg1.jpg") top center no-repeat;
-}
-#topArrow{
-  display: block;
-  /*background-color: red;*/
-  text-align: center;
-  font-size: 24px;
-  color: #8cccc1;
-  border:1px solid #ccc;
-  border-radius: 50%;
-  position: absolute;
-  z-index:999;
-  right:30px;
-}
-#topArrow:hover{
-  color:#fff;
-  background-color: #8cccc1;
-}
+  #homepageModel .bigbg{
+    height: 1200px;
+    background: url("../../assets/rc_bg1.jpg") top center no-repeat;
+  }
+  #topArrow{
+    display: block;
+    /*background-color: red;*/
+    text-align: center;
+    font-size: 24px;
+    color: #8cccc1;
+    border:1px solid #ccc;
+    border-radius: 50%;
+    position: absolute;
+    z-index:999;
+    right:30px;
+  }
+  #topArrow:hover{
+    color:#fff;
+    background-color: #8cccc1;
+  }
 </style>

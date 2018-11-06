@@ -49,20 +49,20 @@
                    @click.native="toUserInfo(o.fansId)">
             <div class="text item">
               <el-col :span="13">
-                <img v-if="index === 0" src="../../assets/排名1.png" alt="">
-                <img v-else-if="index === 1" src="../../assets/排名2.png" alt="">
-                <img v-else-if="index === 2" src="../../assets/排名3.png" alt="">
-                <img v-else-if="index === 3" src="../../assets/排名4.png" alt="">
-                <img v-else-if="index === 4" src="../../assets/排名5.png" alt="">
+                <img v-if="index === 0" src="../../assets/No1.png" alt="">
+                <img v-else-if="index === 1" src="../../assets/No2.png" alt="">
+                <img v-else-if="index === 2" src="../../assets/No3.png" alt="">
+                <img v-else-if="index === 3" src="../../assets/No4.png" alt="">
+                <img v-else-if="index === 4" src="../../assets/No5.png" alt="">
                 <img :src="o.headPhoto" alt="">
               </el-col>
               <el-col :span="9">
                 <div class="sex">
                   <span>{{o.accountName}}</span>
-                  <img v-if="o.sex==='女'" src="../../assets/性别女.png" style="float: left" alt="">
-                  <img v-else src="../../assets/性别男.png" alt="">
+                  <img v-if="o.sex==='女'" src="../../assets/girl.png" style="float: left" alt="">
+                  <img v-else src="../../assets/boy.png" alt="">
                 </div>
-                <p><img src="../../assets/粉丝.png" alt="">{{o.fansNum}}</p>
+                <p><img src="../../assets/fans.png" alt="">{{o.fansNum}}</p>
               </el-col>
             </div>
           </el-card>
