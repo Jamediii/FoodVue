@@ -36,7 +36,7 @@
                 <el-form-item label="" prop="VeriCode">
                   <el-input style="width: 45%" type="text" v-model="registerInfo.VeriCode" placeHolder="请输入验证码"
                             autocomplete="off"></el-input>
-                  <el-button type="primary" @click="checkVeriCode" style="width: 45%" class="right">获取验证码</el-button>
+                  <el-button type="primary" @click="checkVeriCode($event)" style="width: 45%" class="right">获取验证码</el-button>
                 </el-form-item>
                 <div class="agreen">
                   <input type="checkbox" v-model="beSureReg">
@@ -62,7 +62,6 @@
 </template>
 
 <script>
-
   export default {
     name: "Register",
     data() {
@@ -174,15 +173,32 @@
       resetRegister(formName) {
         this.$refs[formName].resetFields();
       },
-      checkVeriCode() {
-        this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
-          .then((res) => {
-            this.registerInfo.checkVeriState = res.status;
-            console.log(res.status);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+      checkVeriCode(e) {
+        let i = 60;
+        let timeId = setInterval(function () {
+          e.target.innerText='获取验证码'+(i)+'s';
+          i--;
+          e.target.setAttribute('disabled','disabled');
+          e.target.style.backgroundColor='#ccdad7';
+          if (i === 0) {
+            e.target.removeAttribute('disabled');
+            e.target.style.backgroundColor='#87d6c8';
+            e.target.innerText='获取验证码'
+            clearInterval(timeId);
+          }
+        },1000);
+        this.$alert('验证码发送中,请稍等', '', {
+          confirmButtonText: '确定',
+          callback: () => {
+            this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
+              .then((res) => {
+                this.registerInfo.checkVeriState = res.status;
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        });
       }
     },
 

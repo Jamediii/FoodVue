@@ -9,13 +9,13 @@
                 <img class="headPhoto" :src=item.headPhoto>
               </el-col>
               <el-col :span="10">
-                <router-link :to="{path:'/fhuser/' + item.dietId + '/recipe/'}">
+                <router-link :to="{path:'/fhuser/' + item.userId + '/recipe/'}">
                   <span style="font-size: 16px">{{item.accountName}}</span><br>
                 </router-link>
                   <span style="font-size: 12px;color: #999">已发表{{item.recipeSum}}个菜谱</span>
               </el-col>
               <el-col :span="8">
-                <router-link :to="{path:'/fhuser/' + item.dietId + '/recipe/'}">
+                <router-link :to="{path:'/fhuser/' + item.userId + '/recipe/'}">
                   <button>进入作者主页</button>
                 </router-link>
               </el-col>
@@ -44,8 +44,7 @@
       //获取的全部菜谱
       this.$axios.get(`${$LH.url}/recipes/users/info`)
         .then((res) =>{
-          var allData = res.data.data;
-          this.userRecipeBriefList=allData;
+          this.userRecipeBriefList = res.data.data;
           // this.fansId = this.userRecipeBriefList[0].userId;
         })
         .catch(function (err) {

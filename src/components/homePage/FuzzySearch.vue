@@ -173,16 +173,18 @@
   }
 
   /* wrap */
-  #wrap {
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    position: relative;
+  #wrap{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: flex-start;
+    align-items:center;
+    align-content: flex-start;
   }
 
   #wrap .box {
     padding: 5px;
-    margin-right: 10px;
+    margin-right: 5px;
     text-align: center;
   }
 

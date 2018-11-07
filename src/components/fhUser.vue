@@ -85,10 +85,8 @@
       // 加载基本图片
       this.$axios.get(`${$LH.url}/recipes/basicPhoto`)
         .then(async result => {
-          console.log(this.basicHead);
           this.basicHead = await result.data.data.userHeadPhoto;
           this.basicWall = await result.data.data.userSettingWall;
-          console.log(this.basicHead);
           if (!this.userInfo.headPhoto) {
             this.userInfo.headPhoto = this.basicHead.replace(':', ':/');
           }
@@ -122,6 +120,10 @@
         let userId = localStorage.getItem('userId');
         // 关注的Id
         let fansId = this.userId;
+        if (userId ===  fansId) {
+          this.$message.error('不可以自己关注自己哟(。・∀・)ノ');
+          return false;
+        }
         if (this.concern === '关注') {
           // 去关注
           this.$axios.get(`${$LH.url}/users/joinFans/${userId}/${fansId}`)
