@@ -105,9 +105,11 @@
       var validatePass5 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入验证码'));
-        } else if (value != 654654) {
+        }
+        else if (value != this.randanData) {
           callback(new Error('验证码输入不正确'));
-        } else {
+        }
+        else {
           callback();
         }
       };
@@ -120,6 +122,7 @@
           checkPwd: '',
           VeriCode: '',
           checkVeriState: '',
+          randanData:0,
 
         },
         beSureReg: false,
@@ -144,6 +147,7 @@
     },
     methods: {
       submitRegister(formName) {
+
         this.$refs[formName].validate((valid) => {
           if (valid && this.registerInfo.checkVeriState == 200 && this.beSureReg) {
             this.$axios.post(`${$LH.url}/register`, {
@@ -174,31 +178,40 @@
         this.$refs[formName].resetFields();
       },
       checkVeriCode(e) {
-        let i = 60;
-        let timeId = setInterval(function () {
-          e.target.innerText='获取验证码'+(i)+'s';
-          i--;
-          e.target.setAttribute('disabled','disabled');
-          e.target.style.backgroundColor='#ccdad7';
-          if (i === 0) {
-            e.target.removeAttribute('disabled');
-            e.target.style.backgroundColor='#87d6c8';
-            e.target.innerText='获取验证码'
-            clearInterval(timeId);
-          }
-        },1000);
-        this.$alert('验证码发送中,请稍等', '', {
-          confirmButtonText: '确定',
-          callback: () => {
-            this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}&tpl_id=106586&tpl_value=%23code%23%3D654654&key=2efeb60a5c3d4239e00c7652af986f9c`)
-              .then((res) => {
-                this.registerInfo.checkVeriState = res.status;
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-          }
-        });
+        if(this.registerInfo.phoneNum.length==0){
+          this.$message({
+            message: '请输入手机号',
+            type: 'warning'
+          });
+        }else{
+          this.randanData=parseInt(Math.random()*99999+100000);
+          let i = 60;
+          let timeId = setInterval(function () {
+            e.target.innerText='获取验证码'+(i)+'s';
+            i--;
+            e.target.setAttribute('disabled','disabled');
+            e.target.style.backgroundColor='#ccdad7';
+            if (i === 0) {
+              e.target.removeAttribute('disabled');
+              e.target.style.backgroundColor='#87d6c8';
+              e.target.innerText='获取验证码'
+              clearInterval(timeId);
+            }
+          },1000);
+          this.$alert('验证码发送中,请稍等', '', {
+            confirmButtonText: '确定',
+            callback: () => {
+              this.$axios.get(`/proxy/sms/send?mobile=${this.registerInfo.phoneNum}&tpl_id=112479&tpl_value=%23code%23%3D${this.randanData}&key=2efeb60a5c3d4239e00c7652af986f9c`)
+                .then((res) => {
+                  this.registerInfo.checkVeriState = res.status;
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+            }
+          });
+        }
+
       }
     },
 
