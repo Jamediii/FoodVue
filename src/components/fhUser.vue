@@ -116,6 +116,14 @@
     methods: {
 
       joinFans() {
+        if (!localStorage.getItem('userId')) {
+          this.$message({
+            message: '警告!,您还未登陆哦',
+            type: 'warning'
+          });
+          this.$route.push('/login');
+          return false;
+        }
         //用户的Id
         let userId = localStorage.getItem('userId');
         // 关注的Id

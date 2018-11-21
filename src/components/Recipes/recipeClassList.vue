@@ -3,14 +3,17 @@
   <div id="recipeCList" class="w">
     <p style="height:20px;"></p>
     <el-row :gutter="20">
-      <!--右侧菜谱部分-->
+      <!--左侧菜谱部分-->
       <el-col :span="20" :xs="24" :sm="24" :md="22" :lg="17" :xl="16">
         <el-header>逛菜谱&nbsp;&nbsp;>>&nbsp;&nbsp;{{recipeClassName}}</el-header>
         <div id="main">
           <Waterfall id="wrap"
                      :align="Waterfall.align"
+                     :resizable="Waterfall.resizable"
+                     :fixWidth="Waterfall.fixWidth"
                      style="margin: 0 0;max-width: 100%"
                      :gutterWidth="Waterfall.gutterWidth"
+                     :minCol="Waterfall.minCol"
                      :maxCol="Waterfall.maxCol">
             <WaterfallItem
               class="box box-item"
@@ -89,7 +92,9 @@
         page: 1,
         Waterfall: {
           align: 'left',
+          minCol:3,
           maxCol: 4,
+          resizable:false,
           gutterWidth: 5,
         },
         WaterfallItem: {
@@ -339,15 +344,9 @@
   }
 
   /* wrap */
-  #wrap {
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    position: relative;
-  }
 
   #wrap .box {
-    width: 350px;
+    width: 100%;
     height: auto;
     padding: 20px 15px 10px 15px;
     border: none;
@@ -385,7 +384,7 @@
   }
 
   #wrap .box .info .title {
-    width: 280px;
+    /*width: 280px;*/
     height: 40px;
     margin: 0 auto;
     line-height: 40px;

@@ -144,7 +144,7 @@
             this.$message({
               message: '恭喜你，信息修改成功',
               type: 'success'
-            })
+            });
             this.$router.push('/user/recipe');
           } else {
             console.log('error submit!!');

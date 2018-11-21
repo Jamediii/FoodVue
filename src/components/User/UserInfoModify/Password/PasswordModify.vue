@@ -5,8 +5,7 @@
       <el-col :span="16" :offset="4">
         <el-steps :active="active" finish-status="success" simple style="margin-top: 10px;margin-bottom: 40px">
           <el-step title="步骤 1"></el-step>
-          <el-step title="步骤 2">
-          </el-step>
+          <el-step title="步骤 2"></el-step>
         </el-steps>
 
         <!--确认老密码-->
@@ -50,7 +49,7 @@
           </el-row>
         </el-form>
 
-        <el-button v-if="active!=2" style="margin-top: 12px;" @click.native="next">下一步</el-button>
+        <el-button v-if="active!=1" style="margin-top: 12px;" @click.native="next">下一步</el-button>
       </el-col>
     </el-row>
   </div>
@@ -115,7 +114,8 @@
               userPwd: _this.ruleForm2.pass
             }
           }).then(result=>{
-            if (result.data.code === 200) {
+            console.log(result);
+            if (result.data.data.state) {
               _this.active++;
               _this.ruleForm2.pass = '';
             }else {
@@ -124,8 +124,6 @@
           });
         }
       },
-
-
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {

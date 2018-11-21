@@ -170,6 +170,13 @@ export default new Router({
           path: '/makemn/:menuName',
           name: 'Makemn',
           component: Makemn,
+          beforeEnter:(to,from,next) => {
+            if (from.fullPath === '/menu') {
+              next();
+            }else {
+              next({path:'/'});
+            }
+          },
           meta: {
             isLogin: true
           }

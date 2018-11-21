@@ -9,7 +9,7 @@
     <!-- 有食谱情况下 -->
     <div v-else>
       <el-row>
-        <!-- 达人菜谱 -->
+        <!-- 达人菜谱
         <el-col :span="8">
           <div
             class="boxFater"
@@ -32,9 +32,9 @@
               </div>
             </div>
           </div>
-        </el-col>
+        </el-col>-->
         <!-- 用户菜谱 -->
-        <el-col :span="8">
+        <el-col >
           <div
             class="boxFater"
             v-if="recipesY.dielt.length > 0"
@@ -58,9 +58,6 @@
               </div>
             </div>
           </div>
-        </el-col>
-        <!-- 用户未过审菜谱 -->
-        <el-col :span="8">
           <!-- 未过审菜谱 -->
           <div
             class="boxFater"
@@ -88,6 +85,7 @@
             </div>
           </div>
         </el-col>
+        <!-- 用户未过审菜谱 -->
       </el-row>
     </div>
   </div>
@@ -133,7 +131,7 @@
           console.log(err.message);
         });
       // 评论数 (过审菜谱才有)
-      this.$axios.post(`${$LH.url}/comment`, {});
+      // this.$axios.post(`${$LH.url}/comment`, {});
     },
     methods: {
       // 过审菜谱
@@ -161,6 +159,7 @@
                 type: 'success',
                 message: '删除成功!'
               });
+              this.reload();
             })
             .catch(err => {
               this.$message({

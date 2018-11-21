@@ -7,8 +7,13 @@
                  :model="form"
                  label-width="80px">
           <el-form-item label="菜谱名称">
-            <el-tooltip class="item" effect="dark" content="文字尽量限制在20字内" placement="right">
-              <el-input v-model="dieltTitle"></el-input>
+            <el-tooltip class="item"
+                        effect="dark"
+                        content="文字尽量限制在20字内"
+                        placement="right"
+                        prop="dieltTitle">
+              <el-input
+                v-model="dieltTitle"></el-input>
             </el-tooltip>
           </el-form-item>
           <el-form-item label="菜谱大图">
@@ -69,14 +74,14 @@
                 <el-col :span="8">
                   <el-input
                     placeholder="食材名称"
-                    v-model="obj.Name">
-                    <i slot="suffix" class="el-ico-third-caigoushicai"></i>
+                    v-model="obj.Name"
+                    clearable>
                   </el-input>
                 </el-col>
                 <el-col :span="6" :offset="2">
                   <el-input placeholder="数量"
-                            v-model="obj.Num">
-                    <i slot="suffix" class="el-ico-third-shuzi"></i>
+                            v-model="obj.Num"
+                            clearable>
                   </el-input>
                 </el-col>
                 <el-col :span="2"
@@ -230,7 +235,9 @@
           stepIco: [
             true, true
           ]
-        }
+        },
+        // 图片名称限制
+        photoName:[]
 
       }
     },
@@ -265,9 +272,9 @@
       //     }
       //   }
       // },
-      '$route': function (to, from) {
+      '$route'(to,from) {
         this.reload();
-      },
+      }
     },
     computed: {
       dieltTitle() {
@@ -283,7 +290,7 @@
             message: `您输入的长度超过了${maxLength}个字`,
             type: 'warning'
           });
-          input=input.substring(0,149);
+          input=input.substr(0,maxLength);
         }
       },
       // 图片预览
@@ -298,9 +305,33 @@
         if (this.$refs[inputName].files) {
           // 大图
           var simpleFile = this.$refs[inputName].files[0];
+          if (this.photoName.length > 0) {
+            for (let i = 0; i < this.photoName.length; i++) {
+              if (this.photoName[i] === simpleFile.name) {
+                this.$notify.error({
+                  title: '错误',
+                  message: '不可重复上传相同的图片!'
+                });
+                return false;
+              }
+            }
+          }
+            this.photoName.push(simpleFile.name);
         } else {
           // 步骤图
           var simpleFile = this.$refs[inputName][0].files[0];
+          if (this.photoName.length > 0) {
+            for (let i = 0; i < this.photoName.length; i++) {
+              if (this.photoName[i] === simpleFile.name) {
+                this.$notify.error({
+                  title: '错误',
+                  message: '不可重复上传相同的图片!'
+                });
+                return false;
+              }
+            }
+          }
+          this.photoName.push(simpleFile.name);
           this.form.steplist[fileSrc].stepPHName = simpleFile.name
         }
         if (simpleFile.size /1024 / 1024 > 3) {
@@ -338,7 +369,7 @@
       // 删除列表
       delFoodList(formArray, key) {
         if (formArray.length <= 1) {
-          this.$message.error('不允许你再删除了! :(');
+          this.$message.error('不允许你再删除了!');
           return false;
         }
         formArray.splice(key, 1);
@@ -375,21 +406,26 @@
         //-----食谱
         formData.append('userId', localStorage.getItem('userId')); // id
         formData.append('dieltTitle', this.dieltTitle); // 标题
-        formData.append('dieltSyon', this.form.dieltSyon); // 简介
-        formData.append('dieltTime', this.form.dieltTime); // 制作事件
-        formData.append('dieltPeo', this.form.dieltWeight); // 食用人数
-        // -----食材
+        formData.append('dieltSyon', this.form.dieltSyon? this.form.dieltSyon: '未作详细的介绍'); // 简介
+        formData.append('dieltTime', this.form.dieltTime? this.form.dieltTime: 30); // 制作时间
+        formData.append('dieltPeo', this.form.dieltWeight? this.form.dieltWeight: 2); // 食用人数
+        // ----- 食材
         formData.append('foodlist', JSON.stringify(this.form.foodlist));
         //-----步骤
+        for (let i = 0; i < this.form.steplist.length; i++) {
+          if (!this.form.steplist[i].stepContent) {
+            this.form.steplist[i].stepContent = '未做任何详细的描述'
+          }
+        }
+
         formData.append('steplist', JSON.stringify(this.form.steplist));
         //-----所有的图片
         for (let k = 0; k <= this.form.steplist.length; k++) {
           // 传入的文件名设置 -------
-          console.log(this.$refs['recipesPhoto'].files[0]);
           if (k === 0) {
             if (!this.$refs['recipesPhoto'].files[0]) {
               this.$message({
-                message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ~ＹＯ',
+                message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ',
                 type: 'warning'
               });
               return false;
@@ -398,7 +434,7 @@
           }else {
             if (!this.$refs[`step${k - 1}`][0].files[0]) {
               this.$message({
-                message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ~ＹＯ',
+                message: '警告! 请确保您的每一个步骤都有一张诱人的图片(＾Ｕ＾)ノ',
                 type: 'warning'
               });
               return false;
@@ -411,7 +447,7 @@
           method: 'post',
           url: `${$LH.url}/operat/upload`,
           data: formData,
-        }).then(() => {
+        }).then((res) => {
           this.$message({
             message: '恭喜你,上传成功,静侯热评！',
             type: 'success'

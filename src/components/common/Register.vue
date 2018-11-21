@@ -147,7 +147,6 @@
     },
     methods: {
       submitRegister(formName) {
-
         this.$refs[formName].validate((valid) => {
           if (valid && this.registerInfo.checkVeriState == 200 && this.beSureReg) {
             this.$axios.post(`${$LH.url}/register`, {
@@ -185,6 +184,9 @@
           });
         }else{
           this.randanData=parseInt(Math.random()*99999+100000);
+          if (e.target === 'span') {
+            e = e.path[1];
+          }
           let i = 60;
           let timeId = setInterval(function () {
             e.target.innerText='获取验证码'+(i)+'s';

@@ -58,8 +58,6 @@
       // 头像上传
       // 格式大小限制
       beforeUpload(file) {
-        console.log(file.type.toLowerCase() === 'image/jpeg');
-        console.log(file.type.toLowerCase() === 'image/jpeg');
         // 文件格式限定
         const isJPG = file.type.toLowerCase() === 'image/jpeg';
         const isPNG = file.type.toLowerCase() === 'image/png';
