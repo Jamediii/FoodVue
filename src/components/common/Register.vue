@@ -177,6 +177,7 @@
         this.$refs[formName].resetFields();
       },
       checkVeriCode(e) {
+        let i = 60;
         if(this.registerInfo.phoneNum.length==0){
           this.$message({
             message: '请输入手机号',
@@ -184,22 +185,34 @@
           });
         }else{
           this.randanData=parseInt(Math.random()*99999+100000);
-          if (e.target === 'span') {
-            e = e.path[1];
+          if (e.target.nodeName === 'SPAN') {
+            e = e.target.parentNode;
+            let timeId = setInterval(function () {
+              e.innerText='获取验证码'+(i)+'s';
+              i--;
+              e.setAttribute('disabled','disabled');
+              e.style.backgroundColor='#ccdad7';
+              if (i === 0) {
+                e.removeAttribute('disabled');
+                e.style.backgroundColor='#87d6c8';
+                e.innerText='获取验证码';
+                clearInterval(timeId);
+              }
+            },1000);
+          }else {
+            let timeId = setInterval(function () {
+              e.target.innerText='获取验证码'+(i)+'s';
+              i--;
+              e.target.setAttribute('disabled','disabled');
+              e.target.style.backgroundColor='#ccdad7';
+              if (i === 0) {
+                e.target.removeAttribute('disabled');
+                e.target.style.backgroundColor='#87d6c8';
+                e.target.innerText='获取验证码';
+                clearInterval(timeId);
+              }
+            },1000);
           }
-          let i = 60;
-          let timeId = setInterval(function () {
-            e.target.innerText='获取验证码'+(i)+'s';
-            i--;
-            e.target.setAttribute('disabled','disabled');
-            e.target.style.backgroundColor='#ccdad7';
-            if (i === 0) {
-              e.target.removeAttribute('disabled');
-              e.target.style.backgroundColor='#87d6c8';
-              e.target.innerText='获取验证码'
-              clearInterval(timeId);
-            }
-          },1000);
           this.$alert('验证码发送中,请稍等', '', {
             confirmButtonText: '确定',
             callback: () => {
